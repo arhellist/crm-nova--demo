@@ -35,15 +35,14 @@
       "crud-table × auth-jwt"
     ],
     "out_of_produces": [
-      "src/features/objects/ObjectsPage.test.tsx",
-      "src/features/objects/ObjectsPage.tsx",
-      "src/features/tasks/HistoryList.tsx",
-      "src/features/tasks/StatusPanel.test.tsx",
-      "src/features/tasks/StatusPanel.tsx",
-      "src/features/tasks/TaskForm.tsx",
-      "src/features/tasks/TaskPage.test.tsx",
-      "src/features/tasks/TaskPage.tsx",
-      "src/features/tasks/useTask.ts"
+      "src/features/tasks/api.test.ts",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/MyTasksPage.test.tsx",
+      "src/features/tasks/MyTasksPage.tsx",
+      "src/features/tasks/TaskRow.test.tsx",
+      "src/features/tasks/TaskRow.tsx",
+      "src/features/tasks/filters.ts",
+      "src/features/tasks/useMyTasks.ts"
     ],
     "missing_produces": [],
     "produces": [
@@ -101,16 +100,16 @@
         "src/app/AppShell.test.tsx"
       ],
       "touched": [
+        "src/app/AppShell.test.tsx",
         "src/app/router.tsx",
-        "src/features/objects/ObjectsPage.test.tsx",
-        "src/features/objects/ObjectsPage.tsx",
-        "src/features/tasks/HistoryList.tsx",
-        "src/features/tasks/StatusPanel.test.tsx",
-        "src/features/tasks/StatusPanel.tsx",
-        "src/features/tasks/TaskForm.tsx",
-        "src/features/tasks/TaskPage.test.tsx",
-        "src/features/tasks/TaskPage.tsx",
-        "src/features/tasks/useTask.ts"
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/MyTasksPage.tsx",
+        "src/features/tasks/TaskRow.test.tsx",
+        "src/features/tasks/TaskRow.tsx",
+        "src/features/tasks/api.test.ts",
+        "src/features/tasks/api.ts",
+        "src/features/tasks/filters.ts",
+        "src/features/tasks/useMyTasks.ts"
       ],
       "missing": [
         "src/features/auth/api.ts",
@@ -124,8 +123,7 @@
         "tailwind.config.cjs",
         "package-lock.json",
         "src/features/auth/useSession.test.tsx",
-        "src/features/auth/LoginPage.test.tsx",
-        "src/app/AppShell.test.tsx"
+        "src/features/auth/LoginPage.test.tsx"
       ],
       "extra": [],
       "proof_debt": [],
@@ -242,9 +240,9 @@
     "file": "evidence/D04.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:43:41.922Z",
+  "timestamp": "2026-11-04T17:50:58.131Z",
   "code_hash": {
-    "git_head": "1e08a4c79d00f14f12bb239e4676adae2de00137",
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -262,8 +260,8 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "7045eb25c9ee08f189f03312e416448219d70ae9",
-    "produces_digest": "1802a6ed81a0bfbee93b97669ab4250e33e7ad7beed69438b2bdd473f5c07adb"
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "069889ea38da7e7e4491a80be5d5b0a73cec7e27ab26cf37273f4b25cd4d0608"
   },
-  "evidence_hash": "3d7f45edbcb015665d27993727be47ffd48409b44528f5a72a62048f0e4d7ce5"
+  "evidence_hash": "efd2bbae41d460455b992aad88049b3245a7545478f668389eb4c7b0468c44e1"
 }

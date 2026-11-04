@@ -1,0 +1,33 @@
+{
+  "d": "D09",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: filters.ts — неизвестный query сводится к all, статус сериализуется только как ?status=<value>, исполнителя в фильтре нет; useMyTasks — infinite query по taskKeys.myTasks(filter), серверный status=eq (DEC-022), агрегат select=status без COUNT(*), «+» при лимите/неполной странице, названия объектов пакетом; TaskRow — действия ровно allowedTargets, обычный переход через RPC и без оптимистичных изменений, «На доработку» ведёт в карточку из-за обязательного комментария, ошибка в строке; MyTasksPage — вкладки role=tab с клавиатурой, группы по пяти статусам, пустое состояние с подсказкой, «Показать ещё» с keyset; router /my заменён на экран. api.ts меняется только необязательным status. В FIT_CHECKS D09 убраны лишние обратные кавычки вокруг app_contracts: парсер сверяет метод и путь буквально. A04.6 ослаблен до факта вызова getSession: экран данных читает сессию штатно. Тесты 57/57, A09.1–A09.6 покрыты, lint/typecheck зелёные.",
+  "acceptance_ids": [
+    "A09.1",
+    "A09.2",
+    "A09.3",
+    "A09.4",
+    "A09.5",
+    "A09.6"
+  ],
+  "code_hash": {
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/tasks/MyTasksPage.test.tsx",
+      "src/features/tasks/MyTasksPage.tsx",
+      "src/features/tasks/TaskRow.test.tsx",
+      "src/features/tasks/TaskRow.tsx",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/filters.ts",
+      "src/features/tasks/useMyTasks.ts"
+    ],
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "fa618843697b05e32af42efee55f1be5240719b847c004ca77d20f90b148b7d6"
+  },
+  "evidence_ref": "evidence/D09.json",
+  "evidence_hash": "63bcbc1388b030a96d191afb8a3227007ef185848b1a0f5fa4616a249b99f2c1",
+  "timestamp": "2026-11-04T17:49:51.887Z"
+}

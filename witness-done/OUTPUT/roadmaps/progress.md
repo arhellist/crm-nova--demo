@@ -30,7 +30,7 @@
 | D06 | Экран объектов и карточка | objects | done | `evidence/D06.json`, `evidence/D06.review.json`, `evidence/BASELINE.json` | `src/features/objects/objectKeys.ts`, `useObjects.ts`, `ObjectsPage.tsx`, `ObjectForm.tsx`, `ObjectArchiveDialog.tsx`, `src/app/router.tsx`, `ObjectsPage.test.tsx`, `ObjectForm.test.tsx`, `ObjectArchiveDialog.test.tsx` | 2026-11-04 | A06.1–A06.6 зелёные (34/34 тестов); keyset «Показать ещё», роль из profiles, архивный бейдж, фокус в диалогах; pre_ci tax_pass; DEC-014, DEC-015 |
 | D07 | Контракт задач | tasks | done | `evidence/D07.json`, `evidence/D07.review.json`, `evidence/BASELINE.json` | `src/features/tasks/types.ts`, `schema.ts`, `api.ts`, `mutations.ts`, `transitions.ts`, `src/shared/api/postgrest.ts`, `schema.test.ts`, `api.test.ts`, `mutations.test.ts`, `openapi.yaml` | 2026-11-04 | A07.1–A07.7 зелёные (44/44 тестов); RPC-переходы, маппинг P0422 по serverMessage, keyset `(created_at,id)`; pre_ci tax_pass; DEC-016, DEC-017, DEC-018 |
 | D08 | Задачи: экран | tasks | done | D08 | TaskPage/StatusPanel/TaskForm/HistoryList, 50/50 тестов | 2026-11-04 | L2; A08.1–A08.6 |
-| D09 | Мои задачи | tasks | not_started | — | — | — | L2; A09.1–A09.6 |
+| D09 | Мои задачи | tasks | done | D09 | MyTasksPage/TaskRow/useMyTasks, 57/57 тестов | 2026-11-04 | L2; A09.1–A09.6 |
 | D10 | Реплика и отчётные вьюхи | reports | not_started | — | — | — | L1; A10.1–A10.4 |
 | D11 | API отчётов | reports | not_started | — | — | — | L2; A11.1–A11.7 |
 | D12 | Отчёты в UI | reports | not_started | — | — | — | L2; A12.1–A12.6 |

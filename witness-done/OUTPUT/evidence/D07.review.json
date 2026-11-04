@@ -2,7 +2,7 @@
   "d": "D07",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Проверено: types/schema — поля §3.3, вход без status/author_id, strip лишних ключей, description 5000 по спецификации (DEC-016), uuid-поля; api — явный select, archived_at is.null, keyset created_at.desc,id.desc с limit+1 и or-фильтром без offset/COUNT, «мои задачи» без assignee_id (RLS), create без status, update без status, 0 строк → 404; маппинг P0422 по serverMessage (transition/comment/assignee), P0403/42501 → «Недостаточно прав», P0400/404 → «Задача не найдена», SQL не раскрывается; mutations — RPC change_task_status/archive_task, возврат статуса из скаляра, комментарий тримится; transitions — буквальная матрица domain-rules §1, помечена как UI-подсказка, не защита. Архивная задача недоступна по RLS (DEC-017). Обёртка PostgREST расширена serverMessage (DEC-018). Тесты 44/44, lint/typecheck зелёные, A07.1–A07.7 покрыты.",
+  "notes": "Переснято на новый produces_digest (DEC-022): listMyTasks получил необязательный status в ListMyTasksParams и передаёт status=eq.<value>; assignee_id по-прежнему не передаётся, пагинация, сортировка и маппинг ошибок не менялись. Добавлен тест DEC-022 на URL фильтра. A07.1–A07.7 зелёные.",
   "acceptance_ids": [
     "A07.1",
     "A07.2",
@@ -13,7 +13,7 @@
     "A07.7"
   ],
   "code_hash": {
-    "git_head": "319be4b1de277847b336a1ab8c97eb23347a4e58",
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
     "git_dirty": true,
     "produces": [
       "src/features/tasks/api.test.ts",
@@ -26,10 +26,10 @@
       "src/features/tasks/types.ts",
       "src/shared/api/postgrest.ts"
     ],
-    "git_tree": "19559dbdc2bc1bf142865b675dd6fc2a6282a44c",
-    "produces_digest": "b547171aec8a9c5a923e3fa9cfe0393b746ed5abbbb2b7d90bf979055639c220"
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "87d0b27f0dd1a3156bdc3d3c8d31ebd8bc13cf94ec08b8eefefa47ef9ee59ba9"
   },
   "evidence_ref": "evidence/D07.json",
-  "evidence_hash": "abd7d59c31245d74cff10c2d6652bbebb666dcf6357bc7726ec8b52b98191ec3",
-  "timestamp": "2026-11-04T17:38:17.851Z"
+  "evidence_hash": "9c890f0a492afca5d30b6de6cc664028128b813540d11391c878291bb0ac249d",
+  "timestamp": "2026-11-04T17:50:12.308Z"
 }

@@ -17,6 +17,7 @@ import { useSession } from '../features/auth/useSession.js';
 import { AppShell } from './AppShell.js';
 import { ObjectsPage } from '../features/objects/ObjectsPage.js';
 import { TaskPage } from '../features/tasks/TaskPage.js';
+import { MyTasksPage } from '../features/tasks/MyTasksPage.js';
 
 function LoadingScreen(): JSX.Element {
   return (
@@ -121,7 +122,7 @@ export function AppRoutes(): JSX.Element {
 
       <Route element={<ProtectedShell />}>
         <Route path="/" element={<Navigate to="/my" replace />} />
-        <Route path="/my" element={<StubPage title="Мои задачи" />} />
+        <Route path="/my" element={<MyTasksPage />} />
         <Route path="/objects" element={<ObjectsPage />} />
         <Route path="/objects/:id" element={<ObjectsPage />} />
         <Route path="/tasks/:id" element={<TaskPage />} />

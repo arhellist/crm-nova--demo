@@ -152,9 +152,19 @@ export async function listTasksByObject(
   return listTasks({ object_id: `eq.${id}` }, params, 'Не удалось загрузить задачи объекта');
 }
 
+/**
+ * Параметры «Моих задач»: необязательный фильтр по статусу (DEC-022).
+ *
+ * `assignee_id` сюда не входит и не передаётся: видимость решает RLS (SEC-04).
+ */
+export interface ListMyTasksParams extends ListTasksParams {
+  status?: TaskStatus;
+}
+
 /** «Мои задачи»: фильтр по исполнителю делает RLS, параметр `assignee_id` не передаётся. */
-export async function listMyTasks(params: ListTasksParams = {}): Promise<TaskPage> {
-  return listTasks({}, params, 'Не удалось загрузить задачи');
+export async function listMyTasks(params: ListMyTasksParams = {}): Promise<TaskPage> {
+  const filter: Record<string, string> = params.status ? { status: `eq.${params.status}` } : {};
+  return listTasks(filter, params, 'Не удалось загрузить задачи');
 }
 
 /** Задача по id; чужая или архивная для RLS не существует (A07.7). */

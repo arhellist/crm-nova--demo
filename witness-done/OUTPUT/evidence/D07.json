@@ -36,7 +36,16 @@
       "crud-table × auth-jwt",
       "crud-table` offset/COUNT"
     ],
-    "out_of_produces": [],
+    "out_of_produces": [
+      "src/app/AppShell.test.tsx",
+      "src/app/router.tsx",
+      "src/features/tasks/MyTasksPage.test.tsx",
+      "src/features/tasks/MyTasksPage.tsx",
+      "src/features/tasks/TaskRow.test.tsx",
+      "src/features/tasks/TaskRow.tsx",
+      "src/features/tasks/filters.ts",
+      "src/features/tasks/useMyTasks.ts"
+    ],
     "missing_produces": [],
     "produces": [
       "src/features/tasks/types.ts",
@@ -82,17 +91,26 @@
         "src/features/tasks/mutations.test.ts"
       ],
       "touched": [
+        "src/app/AppShell.test.tsx",
+        "src/app/router.tsx",
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/MyTasksPage.tsx",
+        "src/features/tasks/TaskRow.test.tsx",
+        "src/features/tasks/TaskRow.tsx",
         "src/features/tasks/api.test.ts",
         "src/features/tasks/api.ts",
-        "src/features/tasks/mutations.test.ts",
-        "src/features/tasks/mutations.ts",
-        "src/features/tasks/schema.test.ts",
-        "src/features/tasks/schema.ts",
-        "src/features/tasks/transitions.ts",
-        "src/features/tasks/types.ts",
-        "src/shared/api/postgrest.ts"
+        "src/features/tasks/filters.ts",
+        "src/features/tasks/useMyTasks.ts"
       ],
-      "missing": [],
+      "missing": [
+        "src/features/tasks/types.ts",
+        "src/features/tasks/schema.ts",
+        "src/features/tasks/mutations.ts",
+        "src/features/tasks/transitions.ts",
+        "src/shared/api/postgrest.ts",
+        "src/features/tasks/schema.test.ts",
+        "src/features/tasks/mutations.test.ts"
+      ],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -158,6 +176,7 @@
       "GET /metrics",
       "GET /rest/v1/objects",
       "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
       "GET /rest/v1/tasks",
       "PATCH /rest/v1/objects",
       "PATCH /rest/v1/tasks",
@@ -209,9 +228,9 @@
     "file": "evidence/D07.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:38:25.353Z",
+  "timestamp": "2026-11-04T17:50:20.528Z",
   "code_hash": {
-    "git_head": "319be4b1de277847b336a1ab8c97eb23347a4e58",
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
     "git_dirty": true,
     "produces": [
       "src/features/tasks/api.test.ts",
@@ -224,8 +243,8 @@
       "src/features/tasks/types.ts",
       "src/shared/api/postgrest.ts"
     ],
-    "git_tree": "19559dbdc2bc1bf142865b675dd6fc2a6282a44c",
-    "produces_digest": "b547171aec8a9c5a923e3fa9cfe0393b746ed5abbbb2b7d90bf979055639c220"
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "87d0b27f0dd1a3156bdc3d3c8d31ebd8bc13cf94ec08b8eefefa47ef9ee59ba9"
   },
-  "evidence_hash": "76e03e7e2e413ab740dbc4c477ad3eb0f8bde96dab2f75dde7f2d86dc7ca40c3"
+  "evidence_hash": "ab51b171ed9b7245dc3ef2c4ead14fc28f1c23217b4cdf3fca1cb77af7688471"
 }

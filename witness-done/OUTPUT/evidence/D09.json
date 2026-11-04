@@ -1,0 +1,222 @@
+{
+  "d": "D09",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /rest/v1/tasks",
+      "POST /rest/v1/rpc/change_task_status"
+    ],
+    "acceptance_ids": [
+      "A09.1",
+      "A09.2",
+      "A09.3",
+      "A09.4",
+      "A09.5",
+      "A09.6"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D07",
+      "D08"
+    ],
+    "conflicts_applied": [
+      "crud-table` offset/COUNT"
+    ],
+    "out_of_produces": [
+      "src/app/AppShell.test.tsx",
+      "src/features/tasks/api.test.ts"
+    ],
+    "missing_produces": [],
+    "produces": [
+      "src/features/tasks/filters.ts",
+      "src/features/tasks/useMyTasks.ts",
+      "src/features/tasks/TaskRow.tsx",
+      "src/features/tasks/MyTasksPage.tsx",
+      "src/features/tasks/api.ts",
+      "src/app/router.tsx",
+      "src/features/tasks/MyTasksPage.test.tsx",
+      "src/features/tasks/TaskRow.test.tsx"
+    ],
+    "conflicts_ref": "`OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями`",
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": "crud-table",
+      "selected": [],
+      "referenced": [
+        "INV-003"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "src/features/tasks/filters.ts",
+        "src/features/tasks/useMyTasks.ts",
+        "src/features/tasks/TaskRow.tsx",
+        "src/features/tasks/MyTasksPage.tsx",
+        "src/features/tasks/api.ts",
+        "src/app/router.tsx",
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/TaskRow.test.tsx"
+      ],
+      "touched": [
+        "src/app/AppShell.test.tsx",
+        "src/app/router.tsx",
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/MyTasksPage.tsx",
+        "src/features/tasks/TaskRow.test.tsx",
+        "src/features/tasks/TaskRow.tsx",
+        "src/features/tasks/api.test.ts",
+        "src/features/tasks/api.ts",
+        "src/features/tasks/filters.ts",
+        "src/features/tasks/useMyTasks.ts"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A09.2",
+        "A09.4",
+        "A09.5",
+        "A09.6"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A09.1",
+        "A09.3"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/TaskRow.test.tsx"
+      ],
+      "binding_hash": "9e986bb79b89442e27a0ffed5382460a3a70e2c2d560e6ae8db3d9d0e634b237"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /rest/v1/tasks",
+      "POST /rest/v1/rpc/change_task_status"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "design-tokens",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D07",
+      "D08"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D09.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": true,
+    "issues": [],
+    "verdict": "supports",
+    "reviewer": "peer-reviewer",
+    "file": "evidence/D09.review.json"
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T17:50:00.242Z",
+  "code_hash": {
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/tasks/MyTasksPage.test.tsx",
+      "src/features/tasks/MyTasksPage.tsx",
+      "src/features/tasks/TaskRow.test.tsx",
+      "src/features/tasks/TaskRow.tsx",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/filters.ts",
+      "src/features/tasks/useMyTasks.ts"
+    ],
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "fa618843697b05e32af42efee55f1be5240719b847c004ca77d20f90b148b7d6"
+  },
+  "evidence_hash": "1eb4ad5fe7f2de144639e707e4d2843bf7dbca3c0eb43461074bc7e75919796f"
+}

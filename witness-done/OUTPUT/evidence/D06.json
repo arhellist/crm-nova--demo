@@ -32,13 +32,15 @@
       "crud-table` offset/COUNT"
     ],
     "out_of_produces": [
-      "src/features/tasks/HistoryList.tsx",
-      "src/features/tasks/StatusPanel.test.tsx",
-      "src/features/tasks/StatusPanel.tsx",
-      "src/features/tasks/TaskForm.tsx",
-      "src/features/tasks/TaskPage.test.tsx",
-      "src/features/tasks/TaskPage.tsx",
-      "src/features/tasks/useTask.ts"
+      "src/app/AppShell.test.tsx",
+      "src/features/tasks/api.test.ts",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/MyTasksPage.test.tsx",
+      "src/features/tasks/MyTasksPage.tsx",
+      "src/features/tasks/TaskRow.test.tsx",
+      "src/features/tasks/TaskRow.tsx",
+      "src/features/tasks/filters.ts",
+      "src/features/tasks/useMyTasks.ts"
     ],
     "missing_produces": [],
     "produces": [
@@ -85,22 +87,24 @@
         "src/features/objects/ObjectArchiveDialog.test.tsx"
       ],
       "touched": [
+        "src/app/AppShell.test.tsx",
         "src/app/router.tsx",
-        "src/features/objects/ObjectsPage.test.tsx",
-        "src/features/objects/ObjectsPage.tsx",
-        "src/features/tasks/HistoryList.tsx",
-        "src/features/tasks/StatusPanel.test.tsx",
-        "src/features/tasks/StatusPanel.tsx",
-        "src/features/tasks/TaskForm.tsx",
-        "src/features/tasks/TaskPage.test.tsx",
-        "src/features/tasks/TaskPage.tsx",
-        "src/features/tasks/useTask.ts"
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/MyTasksPage.tsx",
+        "src/features/tasks/TaskRow.test.tsx",
+        "src/features/tasks/TaskRow.tsx",
+        "src/features/tasks/api.test.ts",
+        "src/features/tasks/api.ts",
+        "src/features/tasks/filters.ts",
+        "src/features/tasks/useMyTasks.ts"
       ],
       "missing": [
         "src/features/objects/objectKeys.ts",
         "src/features/objects/useObjects.ts",
+        "src/features/objects/ObjectsPage.tsx",
         "src/features/objects/ObjectForm.tsx",
         "src/features/objects/ObjectArchiveDialog.tsx",
+        "src/features/objects/ObjectsPage.test.tsx",
         "src/features/objects/ObjectForm.test.tsx",
         "src/features/objects/ObjectArchiveDialog.test.tsx"
       ],
@@ -217,9 +221,9 @@
     "file": "evidence/D06.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:42:50.911Z",
+  "timestamp": "2026-11-04T17:51:32.756Z",
   "code_hash": {
-    "git_head": "1e08a4c79d00f14f12bb239e4676adae2de00137",
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -232,8 +236,8 @@
       "src/features/objects/objectKeys.ts",
       "src/features/objects/useObjects.ts"
     ],
-    "git_tree": "7045eb25c9ee08f189f03312e416448219d70ae9",
-    "produces_digest": "2a48b46caa8d6317b515b6f8e7e51daf2e8b05a69c6ae5835946521b0c98e468"
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "8d7d4be609be9f20598164ffddfecdb2f3f09675f7bbc2271c315dfb3c194d6b"
   },
-  "evidence_hash": "13dfc78dc15b503384d36846f5d9599557af25922253ed62d17b0a14c066f4ad"
+  "evidence_hash": "112f27c4171418dd360fa6f6658a6c49ae7353e4a263cbdb63693010112974e5"
 }

@@ -33,7 +33,15 @@
       "crud-table × auth-jwt"
     ],
     "out_of_produces": [
-      "src/features/objects/ObjectsPage.test.tsx"
+      "src/app/AppShell.test.tsx",
+      "src/features/tasks/api.test.ts",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/MyTasksPage.test.tsx",
+      "src/features/tasks/MyTasksPage.tsx",
+      "src/features/tasks/TaskRow.test.tsx",
+      "src/features/tasks/TaskRow.tsx",
+      "src/features/tasks/filters.ts",
+      "src/features/tasks/useMyTasks.ts"
     ],
     "missing_produces": [],
     "produces": [
@@ -79,18 +87,27 @@
         "src/features/tasks/StatusPanel.test.tsx"
       ],
       "touched": [
+        "src/app/AppShell.test.tsx",
         "src/app/router.tsx",
-        "src/features/objects/ObjectsPage.test.tsx",
-        "src/features/objects/ObjectsPage.tsx",
-        "src/features/tasks/HistoryList.tsx",
-        "src/features/tasks/StatusPanel.test.tsx",
-        "src/features/tasks/StatusPanel.tsx",
-        "src/features/tasks/TaskForm.tsx",
-        "src/features/tasks/TaskPage.test.tsx",
-        "src/features/tasks/TaskPage.tsx",
-        "src/features/tasks/useTask.ts"
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/MyTasksPage.tsx",
+        "src/features/tasks/TaskRow.test.tsx",
+        "src/features/tasks/TaskRow.tsx",
+        "src/features/tasks/api.test.ts",
+        "src/features/tasks/api.ts",
+        "src/features/tasks/filters.ts",
+        "src/features/tasks/useMyTasks.ts"
       ],
-      "missing": [],
+      "missing": [
+        "src/features/tasks/useTask.ts",
+        "src/features/tasks/TaskPage.tsx",
+        "src/features/tasks/StatusPanel.tsx",
+        "src/features/tasks/HistoryList.tsx",
+        "src/features/tasks/TaskForm.tsx",
+        "src/features/objects/ObjectsPage.tsx",
+        "src/features/tasks/TaskPage.test.tsx",
+        "src/features/tasks/StatusPanel.test.tsx"
+      ],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -204,9 +221,9 @@
     "file": "evidence/D08.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:42:32.917Z",
+  "timestamp": "2026-11-04T17:51:52.191Z",
   "code_hash": {
-    "git_head": "1e08a4c79d00f14f12bb239e4676adae2de00137",
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -219,8 +236,8 @@
       "src/features/tasks/TaskPage.tsx",
       "src/features/tasks/useTask.ts"
     ],
-    "git_tree": "7045eb25c9ee08f189f03312e416448219d70ae9",
-    "produces_digest": "7e6a23ff369d4478e9171b6f52803338e77b0a78974aa09cc49c3a7c54774777"
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "572183d930fadc0c9609dbd8a06bf364a3191d812d51b07a549d25d945cdb3aa"
   },
-  "evidence_hash": "2d70355cdf47205196717330a2ed2cd51f6847c8317021171dc71b602f5b132a"
+  "evidence_hash": "cad8171ddf4969ec35ee18da52f5b7013ac5728efc16c016710cbc5b6d8df691"
 }

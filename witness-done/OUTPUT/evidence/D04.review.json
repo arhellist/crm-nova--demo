@@ -2,7 +2,7 @@
   "d": "D04",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Переснято на новый produces_digest после D08: в router.tsx добавлен маршрут /tasks/:id с защитой RequireAuth и оболочкой AppShell; вход, сессия, двойной фактор и защищённые маршруты не менялись, тесты A04.1–A04.6 зелёные.",
+  "notes": "Переснято на новый produces_digest: A04.6 больше не фиксирует ровно один вызов getSession — экран «Мои задачи» штатно читает сессию для роли. Проверки восстановления экрана и отсутствия токенов в URL сохранены, A04.1–A04.6 зелёные.",
   "acceptance_ids": [
     "A04.1",
     "A04.2",
@@ -12,7 +12,7 @@
     "A04.6"
   ],
   "code_hash": {
-    "git_head": "1e08a4c79d00f14f12bb239e4676adae2de00137",
+    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -30,10 +30,10 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "7045eb25c9ee08f189f03312e416448219d70ae9",
-    "produces_digest": "1802a6ed81a0bfbee93b97669ab4250e33e7ad7beed69438b2bdd473f5c07adb"
+    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
+    "produces_digest": "069889ea38da7e7e4491a80be5d5b0a73cec7e27ab26cf37273f4b25cd4d0608"
   },
   "evidence_ref": "evidence/D04.json",
-  "evidence_hash": "e8045e8018165d2770b96a70b5c0535b21d99c56f1d705d2930407be2de8d5b2",
-  "timestamp": "2026-11-04T17:43:34.200Z"
+  "evidence_hash": "bdbe0c86b24661ecf7e28dec7a29268459292bcd42a112c2a8a0cc79a736421b",
+  "timestamp": "2026-11-04T17:50:28.922Z"
 }

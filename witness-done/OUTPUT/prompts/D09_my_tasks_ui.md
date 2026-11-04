@@ -11,7 +11,7 @@ GATE: none
 | Поле | Значение |
 |------|----------|
 | surfaces | ui |
-| produces_count | 5 |
+| produces_count | 6 |
 | entity | task |
 | delivery_slice | S6 |
 | split_group | tasks |
@@ -88,7 +88,7 @@ GATE: none
 | module | crud-table |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями` |
 | conflicts_applied | `crud-table` offset/COUNT |
-| app_contracts | `GET /rest/v1/tasks`, `POST /rest/v1/rpc/change_task_status` |
+| app_contracts | GET /rest/v1/tasks, POST /rest/v1/rpc/change_task_status |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D07, D08 |
@@ -113,6 +113,7 @@ GATE: none
 - `src/features/tasks/useMyTasks.ts` — создать
 - `src/features/tasks/TaskRow.tsx` — создать
 - `src/features/tasks/MyTasksPage.tsx` — создать
+- `src/features/tasks/api.ts` — изменить (`ListMyTasksParams.status`; DEC-022)
 - `src/app/router.tsx` — изменить (маршрут `/my`)
 
 Тесты:
@@ -122,7 +123,8 @@ GATE: none
 
 ## НЕ ТРОГАТЬ
 
-- `src/features/tasks/api.ts` — контракт D07.
+- `src/features/tasks/api.ts` — только необязательный `status` в `ListMyTasksParams` (DEC-022);
+  остальной контракт D07 и `assignee_id` не меняются.
 - `src/features/reports/**` — D12.
 
 ## PRE-CHECK

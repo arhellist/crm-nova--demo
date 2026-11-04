@@ -301,6 +301,36 @@
       "acceptance": "A08.6",
       "cmd": "npx vitest run src/features/tasks/TaskPage.test.tsx -t A08.6",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A09.1",
+      "cmd": "npx vitest run src/features/tasks/MyTasksPage.test.tsx -t A09.1",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A09.2",
+      "cmd": "npx vitest run src/features/tasks/MyTasksPage.test.tsx -t A09.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A09.3",
+      "cmd": "npx vitest run src/features/tasks/TaskRow.test.tsx -t A09.3",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A09.4",
+      "cmd": "npx vitest run src/features/tasks/MyTasksPage.test.tsx -t A09.4",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A09.5",
+      "cmd": "npx vitest run src/features/tasks/TaskRow.test.tsx -t A09.5",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A09.6",
+      "cmd": "npx vitest run src/features/tasks/MyTasksPage.test.tsx -t A09.6",
+      "expect_exit": 0
     }
   ]
 }

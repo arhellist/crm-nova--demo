@@ -9,7 +9,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
-import { createTask, getTask, listTasksByObject, TaskApiError } from './api.js';
+import { createTask, getTask, listMyTasks, listTasksByObject, TaskApiError } from './api.js';
 import type { TaskRow } from './types.js';
 import * as authApi from '../auth/api.js';
 
@@ -143,6 +143,20 @@ describe('listTasksByObject', () => {
     const [secondUrl] = fetchMock.mock.calls[1] as [string];
     expect(secondUrl).toContain('created_at.lt.');
     expect(secondUrl).toContain('id.lt.');
+  });
+});
+
+describe('listMyTasks', () => {
+  it('DEC-022 статус уходит фильтром status=eq, assignee_id не передаётся', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse([task(1, { status: 'in_progress' })]));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const page = await listMyTasks({ status: 'in_progress' });
+
+    expect(page.items).toHaveLength(1);
+    const [url] = fetchMock.mock.calls[0] as [string];
+    expect(url).toContain('status=eq.in_progress');
+    expect(url).not.toContain('assignee_id=eq');
   });
 });
 
