@@ -118,3 +118,6 @@ docker-compose.override.yml
 # --- Witness Done: служебные каталоги ---
 .sp-cache/
 .witness-done-work/
+
+# --- Supabase CLI ---
+supabase/.temp/
