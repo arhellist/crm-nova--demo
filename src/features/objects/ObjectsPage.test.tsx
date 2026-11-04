@@ -31,6 +31,18 @@ vi.mock('../auth/useSession.js', () => ({
   useSession: vi.fn(),
 }));
 
+// Задачи объекта приходят из контракта D07; в тестах экрана они не нужны.
+vi.mock('../tasks/api.js', () => ({
+  listTasksByObject: vi.fn(async () => ({ items: [], nextCursor: null })),
+}));
+
+// Клиент Supabase нужен только транзитным модулям; сеть в этих тестах не трогаем.
+vi.mock('../auth/api.js', () => ({
+  supabase: { auth: { getSession: vi.fn() } },
+  supabaseUrl: 'https://db.nova.test',
+  supabaseAnonKey: 'anon-key',
+}));
+
 function row(index: number, overrides: Partial<ObjectRow> = {}): ObjectRow {
   return {
     id: `00000000-0000-4000-8000-${String(index).padStart(12, '0')}`,
@@ -126,7 +138,8 @@ describe('ObjectsPage', () => {
     expect(await screen.findByRole('heading', { name: 'ЖК Северные Линии' })).toBeTruthy();
     expect(screen.getByText('Архив')).toBeTruthy();
     expect(screen.getByText('Улица Строителей, 7')).toBeTruthy();
-    expect(screen.getByText('Задачи загружаются')).toBeTruthy();
+    expect(await screen.findByRole('heading', { name: 'Задачи' })).toBeTruthy();
+    expect(await screen.findByText('Задач пока нет.')).toBeTruthy();
     expect(screen.queryByRole('button', { name: 'Изменить объект' })).toBeNull();
     expect(screen.queryByRole('button', { name: 'Архивировать объект' })).toBeNull();
   });

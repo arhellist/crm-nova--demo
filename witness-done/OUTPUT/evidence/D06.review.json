@@ -2,7 +2,7 @@
   "d": "D06",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Проверено: список — один DOM без дублей table/cards (ul+grid), 20 строк и «Показать ещё» курсором D05 (limit 20, без offset/COUNT), склейка страниц дедуплицирует по id; поиск локальный по загруженным страницам, ключ без q; управляющие кнопки только manager и только для неархивных, права всё равно в RLS; форма валидирует Zod до сети, блокируется на время мутации, ошибки D05 без SQL; диалог архива — text «объект и задачи останутся в истории», синхронный inFlight-флаг даёт ровно один RPC при двойном клике, Esc/Tab удерживают фокус; архивная карточка читаема, помечена бейджем, без кнопок правки, задачи — состояние «Задачи загружаются» по HOW п.6; пустое состояние без таблицы. Решения: DEC-014 (прочерк в колонке задач до D07), DEC-015 (моки контракта D05 вместо MSW). Тесты 34/34, lint/typecheck зелёные, A06.1–A06.6 покрыты.",
+  "notes": "Переснято на новый produces_digest после DEC-020: в карточке объекта раздел «Задачи» подключён к контракту D07 (listTasksByObject, бейджи, ссылки на /tasks/:id, кнопка «Создать задачу» для manager, TaskForm). Список, роли, keyset и архивирование объекта не менялись; тест A06.5 обновлён под реальный раздел задач.",
   "acceptance_ids": [
     "A06.1",
     "A06.2",
@@ -12,7 +12,7 @@
     "A06.6"
   ],
   "code_hash": {
-    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
+    "git_head": "1e08a4c79d00f14f12bb239e4676adae2de00137",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -25,10 +25,10 @@
       "src/features/objects/objectKeys.ts",
       "src/features/objects/useObjects.ts"
     ],
-    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
-    "produces_digest": "b6d117362a4df56998e3a5259e28acc94df66fb99f6e70712525c590ab71479e"
+    "git_tree": "7045eb25c9ee08f189f03312e416448219d70ae9",
+    "produces_digest": "2a48b46caa8d6317b515b6f8e7e51daf2e8b05a69c6ae5835946521b0c98e468"
   },
   "evidence_ref": "evidence/D06.json",
-  "evidence_hash": "13141c51407cc86b1297d93e8f98ca5eddb40749aae04876201d1ede765dbe57",
-  "timestamp": "2026-11-04T17:33:33.861Z"
+  "evidence_hash": "934d2f464afc4a8fb762df006f3a6598d7abdffbef2528b8740e2b1f24e7df93",
+  "timestamp": "2026-11-04T17:42:43.447Z"
 }

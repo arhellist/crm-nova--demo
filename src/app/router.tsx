@@ -16,6 +16,7 @@ import { signOut } from '../features/auth/api.js';
 import { useSession } from '../features/auth/useSession.js';
 import { AppShell } from './AppShell.js';
 import { ObjectsPage } from '../features/objects/ObjectsPage.js';
+import { TaskPage } from '../features/tasks/TaskPage.js';
 
 function LoadingScreen(): JSX.Element {
   return (
@@ -123,7 +124,7 @@ export function AppRoutes(): JSX.Element {
         <Route path="/my" element={<StubPage title="Мои задачи" />} />
         <Route path="/objects" element={<ObjectsPage />} />
         <Route path="/objects/:id" element={<ObjectsPage />} />
-        <Route path="/tasks/:id" element={<StubPage title="Задача" />} />
+        <Route path="/tasks/:id" element={<TaskPage />} />
         <Route
           path="/reports"
           element={

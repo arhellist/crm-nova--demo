@@ -91,7 +91,7 @@ GATE: none
 | module | crud-table |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#1-конфликты-включённых-модулей` |
 | conflicts_applied | `crud-table × auth-jwt` |
-| app_contracts | `GET /rest/v1/tasks`, `POST /rest/v1/rpc/change_task_status` |
+| app_contracts | GET /rest/v1/tasks, POST /rest/v1/rpc/change_task_status |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D03, D04, D07 |
@@ -118,6 +118,7 @@ GATE: none
 - `src/features/tasks/HistoryList.tsx` — создать
 - `src/features/tasks/TaskForm.tsx` — создать
 - `src/app/router.tsx` — изменить (маршруты задач)
+- `src/features/objects/ObjectsPage.tsx` — изменить (задачи объекта и создание из карточки; DEC-020)
 
 Тесты:
 

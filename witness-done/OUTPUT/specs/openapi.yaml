@@ -254,6 +254,31 @@ paths:
           content:
             application/json:
               schema: { $ref: "#/components/schemas/Error" }
+  # История статусов: только чтение, запись делает триггер (INV-004).
+  /rest/v1/task_status_history:
+    get:
+      operationId: postgrestListTaskHistory
+      summary: История переходов задачи (append-only, RLS по видимости задачи)
+      security:
+        - userJwt: []
+      parameters:
+        - { name: select, in: query, schema: { type: string } }
+        - { name: task_id, in: query, schema: { type: string, format: uuid } }
+        - { name: order, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 50 } }
+      responses:
+        "200":
+          description: Строки истории от новых к старым
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/TaskHistoryRow" }
+        "401":
+          description: Нет или истёк JWT
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
   # Write-контур Supabase: единственный путь смены статуса и архивирования (ADR-0002).
   # Функции объявлены в схеме public, поэтому PostgREST отдаёт их по маршруту /rpc/.
   /rest/v1/rpc/change_task_status:
@@ -560,6 +585,16 @@ components:
         created_at: { type: string, format: date-time }
         updated_at: { type: string, format: date-time }
         archived_at: { type: string, format: date-time, nullable: true }
+    TaskHistoryRow:
+      type: object
+      required: [id, to_status, changed_by, created_at]
+      properties:
+        id: { type: integer, minimum: 1 }
+        from_status: { type: [string, "null"], enum: [new, in_progress, on_review, rework, accepted, null] }
+        to_status: { type: string, enum: [new, in_progress, on_review, rework, accepted] }
+        changed_by: { type: string, format: uuid }
+        comment: { type: [string, "null"], maxLength: 2000 }
+        created_at: { type: string, format: date-time }
     ReplicationStatus:
       type: object
       required: [status, lag_seconds]

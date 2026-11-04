@@ -13,6 +13,9 @@ import { useId, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from '../auth/useSession.js';
+import { listTasksByObject } from '../tasks/api.js';
+import { StatusBadge, formatMoscowDateTime } from '../tasks/HistoryList.js';
+import { TaskForm } from '../tasks/TaskForm.js';
 import { createObject, getObject, updateObject } from './api.js';
 import { archiveObject } from './mutations.js';
 import { ObjectArchiveDialog } from './ObjectArchiveDialog.js';
@@ -290,10 +293,17 @@ function ObjectDetail({ id, isManager }: { id: string; isManager: boolean }): JS
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [archiving, setArchiving] = useState(false);
+  const [creatingTask, setCreatingTask] = useState(false);
 
   const object = useQuery({
     queryKey: objectKeys.detail(id),
     queryFn: () => getObject(id),
+  });
+
+  // Задачи объекта: контракт D07, курсорная пагинация; экран показывает первую страницу.
+  const tasks = useQuery({
+    queryKey: objectKeys.tasks(id),
+    queryFn: () => listTasksByObject(id, { limit: 20 }),
   });
 
   const updateMutation = useMutation({
@@ -385,13 +395,61 @@ function ObjectDetail({ id, isManager }: { id: string; isManager: boolean }): JS
       </div>
 
       <div className="mt-8 rounded-md border border-stroke bg-panel p-4">
-        <h2 className="text-[18px] font-semibold text-text">Задачи</h2>
-        {archived ? (
-          <p className="mt-1 text-sm text-text-mute">Задачи архивного объекта доступны только для чтения.</p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-[18px] font-semibold text-text">Задачи</h2>
+          {isManager && !archived ? (
+            <button
+              type="button"
+              aria-label="Создать задачу"
+              onClick={() => setCreatingTask(true)}
+              className="rounded-sm bg-cyan px-3 py-1.5 text-sm font-semibold text-bg-0 transition hover:shadow-glow-cyan"
+            >
+              Задача
+            </button>
+          ) : null}
+        </div>
+
+        {tasks.isLoading ? (
+          <p role="status" className="mt-3 text-sm text-text-dim">
+            Загрузка задач…
+          </p>
         ) : null}
-        <p role="status" className="mt-3 text-sm text-text-dim">
-          Задачи загружаются
-        </p>
+
+        {tasks.isError ? (
+          <div role="alert" className="mt-3">
+            <p className="text-sm text-rose">Не удалось загрузить задачи.</p>
+            <button
+              type="button"
+              onClick={() => void tasks.refetch()}
+              className="mt-2 rounded-sm border border-stroke px-3 py-1.5 text-sm text-text-dim hover:border-stroke-strong hover:text-text"
+            >
+              Повторить
+            </button>
+          </div>
+        ) : null}
+
+        {!tasks.isLoading && !tasks.isError && (tasks.data?.items.length ?? 0) === 0 ? (
+          <p className="mt-3 text-sm text-text-mute">Задач пока нет.</p>
+        ) : null}
+
+        {tasks.data && tasks.data.items.length > 0 ? (
+          <ul aria-label="Задачи объекта" className="mt-3 divide-y divide-stroke">
+            {tasks.data.items.map((task) => (
+              <li key={task.id} className="flex flex-wrap items-center gap-3 py-2">
+                <Link
+                  to={`/tasks/${task.id}`}
+                  className="min-w-0 flex-1 truncate text-sm text-text transition hover:text-cyan"
+                >
+                  {task.title}
+                </Link>
+                <StatusBadge status={task.status} />
+                <span className="font-mono text-xs text-text-mute">
+                  {formatMoscowDateTime(task.created_at)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
 
       {editing ? (
@@ -408,6 +466,18 @@ function ObjectDetail({ id, isManager }: { id: string; isManager: boolean }): JS
           object={row}
           onCancel={() => setArchiving(false)}
           onConfirm={handleArchive}
+        />
+      ) : null}
+
+      {creatingTask ? (
+        <TaskForm
+          mode="create"
+          objectId={row.id}
+          onCancel={() => setCreatingTask(false)}
+          onSaved={() => {
+            void queryClient.invalidateQueries({ queryKey: objectKeys.tasks(row.id) });
+            setCreatingTask(false);
+          }}
         />
       ) : null}
     </section>

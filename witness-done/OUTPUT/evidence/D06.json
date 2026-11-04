@@ -31,7 +31,15 @@
     "conflicts_applied": [
       "crud-table` offset/COUNT"
     ],
-    "out_of_produces": [],
+    "out_of_produces": [
+      "src/features/tasks/HistoryList.tsx",
+      "src/features/tasks/StatusPanel.test.tsx",
+      "src/features/tasks/StatusPanel.tsx",
+      "src/features/tasks/TaskForm.tsx",
+      "src/features/tasks/TaskPage.test.tsx",
+      "src/features/tasks/TaskPage.tsx",
+      "src/features/tasks/useTask.ts"
+    ],
     "missing_produces": [],
     "produces": [
       "src/features/objects/objectKeys.ts",
@@ -78,16 +86,24 @@
       ],
       "touched": [
         "src/app/router.tsx",
-        "src/features/objects/ObjectArchiveDialog.test.tsx",
-        "src/features/objects/ObjectArchiveDialog.tsx",
-        "src/features/objects/ObjectForm.test.tsx",
-        "src/features/objects/ObjectForm.tsx",
         "src/features/objects/ObjectsPage.test.tsx",
         "src/features/objects/ObjectsPage.tsx",
-        "src/features/objects/objectKeys.ts",
-        "src/features/objects/useObjects.ts"
+        "src/features/tasks/HistoryList.tsx",
+        "src/features/tasks/StatusPanel.test.tsx",
+        "src/features/tasks/StatusPanel.tsx",
+        "src/features/tasks/TaskForm.tsx",
+        "src/features/tasks/TaskPage.test.tsx",
+        "src/features/tasks/TaskPage.tsx",
+        "src/features/tasks/useTask.ts"
       ],
-      "missing": [],
+      "missing": [
+        "src/features/objects/objectKeys.ts",
+        "src/features/objects/useObjects.ts",
+        "src/features/objects/ObjectForm.tsx",
+        "src/features/objects/ObjectArchiveDialog.tsx",
+        "src/features/objects/ObjectForm.test.tsx",
+        "src/features/objects/ObjectArchiveDialog.test.tsx"
+      ],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -150,14 +166,17 @@
       "GET /metrics",
       "GET /rest/v1/objects",
       "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
       "GET /rest/v1/tasks",
       "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
       "POST /auth/v1/factors",
       "POST /auth/v1/token",
       "POST /rest/v1/objects",
       "POST /rest/v1/rpc/archive_object",
       "POST /rest/v1/rpc/archive_task",
-      "POST /rest/v1/rpc/change_task_status"
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
     ],
     "missing": [],
     "note": null
@@ -198,9 +217,9 @@
     "file": "evidence/D06.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:33:40.693Z",
+  "timestamp": "2026-11-04T17:42:50.911Z",
   "code_hash": {
-    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
+    "git_head": "1e08a4c79d00f14f12bb239e4676adae2de00137",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -213,8 +232,8 @@
       "src/features/objects/objectKeys.ts",
       "src/features/objects/useObjects.ts"
     ],
-    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
-    "produces_digest": "b6d117362a4df56998e3a5259e28acc94df66fb99f6e70712525c590ab71479e"
+    "git_tree": "7045eb25c9ee08f189f03312e416448219d70ae9",
+    "produces_digest": "2a48b46caa8d6317b515b6f8e7e51daf2e8b05a69c6ae5835946521b0c98e468"
   },
-  "evidence_hash": "3b6b8c05ebef4c7f397ecfac461dcdfe58e2cdd0f68cfcb650ce392d3208b8c2"
+  "evidence_hash": "13dfc78dc15b503384d36846f5d9599557af25922253ed62d17b0a14c066f4ad"
 }

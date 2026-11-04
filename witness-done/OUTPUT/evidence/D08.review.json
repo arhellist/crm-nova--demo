@@ -1,0 +1,34 @@
+{
+  "d": "D08",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: TaskPage — статус из сервера, панель только из allowedTargets, история отдельным запросом changed_by (DEC-019), имена пакетом из profiles, архивное состояние защитное (DEC-021); StatusPanel — кнопки по матрице, возврат с обязательным непустым комментарием без оптимистичных изменений, инвалидация task/history/tasks/my-tasks, ошибка RPC показывается без SQL, disabled на время мутации; HistoryList — порядок сервера, подписи событий, комментарий только у возврата, бейдж цвет+текст; TaskForm — без status/author_id, исполнитель только executor, блокировка смены исполнителя вне new/rework, Zod до сети; карточка объекта показывает задачи и создаёт TaskForm (DEC-020). Тесты 50/50, lint/typecheck зелёные, A08.1–A08.6 покрыты.",
+  "acceptance_ids": [
+    "A08.1",
+    "A08.2",
+    "A08.3",
+    "A08.4",
+    "A08.5",
+    "A08.6"
+  ],
+  "code_hash": {
+    "git_head": "1e08a4c79d00f14f12bb239e4676adae2de00137",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/objects/ObjectsPage.tsx",
+      "src/features/tasks/HistoryList.tsx",
+      "src/features/tasks/StatusPanel.test.tsx",
+      "src/features/tasks/StatusPanel.tsx",
+      "src/features/tasks/TaskForm.tsx",
+      "src/features/tasks/TaskPage.test.tsx",
+      "src/features/tasks/TaskPage.tsx",
+      "src/features/tasks/useTask.ts"
+    ],
+    "git_tree": "7045eb25c9ee08f189f03312e416448219d70ae9",
+    "produces_digest": "7e6a23ff369d4478e9171b6f52803338e77b0a78974aa09cc49c3a7c54774777"
+  },
+  "evidence_ref": "evidence/D08.json",
+  "evidence_hash": "b8cbc71173718eb1409fb59796ea737ff2689e43b85fe994a723252b8ee630d9",
+  "timestamp": "2026-11-04T17:42:25.177Z"
+}
