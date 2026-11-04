@@ -144,7 +144,15 @@
       "GET /api/reports/workload",
       "GET /health",
       "GET /health/replication",
-      "GET /metrics"
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status"
     ],
     "missing": [],
     "note": null
@@ -181,9 +189,9 @@
     "file": "evidence/D01.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:09:15.159Z",
+  "timestamp": "2026-11-04T17:25:44.675Z",
   "code_hash": {
-    "git_head": "16dfea2a8441d8376d6b5c59597103ec6666d3c8",
+    "git_head": "c0d360b42096c40ef3d4f13e9e8717edabc5038b",
     "git_dirty": false,
     "produces": [
       "package.json",
@@ -197,8 +205,8 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "1c811a0f50a229ec9939fb075ff8422b1aca4a48",
-    "produces_digest": "1c64f911d56c743da62ea9ea5d59a68a9850cb7d8df0e52f9b8530cac063afe7"
+    "git_tree": "31f1d15cd82cadc79bc9827d86dc417cee9488f7",
+    "produces_digest": "98d25e3c90a5f2716e606ad76b3727592a0f34610cc154e201e35822bfeb7170"
   },
-  "evidence_hash": "538674c67edd8738949b8b597a1f0c06dba4407a7d3ffea2a97322ca377c5c5b"
+  "evidence_hash": "d40de868372d8c3b222260eff9b3dc0ee451fe1166ce1eac26aa7861859f5a4e"
 }

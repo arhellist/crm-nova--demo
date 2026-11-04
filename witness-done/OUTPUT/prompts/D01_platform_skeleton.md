@@ -93,7 +93,7 @@ GATE: none
 | module | logging-pino, rate-limiting |
 | conflicts_ref | none |
 | conflicts_applied | none |
-| app_contracts | `GET /health` |
+| app_contracts | GET /health |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | — |
