@@ -95,7 +95,7 @@ GATE: none
 | module | none |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями` |
 | conflicts_applied | `caching-redis × NFR4` (кэш в процессе) |
-| app_contracts | `GET /api/reports/objects`, `GET /api/reports/workload`, `GET /api/reports/status-ages`, `GET /health/replication`, `GET /metrics` |
+| app_contracts | GET /api/reports/objects, GET /api/reports/workload, GET /api/reports/status-ages, GET /health/replication, GET /metrics |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D01, D10 |

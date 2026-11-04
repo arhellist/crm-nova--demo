@@ -1,0 +1,35 @@
+{
+  "d": "D11",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: config.ts — только контур чтения (API_TOKEN ≥32, DATABASE_URL_REPLICA, TTL≤300), ключей primary нет; db.ts — пул max 10/таймауты 3с, только SELECT из вьюх, подписка nova_sub → streaming/lagging/broken; reports.ts — токен и Origin до БД, конверт source=replica+lag_seconds+generated_at, кэш ≤30с, деградация 503 без SQL; health.ts — /health без БД 200, /health/replication 503 при lagging/broken c retry-after, метрики без секретов; server.ts — 401/403/405, rate limit 60/мин, ошибки без строки подключения. Тесты: 14/14 (config 4, reports 5, health 3, aggregates 2), acceptance A11.1–A11.7 связаны. DEC-024: формат app_contracts исправлен, код не менялся.",
+  "acceptance_ids": [
+    "A11.1",
+    "A11.2",
+    "A11.3",
+    "A11.4",
+    "A11.5",
+    "A11.6",
+    "A11.7"
+  ],
+  "code_hash": {
+    "git_head": "9faa485d32d3c117edfee629612e62101e566861",
+    "git_dirty": true,
+    "produces": [
+      "src/reporting/aggregates.test.ts",
+      "src/reporting/config.test.ts",
+      "src/reporting/config.ts",
+      "src/reporting/db.ts",
+      "src/reporting/routes/health.test.ts",
+      "src/reporting/routes/health.ts",
+      "src/reporting/routes/reports.test.ts",
+      "src/reporting/routes/reports.ts",
+      "src/reporting/server.ts"
+    ],
+    "git_tree": "d75b18be310c97c932b0f64e828cc8ec86c73c37",
+    "produces_digest": "58e15b38d4a942ad8518d236f5d8c9a57a04a1efef53a48a93ebbe31d18498ce"
+  },
+  "evidence_ref": "evidence/D11.json",
+  "evidence_hash": "191039df50779b7a68444211b508473f29035dd008d91e80b255f25b439f491e",
+  "timestamp": "2026-11-04T18:03:00.741Z"
+}

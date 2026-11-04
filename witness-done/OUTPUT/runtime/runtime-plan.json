@@ -351,6 +351,41 @@
       "acceptance": "A10.4",
       "cmd": "npx vitest run infra/replica/check.test.mjs -t A10.4",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A11.1",
+      "cmd": "npx vitest run src/reporting/routes/reports.test.ts -t A11.1",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A11.2",
+      "cmd": "npx vitest run src/reporting/routes/reports.test.ts -t A11.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A11.3",
+      "cmd": "npx vitest run src/reporting/routes/health.test.ts -t A11.3",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A11.4",
+      "cmd": "npx vitest run src/reporting/aggregates.test.ts -t A11.4",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A11.5",
+      "cmd": "npx vitest run src/reporting/routes/reports.test.ts -t A11.5",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A11.6",
+      "cmd": "npx vitest run src/reporting/routes/health.test.ts -t A11.6",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A11.7",
+      "cmd": "npx vitest run src/reporting/config.test.ts -t A11.7",
+      "expect_exit": 0
     }
   ]
 }

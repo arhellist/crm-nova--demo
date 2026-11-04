@@ -32,7 +32,7 @@
 | D08 | Задачи: экран | tasks | done | D08 | TaskPage/StatusPanel/TaskForm/HistoryList, 50/50 тестов | 2026-11-04 | L2; A08.1–A08.6 |
 | D09 | Мои задачи | tasks | done | D09 | MyTasksPage/TaskRow/useMyTasks, 57/57 тестов | 2026-11-04 | L2; A09.1–A09.6 |
 | D10 | Контур реплики и вьюхи | reports | done | D10 | 0008 + compose + views + check.mjs, 72/72 тестов | 2026-11-04 | L1; A10.1–A10.4 |
-| D11 | API отчётов | reports | not_started | — | — | — | L2; A11.1–A11.7 |
+| D11 | API отчётов | reports | done | D11 | 5 модулей reporting + 4 набора тестов (14/14), pre_ci tax_pass | 2026-11-04 | L2; A11.1–A11.7; DEC-024 |
 | D12 | Отчёты в UI | reports | not_started | — | — | — | L2; A12.1–A12.6 |
 | D13 | Наблюдаемость и восстановление | release | not_started | — | — | — | L1; A13.1–A13.4 |
 | D14 | Релиз и приёмка | release | not_started | — | — | — | L1; A14.1–A14.4 |

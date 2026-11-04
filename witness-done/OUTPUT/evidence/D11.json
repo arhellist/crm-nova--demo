@@ -1,0 +1,233 @@
+{
+  "d": "D11",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /api/reports/objects",
+      "GET /api/reports/workload",
+      "GET /api/reports/status-ages",
+      "GET /health/replication",
+      "GET /metrics"
+    ],
+    "acceptance_ids": [
+      "A11.1",
+      "A11.2",
+      "A11.3",
+      "A11.4",
+      "A11.5",
+      "A11.6",
+      "A11.7"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D01",
+      "D10"
+    ],
+    "conflicts_applied": [
+      "caching-redis × NFR4` (кэш в процессе)"
+    ],
+    "out_of_produces": [],
+    "missing_produces": [],
+    "produces": [
+      "src/reporting/config.ts",
+      "src/reporting/db.ts",
+      "src/reporting/routes/reports.ts",
+      "src/reporting/routes/health.ts",
+      "src/reporting/server.ts",
+      "src/reporting/config.test.ts",
+      "src/reporting/routes/reports.test.ts",
+      "src/reporting/routes/health.test.ts",
+      "src/reporting/aggregates.test.ts"
+    ],
+    "conflicts_ref": "`OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями`",
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": null,
+      "selected": [],
+      "referenced": [
+        "INV-001",
+        "INV-011",
+        "INV-006"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "src/reporting/config.ts",
+        "src/reporting/db.ts",
+        "src/reporting/routes/reports.ts",
+        "src/reporting/routes/health.ts",
+        "src/reporting/server.ts",
+        "src/reporting/config.test.ts",
+        "src/reporting/routes/reports.test.ts",
+        "src/reporting/routes/health.test.ts",
+        "src/reporting/aggregates.test.ts"
+      ],
+      "touched": [
+        "src/reporting/aggregates.test.ts",
+        "src/reporting/config.test.ts",
+        "src/reporting/config.ts",
+        "src/reporting/db.ts",
+        "src/reporting/routes/health.test.ts",
+        "src/reporting/routes/health.ts",
+        "src/reporting/routes/reports.test.ts",
+        "src/reporting/routes/reports.ts",
+        "src/reporting/server.ts"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A11.2",
+        "A11.4",
+        "A11.5",
+        "A11.7"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A11.1",
+        "A11.3",
+        "A11.6"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "src/reporting/aggregates.test.ts",
+        "src/reporting/config.test.ts",
+        "src/reporting/routes/health.test.ts",
+        "src/reporting/routes/reports.test.ts"
+      ],
+      "binding_hash": "81ad72d70f8205a32ae47a4f3417839cdeb72ec7ae4b44f38645a6c90c38c034"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /api/reports/objects",
+      "GET /api/reports/workload",
+      "GET /api/reports/status-ages",
+      "GET /health/replication",
+      "GET /metrics"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "logging, rate-limit, no-secrets",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D01",
+      "D10"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D11.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": true,
+    "issues": [],
+    "verdict": "supports",
+    "reviewer": "peer-reviewer",
+    "file": "evidence/D11.review.json"
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T18:03:12.817Z",
+  "code_hash": {
+    "git_head": "9faa485d32d3c117edfee629612e62101e566861",
+    "git_dirty": true,
+    "produces": [
+      "src/reporting/aggregates.test.ts",
+      "src/reporting/config.test.ts",
+      "src/reporting/config.ts",
+      "src/reporting/db.ts",
+      "src/reporting/routes/health.test.ts",
+      "src/reporting/routes/health.ts",
+      "src/reporting/routes/reports.test.ts",
+      "src/reporting/routes/reports.ts",
+      "src/reporting/server.ts"
+    ],
+    "git_tree": "d75b18be310c97c932b0f64e828cc8ec86c73c37",
+    "produces_digest": "58e15b38d4a942ad8518d236f5d8c9a57a04a1efef53a48a93ebbe31d18498ce"
+  },
+  "evidence_hash": "205b8f5ce64917aee39dd152535a4b04107bd4d95244061a6ee601105033edd8"
+}
