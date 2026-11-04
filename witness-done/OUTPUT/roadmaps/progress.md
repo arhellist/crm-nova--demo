@@ -23,7 +23,7 @@
 | D | Кратко | split_group | Статус | evidence_ref | Доказательства (пути/PR) | Обновлено | Заметки |
 |---|--------|-------------|--------|--------------|--------------------------|-----------|---------|
 | D01 | Каркас, env, логгер, health | platform | done | `evidence/D01.json`, `evidence/D01.review.json`, `evidence/BASELINE.json` | `src/shared/config/env.ts`, `src/shared/logger.ts`, `src/server/app.ts`, `src/server/index.ts`, тесты A01.1–A01.6 | 2026-11-04 | A01.1–A01.6 зелёные; env-валидация, redact, rate limit 60/мин, health, SIGTERM; pre_ci tax_pass |
-| D02 | Схема, enum, RLS | schema | not_started | — | — | — | L1; A02.1–A02.4 |
+| D02 | Схема, enum, RLS | schema | done | `evidence/D02.json`, `evidence/D02.review.json`, `evidence/BASELINE.json` | `supabase/migrations/0001_enums_and_tables.sql`, `0002_helpers.sql`, `0003_rls_policies.sql`, `supabase/seed.sql`, `supabase/tests/schema_test.sql`, `supabase/tests/rls_test.sql` | 2026-11-04 | A02.1–A02.6 зелёные; RLS на всех таблицах, grants без anon, append-only история, seed идемпотентен; pgTAP 14/14; pre_ci tax_pass |
 | D03 | Машина статусов и история | schema | not_started | — | — | — | L2; A03.1–A03.7 |
 | D04 | Вход с MFA и оболочка | auth | not_started | — | — | — | L2; A04.1–A04.6 |
 | D05 | Объекты: контракт записи | objects | not_started | — | — | — | L2; A05.1–A05.6 |

@@ -94,7 +94,7 @@ GATE: none
 | module | none |
 | conflicts_ref | none |
 | conflicts_applied | none |
-| app_contracts | `GET /rest/v1/objects`, `GET /rest/v1/tasks` |
+| app_contracts | GET /rest/v1/objects, GET /rest/v1/tasks |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D01 |

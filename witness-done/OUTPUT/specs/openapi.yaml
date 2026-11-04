@@ -14,6 +14,58 @@ servers:
 security:
   - bearerAuth: []
 paths:
+  # Внешний контракт Supabase PostgREST: чтение доменных таблиц. Видимость строк решает
+  # RLS (objects_select/tasks_select), а не backend; запись и удаление здесь не описаны,
+  # потому что грантов на них нет (INV-001, INV-002).
+  /rest/v1/objects:
+    get:
+      operationId: postgrestListObjects
+      summary: Список объектов через PostgREST (RLS)
+      security:
+        - userJwt: []
+      parameters:
+        - { name: select, in: query, schema: { type: string } }
+        - { name: order, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 50 } }
+        - { name: offset, in: query, schema: { type: string }, description: Не используется; пагинация курсорная }
+      responses:
+        "200":
+          description: Массив видимых неархивированных объектов
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ObjectRow" }
+        "401":
+          description: Нет или истёк JWT
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /rest/v1/tasks:
+    get:
+      operationId: postgrestListTasks
+      summary: Список задач через PostgREST (RLS)
+      security:
+        - userJwt: []
+      parameters:
+        - { name: select, in: query, schema: { type: string } }
+        - { name: status, in: query, schema: { type: string } }
+        - { name: assignee_id, in: query, schema: { type: string, format: uuid } }
+        - { name: order, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 50 } }
+      responses:
+        "200":
+          description: Массив видимых неархивированных задач (manager — все, executor — свои)
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/TaskRow" }
+        "401":
+          description: Нет или истёк JWT
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
   /health:
     get:
       operationId: getHealth
@@ -126,6 +178,11 @@ paths:
           $ref: "#/components/responses/ReplicaLag"
 components:
   securitySchemes:
+    userJwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Пользовательский JWT Supabase; роль берётся из profiles, не из claim
     bearerAuth:
       type: http
       scheme: bearer
@@ -155,6 +212,31 @@ components:
         application/json:
           schema: { $ref: "#/components/schemas/Error" }
   schemas:
+    ObjectRow:
+      type: object
+      required: [id, title, address, created_by, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string, maxLength: 200 }
+        address: { type: string, maxLength: 300 }
+        created_by: { type: string, format: uuid }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+        archived_at: { type: string, format: date-time, nullable: true }
+    TaskRow:
+      type: object
+      required: [id, object_id, title, assignee_id, author_id, status, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        object_id: { type: string, format: uuid }
+        title: { type: string, maxLength: 200 }
+        description: { type: string, maxLength: 5000 }
+        assignee_id: { type: string, format: uuid }
+        author_id: { type: string, format: uuid }
+        status: { type: string, enum: [new, in_progress, on_review, rework, accepted] }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+        archived_at: { type: string, format: date-time, nullable: true }
     ReplicationStatus:
       type: object
       required: [status, lag_seconds]

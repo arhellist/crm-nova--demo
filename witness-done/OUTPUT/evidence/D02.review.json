@@ -1,0 +1,32 @@
+{
+  "d": "D02",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: RLS включён на всех четырёх таблицах, политики objects/tasks/профиля/history соответствуют baseline; grants не дают anon ни чтения ни EXECUTE; write на tasks ограничен колонками, прямой UPDATE status и DELETE отклоняются правами; helpers — security definer с search_path и revoke execute у anon; seed идемпотентен и покрывает 3 объекта, 8 задач, все 5 статусов и историю; pgTAP 14/14 зелёные на PostgreSQL 16. Acceptance A02.1–A02.6 объявлены в тестах.",
+  "acceptance_ids": [
+    "A02.1",
+    "A02.2",
+    "A02.3",
+    "A02.4",
+    "A02.5",
+    "A02.6"
+  ],
+  "code_hash": {
+    "git_head": "e9f2903229b02f183058166b68c474945be06a7a",
+    "git_dirty": true,
+    "produces": [
+      "supabase/config.toml",
+      "supabase/migrations/0001_enums_and_tables.sql",
+      "supabase/migrations/0002_helpers.sql",
+      "supabase/migrations/0003_rls_policies.sql",
+      "supabase/seed.sql",
+      "supabase/tests/rls_test.sql",
+      "supabase/tests/schema_test.sql"
+    ],
+    "git_tree": "0bd690dc8b0c0bdb81fa440a76312b5cea1c461a",
+    "produces_digest": "2471297cd6409d6f9054165c7643e740a58ad0e150a2aefe168fe7834b96df54"
+  },
+  "evidence_ref": "evidence/D02.json",
+  "evidence_hash": "caa2c8be3f08cd77b94a71834289ca8e36dfcb05eacb80ee5c680f4f6eff1cae",
+  "timestamp": "2026-11-04T17:15:47.096Z"
+}

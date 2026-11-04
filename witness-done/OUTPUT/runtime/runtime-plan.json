@@ -12,6 +12,15 @@
   ],
   "up": [
     {
+      "id": "db",
+      "cmd": "npx --yes supabase@latest start",
+      "ready": {
+        "type": "cmd",
+        "cmd": "npx --yes supabase@latest status -o json",
+        "timeout_s": 300
+      }
+    },
+    {
       "id": "api",
       "cmd": "PORT=8080 LOG_LEVEL=silent NODE_ENV=test SUPABASE_URL=http://127.0.0.1:54321 API_TOKEN=local-dev-token DATABASE_URL=postgresql://nova_ro:local@127.0.0.1:5433/nova_replica ALLOWED_ORIGINS=http://127.0.0.1:5173 npm run dev &",
       "ready": {
@@ -22,10 +31,19 @@
       }
     }
   ],
-  "seed": [],
+  "seed": [
+    {
+      "id": "db-reset",
+      "cmd": "npx --yes supabase@latest db reset",
+      "idempotent": true
+    }
+  ],
   "down": [
     {
       "cmd": "pkill -f 'tsx watch src/server/index.ts' || true"
+    },
+    {
+      "cmd": "npx --yes supabase@latest stop --no-backup"
     }
   ],
   "verify": [
@@ -57,6 +75,36 @@
     {
       "acceptance": "A01.6",
       "cmd": "npx vitest run src/server/app.test.ts -t A01.6",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A02.1",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/schema_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A02.4",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/schema_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A02.2",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/rls_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A02.3",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/rls_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A02.5",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/rls_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A02.6",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/rls_test.sql",
       "expect_exit": 0
     }
   ]

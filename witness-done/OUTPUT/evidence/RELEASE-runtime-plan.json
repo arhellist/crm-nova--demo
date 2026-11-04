@@ -18,7 +18,13 @@
     "A01.3",
     "A01.4",
     "A01.5",
-    "A01.6"
+    "A01.6",
+    "A02.1",
+    "A02.4",
+    "A02.2",
+    "A02.3",
+    "A02.5",
+    "A02.6"
   ],
   "na": [],
   "uncovered": [],
@@ -26,13 +32,13 @@
   "coverage_scope": "accepted D from evidence",
   "issues": [],
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:08:46.018Z",
+  "timestamp": "2026-11-04T17:13:46.973Z",
   "evidence_name": "RELEASE-runtime-plan.json",
   "code_hash": {
-    "git_head": "061353f964e6522c91c3dcd7649689b87e6bf27d",
+    "git_head": "e9f2903229b02f183058166b68c474945be06a7a",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "f2ffebff2413d519812887fac2b874d0e2083411"
+    "git_tree": "0bd690dc8b0c0bdb81fa440a76312b5cea1c461a"
   },
-  "evidence_hash": "716047ab373dc4ddda36f0746b934c1707d5016c3166d243cbf22fab8f922e56"
+  "evidence_hash": "9de7ccdc7b98d2c674d4a49eaca3677aae869b506147576b0439e88d91a9e9fd"
 }

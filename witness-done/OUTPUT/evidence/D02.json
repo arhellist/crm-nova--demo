@@ -1,0 +1,197 @@
+{
+  "d": "D02",
+  "level": "L1",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /rest/v1/objects",
+      "GET /rest/v1/tasks"
+    ],
+    "acceptance_ids": [
+      "A02.1",
+      "A02.2",
+      "A02.3",
+      "A02.4",
+      "A02.5",
+      "A02.6"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D01"
+    ],
+    "conflicts_applied": [],
+    "out_of_produces": [],
+    "missing_produces": [],
+    "produces": [
+      "supabase/migrations/0001_enums_and_tables.sql",
+      "supabase/migrations/0002_helpers.sql",
+      "supabase/migrations/0003_rls_policies.sql",
+      "supabase/seed.sql",
+      "supabase/config.toml",
+      "supabase/tests/schema_test.sql",
+      "supabase/tests/rls_test.sql"
+    ],
+    "acceptance_min": 3,
+    "acceptance_max": null,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": null,
+      "selected": [],
+      "referenced": [
+        "INV-002",
+        "INV-004",
+        "INV-005",
+        "INV-008"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "supabase/migrations/0001_enums_and_tables.sql",
+        "supabase/migrations/0002_helpers.sql",
+        "supabase/migrations/0003_rls_policies.sql",
+        "supabase/seed.sql",
+        "supabase/config.toml",
+        "supabase/tests/schema_test.sql",
+        "supabase/tests/rls_test.sql"
+      ],
+      "touched": [
+        "supabase/config.toml",
+        "supabase/migrations/0001_enums_and_tables.sql",
+        "supabase/migrations/0002_helpers.sql",
+        "supabase/migrations/0003_rls_policies.sql",
+        "supabase/seed.sql",
+        "supabase/tests/rls_test.sql",
+        "supabase/tests/schema_test.sql"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A02.1",
+        "A02.3",
+        "A02.5",
+        "A02.6"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A02.2",
+        "A02.4"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "supabase/tests/rls_test.sql",
+        "supabase/tests/schema_test.sql"
+      ],
+      "binding_hash": "c9284e842d46ba6a06157be4b572072c32eaad0d1e7417909d7bbe7fda28f755"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /rest/v1/objects",
+      "GET /rest/v1/tasks"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/tasks"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "no-secrets",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D01"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D02.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": false,
+    "ok": true,
+    "issues": []
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T17:15:51.230Z",
+  "code_hash": {
+    "git_head": "e9f2903229b02f183058166b68c474945be06a7a",
+    "git_dirty": true,
+    "produces": [
+      "supabase/config.toml",
+      "supabase/migrations/0001_enums_and_tables.sql",
+      "supabase/migrations/0002_helpers.sql",
+      "supabase/migrations/0003_rls_policies.sql",
+      "supabase/seed.sql",
+      "supabase/tests/rls_test.sql",
+      "supabase/tests/schema_test.sql"
+    ],
+    "git_tree": "0bd690dc8b0c0bdb81fa440a76312b5cea1c461a",
+    "produces_digest": "2471297cd6409d6f9054165c7643e740a58ad0e150a2aefe168fe7834b96df54"
+  },
+  "evidence_hash": "ecf1593a9b2ff3416749bfe3019b4cdffdc295fda97762891ecb7a3e874c0071"
+}

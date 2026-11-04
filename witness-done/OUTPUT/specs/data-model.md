@@ -47,9 +47,9 @@ Email не дублируется: он в `auth.users` и не нужен др�
 | `created_by` | `uuid` | `not null default auth.uid() references profiles(id)` | автор |
 | `created_at` | `timestamptz` | `not null default now()` | |
 | `updated_at` | `timestamptz` | `not null default now()` | обновляется триггером |
-| `deleted_at` | `timestamptz` | `null` | архивирование, не удаление |
+| `archived_at` | `timestamptz` | `null` | архивирование, не удаление |
 
-Индексы: `objects(deleted_at)`, `objects(lower(title))`, `objects(lower(address))` — для поиска.
+Индексы: `objects(archived_at)`, `objects(lower(title))`, `objects(lower(address))` — для поиска.
 
 ### 3.3. `tasks`
 
@@ -64,9 +64,9 @@ Email не дублируется: он в `auth.users` и не нужен др�
 | `status` | `public.task_status` | `not null default 'new'` | меняется только через RPC |
 | `created_at` | `timestamptz` | `not null default now()` | |
 | `updated_at` | `timestamptz` | `not null default now()` | обновляется триггером |
-| `deleted_at` | `timestamptz` | `null` | архивирование |
+| `archived_at` | `timestamptz` | `null` | архивирование |
 
-Индексы: `tasks(assignee_id, status) where deleted_at is null`, `tasks(object_id) where deleted_at is null`,
+Индексы: `tasks(assignee_id, status) where archived_at is null`, `tasks(object_id) where archived_at is null`,
 `tasks(created_at desc)`.
 
 Инварианты (триггер `validate_task_actors`): `assignee_id` — пользователь с ролью `executor`;
@@ -87,7 +87,7 @@ Email не дублируется: он в `auth.users` и не нужен др�
 
 Ограничения: `check (from_status is distinct from to_status)`;
 `check (to_status <> 'rework' or length(btrim(coalesce(comment,''))) > 0)`.
-Индекс: `(task_id, created_at desc, id desc)`. `updated_at`/`deleted_at` отсутствуют: строка
+Индекс: `(task_id, created_at desc, id desc)`. `updated_at`/`archived_at` отсутствуют: строка
 неизменяема.
 
 ### 3.5. Связи и каскады
@@ -101,7 +101,7 @@ Email не дублируется: он в `auth.users` и не нужен др�
 | `task_status_history.task_id → tasks.id` | N:1 | `restrict` — история не удаляется |
 
 Физический `DELETE` не выдан ни одной роли. Удаление объекта означает архивирование: его задачи
-перестают быть видимыми (фильтр `deleted_at is null` в политиках и запросах), но не удаляются.
+перестают быть видимыми (фильтр `archived_at is null` в политиках и запросах), но не удаляются.
 
 ## 4. Функции и триггеры (контракт записи)
 
@@ -109,7 +109,7 @@ Email не дублируется: он в `auth.users` и не нужен др�
 
 `security definer`, `set search_path = public, pg_temp`. Порядок работы:
 
-1. `select ... from tasks where id = p_task_id and deleted_at is null for update`; нет строки → `P0400`.
+1. `select ... from tasks where id = p_task_id and archived_at is null for update`; нет строки → `P0400`.
 2. Проверка актора: для исполнителя `assignee_id = auth.uid()`, для менеджера `is_manager()`;
    иначе `P0403`.
 3. Проверка пары `(current_status, p_target)` по матрице §5.3 ТЗ; иначе `P0422`.
@@ -131,7 +131,7 @@ Email не дублируется: он в `auth.users` и не нужен др�
 
 ### 4.3. `rpc.archive_object(p_object_id uuid)` и `rpc.archive_task(p_task_id uuid)`
 
-`security definer`, только `manager`; выставляют `deleted_at = now()` при `deleted_at is null`
+`security definer`, только `manager`; выставляют `archived_at = now()` при `archived_at is null`
 (идемпотентно). Архивирование объекта не удаляет задачи, но скрывает их из выборок.
 История сохраняется.
 
@@ -174,7 +174,7 @@ Email не дублируется: он в `auth.users` и не нужен др�
 ## 8. Аудит и архивирование
 
 История статусов — аудит домена: кто, когда, из какого статуса в какой, комментарий. Отдельного
-журнала чтения нет (не входит в продукт). Архивирование (`deleted_at`) заменяет удаление для объектов
+журнала чтения нет (не входит в продукт). Архивирование (`archived_at`) заменяет удаление для объектов
 и задач; физическое удаление запрещено грантами и `restrict`-каскадами.
 
 ## 9. Отчётные вьюхи (только на вторичной БД)
@@ -192,8 +192,8 @@ select o.id, o.title, o.address,
                 / nullif(count(t.id), 0), 1), 0) as accepted_share,
        max(t.updated_at) as last_activity_at
 from objects o
-left join tasks t on t.object_id = o.id and t.deleted_at is null
-where o.deleted_at is null
+left join tasks t on t.object_id = o.id and t.archived_at is null
+where o.archived_at is null
 group by o.id, o.title, o.address;
 
 -- report_workload: загрузка исполнителей (без email)
@@ -205,7 +205,7 @@ select p.id as assignee_id, p.full_name,
        count(*) filter (where t.status = 'accepted')    as tasks_accepted,
        min(t.created_at) as oldest_open_at
 from profiles p
-join tasks t on t.assignee_id = p.id and t.deleted_at is null
+join tasks t on t.assignee_id = p.id and t.archived_at is null
 where p.role = 'executor'
 group by p.id, p.full_name;
 
