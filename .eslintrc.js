@@ -2,10 +2,8 @@
  * ESLint для NOVA CRM (frontend + backend отчётности).
  *
  * Источник: SEED/eslintrc.baseline.js, адаптирован под структуру проекта:
- *   web/      — React 18 + TypeScript strict (Vite)
- *   backend/  — Fastify 4 + TypeScript strict, только чтение
- *   e2e/      — Playwright
- *   scripts/  — служебные скрипты (seed, replica check)
+ *   src/          — React 18 + Fastify 4, TypeScript strict; домены в src/features/**,
+ *                   отчётный backend в src/reporting/**, платформа в src/shared/** и src/server/**
  *
  * Правила проекта, которые нельзя отключать:
  *   - app-код только на TypeScript (`no-restricted-syntax` + расширение файлов);
@@ -24,7 +22,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     ecmaFeatures: { jsx: true },
-    project: ['./tsconfig.json', './web/tsconfig.json', './backend/tsconfig.json'],
+    project: ['./tsconfig.json'],
     tsconfigRootDir: __dirname,
   },
   settings: { react: { version: '18.3' } },
@@ -92,8 +90,8 @@ module.exports = {
   ],
   overrides: [
     {
-      // App-код — только TypeScript. Файлы .js/.jsx в src/ и backend/src/ запрещены.
-      files: ['web/src/**/*.{js,jsx}', 'backend/src/**/*.{js,jsx}'],
+      // App-код — только TypeScript. Файлы .js/.jsx в src/ запрещены.
+      files: ['src/**/*.{js,jsx}'],
       rules: {
         'no-restricted-syntax': [
           'error',
