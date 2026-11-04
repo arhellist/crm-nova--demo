@@ -176,6 +176,36 @@
       "acceptance": "A04.6",
       "cmd": "npx vitest run src/app/AppShell.test.tsx -t A04.6",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A05.1",
+      "cmd": "npx vitest run src/features/objects/schema.test.ts src/features/objects/api.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A05.2",
+      "cmd": "npx vitest run src/features/objects/schema.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A05.3",
+      "cmd": "npx vitest run src/features/objects/authz.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A05.4",
+      "cmd": "npx vitest run src/features/objects/api.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A05.5",
+      "cmd": "npx vitest run src/features/objects/schema.test.ts src/features/objects/api.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A05.6",
+      "cmd": "npx vitest run src/features/objects/authz.test.ts",
+      "expect_exit": 0
     }
   ]
 }

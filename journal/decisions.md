@@ -23,3 +23,4 @@
 | DEC-010 | D03: функции записи создаём в схеме public (public.change_task_status, public… | 2026-11-04 | принято | 20261104-2057-davay-ebash-kod-po-proektu |
 | DEC-011 | D04 дополнительно создаёт минимальный фронтенд-каркас: index.html, src/main.t… | 2026-11-04 | принято | 20261104-2057-davay-ebash-kod-po-proektu |
 | DEC-012 | Новые ключи Supabase раскладываются по контрактным именам OUTPUT/tooling/env-… | 2026-11-04 | принято | 20261104-2122-env-supabase-prover-perechen-peremennyh |
+| DEC-013 | D05 переиспользует единственный клиент Supabase из src/features/auth/api.ts: … | 2026-11-04 | принято | — |

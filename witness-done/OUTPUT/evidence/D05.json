@@ -1,0 +1,224 @@
+{
+  "d": "D05",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /rest/v1/objects",
+      "POST /rest/v1/objects",
+      "PATCH /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object"
+    ],
+    "acceptance_ids": [
+      "A05.1",
+      "A05.2",
+      "A05.3",
+      "A05.4",
+      "A05.5",
+      "A05.6"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D01",
+      "D02"
+    ],
+    "conflicts_applied": [
+      "crud-table × auth-jwt",
+      "crud-table` offset/COUNT"
+    ],
+    "out_of_produces": [],
+    "missing_produces": [],
+    "produces": [
+      "src/features/objects/types.ts",
+      "src/features/objects/schema.ts",
+      "src/features/objects/api.ts",
+      "src/features/objects/mutations.ts",
+      "src/shared/api/postgrest.ts",
+      "src/features/auth/api.ts",
+      "src/features/objects/schema.test.ts",
+      "src/features/objects/api.test.ts",
+      "src/features/objects/authz.test.ts"
+    ],
+    "conflicts_ref": "`OUTPUT/docs/07_conflicts.md#1-конфликты-включённых-модулей`",
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": "crud-table",
+      "selected": [],
+      "referenced": [
+        "INV-001"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "src/features/objects/types.ts",
+        "src/features/objects/schema.ts",
+        "src/features/objects/api.ts",
+        "src/features/objects/mutations.ts",
+        "src/shared/api/postgrest.ts",
+        "src/features/auth/api.ts",
+        "src/features/objects/schema.test.ts",
+        "src/features/objects/api.test.ts",
+        "src/features/objects/authz.test.ts"
+      ],
+      "touched": [
+        "src/features/auth/api.ts",
+        "src/features/objects/api.test.ts",
+        "src/features/objects/api.ts",
+        "src/features/objects/authz.test.ts",
+        "src/features/objects/mutations.ts",
+        "src/features/objects/schema.test.ts",
+        "src/features/objects/schema.ts",
+        "src/features/objects/types.ts",
+        "src/shared/api/postgrest.ts"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A05.2",
+        "A05.4",
+        "A05.5",
+        "A05.6"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A05.1",
+        "A05.3"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "src/features/objects/api.test.ts",
+        "src/features/objects/authz.test.ts",
+        "src/features/objects/schema.test.ts"
+      ],
+      "binding_hash": "00eb1649cb39ac5d87d680b9571bf35a083433c03c386f05f44d583abc19201c"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /rest/v1/objects",
+      "POST /rest/v1/objects",
+      "PATCH /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "no-secrets",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D01",
+      "D02"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D05.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": true,
+    "issues": [],
+    "verdict": "supports",
+    "reviewer": "peer-reviewer",
+    "file": "evidence/D05.review.json"
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T17:28:50.379Z",
+  "code_hash": {
+    "git_head": "7cfa627bcba1bb4e364e1110e5dde680e5c6dc89",
+    "git_dirty": true,
+    "produces": [
+      "src/features/auth/api.ts",
+      "src/features/objects/api.test.ts",
+      "src/features/objects/api.ts",
+      "src/features/objects/authz.test.ts",
+      "src/features/objects/mutations.ts",
+      "src/features/objects/schema.test.ts",
+      "src/features/objects/schema.ts",
+      "src/features/objects/types.ts",
+      "src/shared/api/postgrest.ts"
+    ],
+    "git_tree": "63c54ae6f7d979411ef653bf27c230a0875f8acd",
+    "produces_digest": "b418e604baeb7456961aab43d2c98a0eae950874a477bff27cd6c12a4adef5ed"
+  },
+  "evidence_hash": "f600fe9211485953bf3c509f12e8b4e6e6e53c703d7782de25d3c0aa34709060"
+}

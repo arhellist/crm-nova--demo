@@ -1,0 +1,34 @@
+{
+  "d": "D05",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Повторное ревью после расширения PRODUCES (DEC-013): в набор вошёл src/features/auth/api.ts с экспортом supabaseUrl/supabaseAnonKey; значения уже прошли readClientEnv, service_role не участвует (INV-006), токен по-прежнему не логируется. Остальные файлы не менялись: types/schema (2 поля, trim, 200/300, strip служебных), postgrest (apikey+Bearer из supabase-js, ошибки без SQL/имён таблиц), listObjects (select, title.asc,id.asc, limit+1, keyset-or, без offset/COUNT), create/update (валидация до сети, 0 строк → ошибка), archiveObject (только rpc.archive_object, инвалидация ['objects']). Тесты 28/28, lint/typecheck зелёные, A05.1–A05.6 покрыты.",
+  "acceptance_ids": [
+    "A05.1",
+    "A05.2",
+    "A05.3",
+    "A05.4",
+    "A05.5",
+    "A05.6"
+  ],
+  "code_hash": {
+    "git_head": "7cfa627bcba1bb4e364e1110e5dde680e5c6dc89",
+    "git_dirty": true,
+    "produces": [
+      "src/features/auth/api.ts",
+      "src/features/objects/api.test.ts",
+      "src/features/objects/api.ts",
+      "src/features/objects/authz.test.ts",
+      "src/features/objects/mutations.ts",
+      "src/features/objects/schema.test.ts",
+      "src/features/objects/schema.ts",
+      "src/features/objects/types.ts",
+      "src/shared/api/postgrest.ts"
+    ],
+    "git_tree": "63c54ae6f7d979411ef653bf27c230a0875f8acd",
+    "produces_digest": "b418e604baeb7456961aab43d2c98a0eae950874a477bff27cd6c12a4adef5ed"
+  },
+  "evidence_ref": "evidence/D05.json",
+  "evidence_hash": "3603dc39d8554b172dcefd33717500d5ad53b39d02ff86f99754d8e14449e099",
+  "timestamp": "2026-11-04T17:28:45.191Z"
+}

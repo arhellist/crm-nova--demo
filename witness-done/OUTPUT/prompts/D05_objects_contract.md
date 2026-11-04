@@ -91,7 +91,7 @@ GATE: none
 | module | crud-table |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#1-конфликты-включённых-модулей` |
 | conflicts_applied | `crud-table × auth-jwt`, `crud-table` offset/COUNT |
-| app_contracts | `GET /rest/v1/objects`, `POST /rest/v1/objects`, `PATCH /rest/v1/objects`, `POST /rest/v1/rpc/archive_object` |
+| app_contracts | GET /rest/v1/objects, POST /rest/v1/objects, PATCH /rest/v1/objects, POST /rest/v1/rpc/archive_object |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D01, D02 |
@@ -117,6 +117,7 @@ GATE: none
 - `src/features/objects/api.ts` — создать
 - `src/features/objects/mutations.ts` — создать
 - `src/shared/api/postgrest.ts` — создать
+- `src/features/auth/api.ts` — изменить (экспорт `supabaseUrl`/`supabaseAnonKey` для обёртки; DEC-013)
 
 Тесты:
 

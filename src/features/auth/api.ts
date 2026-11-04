@@ -59,6 +59,10 @@ interface Database {
 
 const { url, anonKey } = readClientEnv();
 
+/** Базовый URL и anon-ключ для PostgREST-обёртки; service_role сюда не попадает (INV-006). */
+export const supabaseUrl = url;
+export const supabaseAnonKey = anonKey;
+
 /** Единственный экземпляр клиента: сессия и refresh живут в нём. */
 export const supabase = createClient<Database>(url, anonKey, {
   auth: {

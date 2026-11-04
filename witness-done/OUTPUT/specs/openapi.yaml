@@ -41,6 +41,61 @@ paths:
           content:
             application/json:
               schema: { $ref: "#/components/schemas/Error" }
+    post:
+      operationId: postgrestCreateObject
+      summary: Создать объект (только manager, RLS)
+      security:
+        - userJwt: []
+      parameters:
+        - { name: select, in: query, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ObjectInput" }
+      responses:
+        "201":
+          description: Созданный объект
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ObjectRow" }
+        "400":
+          description: Ошибка валидации
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "403":
+          description: Нет прав (RLS/гранты)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+    patch:
+      operationId: postgrestUpdateObject
+      summary: Изменить объект (только manager, RLS)
+      security:
+        - userJwt: []
+      parameters:
+        - { name: id, in: query, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ObjectInput" }
+      responses:
+        "200":
+          description: Изменённые строки; пустой массив означает «нет прав/не найдено»
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ObjectRow" }
+        "403":
+          description: Нет прав
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
   /rest/v1/tasks:
     get:
       operationId: postgrestListTasks
@@ -374,6 +429,13 @@ components:
         factor_id: { type: string, format: uuid }
         challenge_id: { type: string }
         code: { type: string, pattern: "^[0-9]{6}$" }
+    ObjectInput:
+      type: object
+      required: [title, address]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        address: { type: string, minLength: 1, maxLength: 300 }
+      additionalProperties: false
     ProfileRow:
       type: object
       required: [id, full_name, role]
