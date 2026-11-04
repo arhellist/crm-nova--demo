@@ -1,0 +1,7 @@
+{
+  "name": "eslint-plugin-local-rules",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "description": "Local ESLint rules seeded by Witness Done"
+}
