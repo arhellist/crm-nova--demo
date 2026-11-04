@@ -2,7 +2,7 @@
   "d": "D04",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Переснято на новый produces_digest: A04.6 больше не фиксирует ровно один вызов getSession — экран «Мои задачи» штатно читает сессию для роли. Проверки восстановления экрана и отсутствия токенов в URL сохранены, A04.1–A04.6 зелёные.",
+  "notes": "Переснято на новый produces_digest: package-lock.json изменился из-за зависимости pg (DEC-023). Вход, MFA, guard'ы, оболочка и маршруты не менялись, A04.1–A04.6 зелёные.",
   "acceptance_ids": [
     "A04.1",
     "A04.2",
@@ -12,7 +12,7 @@
     "A04.6"
   ],
   "code_hash": {
-    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
+    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -30,10 +30,10 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
-    "produces_digest": "069889ea38da7e7e4491a80be5d5b0a73cec7e27ab26cf37273f4b25cd4d0608"
+    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
+    "produces_digest": "4bc348c192202c3ccdfe10652bb4a177f28d626125fa476342e176f672cebc84"
   },
   "evidence_ref": "evidence/D04.json",
-  "evidence_hash": "bdbe0c86b24661ecf7e28dec7a29268459292bcd42a112c2a8a0cc79a736421b",
-  "timestamp": "2026-11-04T17:50:28.922Z"
+  "evidence_hash": "a788adaccf0a52bde1d5ae8a666646f23b529eef1f10525a1e80ee55c37c3363",
+  "timestamp": "2026-11-04T17:57:42.228Z"
 }

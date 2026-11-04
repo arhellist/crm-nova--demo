@@ -1,0 +1,220 @@
+{
+  "d": "D10",
+  "level": "L1",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /rest/v1/objects"
+    ],
+    "acceptance_ids": [
+      "A10.1",
+      "A10.2",
+      "A10.3",
+      "A10.4"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D03"
+    ],
+    "conflicts_applied": [],
+    "out_of_produces": [
+      "package-lock.json"
+    ],
+    "missing_produces": [],
+    "produces": [
+      "supabase/migrations/0008_publication_and_ro.sql",
+      "infra/replica/docker-compose.yml",
+      "infra/replica/init/010_subscription.sql",
+      "infra/replica/init/020_views.sql",
+      "infra/replica/check.mjs",
+      "infra/replica/api.Dockerfile",
+      "infra/replica/init/000_auth_stub.sql",
+      "package.json",
+      "infra/replica/check.test.mjs",
+      "infra/replica/compose.test.mjs",
+      "supabase/tests/views_test.sql"
+    ],
+    "acceptance_min": 3,
+    "acceptance_max": null,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": null,
+      "selected": [],
+      "referenced": [
+        "INV-011",
+        "INV-001"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "supabase/migrations/0008_publication_and_ro.sql",
+        "infra/replica/docker-compose.yml",
+        "infra/replica/init/010_subscription.sql",
+        "infra/replica/init/020_views.sql",
+        "infra/replica/check.mjs",
+        "infra/replica/api.Dockerfile",
+        "infra/replica/init/000_auth_stub.sql",
+        "package.json",
+        "infra/replica/check.test.mjs",
+        "infra/replica/compose.test.mjs",
+        "supabase/tests/views_test.sql"
+      ],
+      "touched": [
+        "infra/replica/api.Dockerfile",
+        "infra/replica/check.mjs",
+        "infra/replica/check.test.mjs",
+        "infra/replica/compose.test.mjs",
+        "infra/replica/docker-compose.yml",
+        "infra/replica/init/000_auth_stub.sql",
+        "infra/replica/init/010_subscription.sql",
+        "infra/replica/init/020_views.sql",
+        "package-lock.json",
+        "package.json",
+        "supabase/migrations/0008_publication_and_ro.sql",
+        "supabase/tests/views_test.sql"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A10.1",
+        "A10.4"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A10.2",
+        "A10.3"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "infra/replica/check.test.mjs",
+        "infra/replica/compose.test.mjs",
+        "supabase/tests/views_test.sql"
+      ],
+      "binding_hash": "ced5df839e17f3e103e762a43b6123cce8fb79666811718255e953e43022b64a"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /rest/v1/objects"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "no-secrets",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D03"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D10.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": false,
+    "ok": true,
+    "issues": []
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T17:57:07.991Z",
+  "code_hash": {
+    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_dirty": true,
+    "produces": [
+      "infra/replica/api.Dockerfile",
+      "infra/replica/check.mjs",
+      "infra/replica/check.test.mjs",
+      "infra/replica/compose.test.mjs",
+      "infra/replica/docker-compose.yml",
+      "infra/replica/init/000_auth_stub.sql",
+      "infra/replica/init/010_subscription.sql",
+      "infra/replica/init/020_views.sql",
+      "package.json",
+      "supabase/migrations/0008_publication_and_ro.sql",
+      "supabase/tests/views_test.sql"
+    ],
+    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
+    "produces_digest": "bb0f714616b6d16a5180c3088b9d1e9b82f0e76fc1144eac7386f2a4a893a83e"
+  },
+  "evidence_hash": "f6a8016bc566c28214d78659ce90195f727a7ae53f5f1fd451879a7a200e2c04"
+}

@@ -35,14 +35,17 @@
       "crud-table × auth-jwt"
     ],
     "out_of_produces": [
-      "src/features/tasks/api.test.ts",
-      "src/features/tasks/api.ts",
-      "src/features/tasks/MyTasksPage.test.tsx",
-      "src/features/tasks/MyTasksPage.tsx",
-      "src/features/tasks/TaskRow.test.tsx",
-      "src/features/tasks/TaskRow.tsx",
-      "src/features/tasks/filters.ts",
-      "src/features/tasks/useMyTasks.ts"
+      "package.json",
+      "infra/replica/api.Dockerfile",
+      "infra/replica/check.mjs",
+      "infra/replica/check.test.mjs",
+      "infra/replica/compose.test.mjs",
+      "infra/replica/docker-compose.yml",
+      "infra/replica/init/000_auth_stub.sql",
+      "infra/replica/init/010_subscription.sql",
+      "infra/replica/init/020_views.sql",
+      "supabase/migrations/0008_publication_and_ro.sql",
+      "supabase/tests/views_test.sql"
     ],
     "missing_produces": [],
     "produces": [
@@ -100,30 +103,33 @@
         "src/app/AppShell.test.tsx"
       ],
       "touched": [
-        "src/app/AppShell.test.tsx",
-        "src/app/router.tsx",
-        "src/features/tasks/MyTasksPage.test.tsx",
-        "src/features/tasks/MyTasksPage.tsx",
-        "src/features/tasks/TaskRow.test.tsx",
-        "src/features/tasks/TaskRow.tsx",
-        "src/features/tasks/api.test.ts",
-        "src/features/tasks/api.ts",
-        "src/features/tasks/filters.ts",
-        "src/features/tasks/useMyTasks.ts"
+        "infra/replica/api.Dockerfile",
+        "infra/replica/check.mjs",
+        "infra/replica/check.test.mjs",
+        "infra/replica/compose.test.mjs",
+        "infra/replica/docker-compose.yml",
+        "infra/replica/init/000_auth_stub.sql",
+        "infra/replica/init/010_subscription.sql",
+        "infra/replica/init/020_views.sql",
+        "package-lock.json",
+        "package.json",
+        "supabase/migrations/0008_publication_and_ro.sql",
+        "supabase/tests/views_test.sql"
       ],
       "missing": [
         "src/features/auth/api.ts",
         "src/features/auth/useSession.ts",
         "src/features/auth/LoginPage.tsx",
         "src/features/auth/MfaChallenge.tsx",
+        "src/app/router.tsx",
         "src/app/AppShell.tsx",
         "index.html",
         "src/main.tsx",
         "src/styles/tokens.css",
         "tailwind.config.cjs",
-        "package-lock.json",
         "src/features/auth/useSession.test.tsx",
-        "src/features/auth/LoginPage.test.tsx"
+        "src/features/auth/LoginPage.test.tsx",
+        "src/app/AppShell.test.tsx"
       ],
       "extra": [],
       "proof_debt": [],
@@ -240,9 +246,9 @@
     "file": "evidence/D04.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:50:58.131Z",
+  "timestamp": "2026-11-04T17:57:51.346Z",
   "code_hash": {
-    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
+    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -260,8 +266,8 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
-    "produces_digest": "069889ea38da7e7e4491a80be5d5b0a73cec7e27ab26cf37273f4b25cd4d0608"
+    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
+    "produces_digest": "4bc348c192202c3ccdfe10652bb4a177f28d626125fa476342e176f672cebc84"
   },
-  "evidence_hash": "efd2bbae41d460455b992aad88049b3245a7545478f668389eb4c7b0468c44e1"
+  "evidence_hash": "7ece034a365d85cea0dfe43ba07cc80e11a5d69a8169ff869ba10be44194d77a"
 }

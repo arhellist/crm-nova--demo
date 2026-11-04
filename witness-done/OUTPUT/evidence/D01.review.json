@@ -2,7 +2,7 @@
   "d": "D01",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Переснято на новый produces_digest: package.json получил dev-скрипт с --env-file=.env.local (chore-коммит), зависимости и остальные поля не менялись; .env.example и игнор supabase/.temp вынесены отдельно, секретов в репозитории нет (INV-006).",
+  "notes": "Переснято на новый produces_digest после DEC-023: в package.json добавлены pg и @types/pg для check.mjs D10 и отчётного API D11. Платформенный каркас, env-схема, логгер, health и graceful shutdown не менялись, A01.1–A01.6 зелёные.",
   "acceptance_ids": [
     "A01.1",
     "A01.2",
@@ -12,8 +12,8 @@
     "A01.6"
   ],
   "code_hash": {
-    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
-    "git_dirty": false,
+    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_dirty": true,
     "produces": [
       "package.json",
       "src/server/app.test.ts",
@@ -26,10 +26,10 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
-    "produces_digest": "084dfc3df696cbd22fe3039d572455e26a3cee2e0f739705bd84d4ea11548ac4"
+    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
+    "produces_digest": "cdece9d6ba328a43cd47c447be5ccd2fd9047131e79502591af803974f7394bb"
   },
   "evidence_ref": "evidence/D01.json",
-  "evidence_hash": "3183aa53b74fd9b61e7d6db64247a7a3dd18c1902d322d4d6fa2abfd54c1be9f",
-  "timestamp": "2026-11-04T17:34:21.434Z"
+  "evidence_hash": "e7965121ae48a0f62de66b1d9801ea68baab99a24c121ea9cd9edd577e368542",
+  "timestamp": "2026-11-04T17:57:20.636Z"
 }

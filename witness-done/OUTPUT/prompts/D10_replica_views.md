@@ -11,7 +11,7 @@ GATE: none
 | Поле | Значение |
 |------|----------|
 | surfaces | db |
-| produces_count | 5 |
+| produces_count | 8 |
 | entity | — |
 | delivery_slice | S7 |
 | split_group | reports |
@@ -91,7 +91,7 @@ GATE: none
 | module | none |
 | conflicts_ref | none |
 | conflicts_applied | none |
-| app_contracts | `GET /rest/v1/objects` (только чтение через `nova_ro`) |
+| app_contracts | GET /rest/v1/objects (только чтение через nova_ro) |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D03 |
@@ -117,12 +117,15 @@ GATE: none
 - `infra/replica/init/010_subscription.sql` — создать
 - `infra/replica/init/020_views.sql` — создать
 - `infra/replica/check.mjs` — создать
+- `infra/replica/api.Dockerfile` — создать (образ backend для compose; DEC-023)
+- `infra/replica/init/000_auth_stub.sql` — создать (совместимость Supabase-миграций; DEC-023)
+- `package.json` — изменить (зависимости `pg`, `@types/pg`; DEC-023)
 
 Тесты:
 
 - `infra/replica/check.test.mjs` — A10.4 (проверка отказа записи)
 - `infra/replica/compose.test.mjs` — A10.1
-- `supabase/tests/views_test.sql` — A10.2, A10.3
+- `supabase/tests/views_test.sql` — A10.2, A10.3 (pgTAP на подписчике)
 
 ## НЕ ТРОГАТЬ
 

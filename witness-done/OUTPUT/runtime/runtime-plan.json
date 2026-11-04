@@ -331,6 +331,26 @@
       "acceptance": "A09.6",
       "cmd": "npx vitest run src/features/tasks/MyTasksPage.test.tsx -t A09.6",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A10.1",
+      "cmd": "npx vitest run infra/replica/compose.test.mjs -t A10.1",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A10.2",
+      "cmd": "npx vitest run infra/replica/check.test.mjs -t A10.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A10.3",
+      "cmd": "npx vitest run infra/replica/check.test.mjs -t A10.3",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A10.4",
+      "cmd": "npx vitest run infra/replica/check.test.mjs -t A10.4",
+      "expect_exit": 0
     }
   ]
 }

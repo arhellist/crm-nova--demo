@@ -1,0 +1,102 @@
+# docker-compose.yml — контур отчётности: вторичная БД PostgreSQL 16 и read-only API.
+#
+# Инварианты (ADR-0003, D10):
+#  - `replica` — обычный PostgreSQL 16; `wal_level = logical` на подписчике не нужен,
+#    логическое декодирование работает на primary через `pgoutput`;
+#  - схема на подписчике накатывается теми же миграциями 0001–0007 (DDL не реплицируется);
+#    0008 (публикация) применяется только на primary, иначе создать её негде;
+#  - подписка `nova_sub` создаётся один раз: повторный `up` не дублирует данные (A10.1);
+#  - `api` знает только строку подключения к реплике; primary в его окружении отсутствует
+#    (INV-001), пароли приходят из env, в файле их нет (INV-006);
+#  - остановка реплики не останавливает primary: слот удерживает WAL, запись продолжается.
+
+name: nova-replica
+
+services:
+  replica:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${REPLICA_DB:-nova}
+      POSTGRES_USER: ${REPLICA_USER:-postgres}
+      POSTGRES_PASSWORD: ${REPLICA_PASSWORD:?REPLICA_PASSWORD обязателен}
+    command:
+      - postgres
+      - -c
+      - max_replication_slots=4
+      - -c
+      - max_wal_senders=8
+    ports:
+      - '${REPLICA_PORT:-5433}:5432'
+    volumes:
+      - replica-data:/var/lib/postgresql/data
+      - ../../supabase/migrations:/opt/nova/migrations:ro
+      - ./init:/opt/nova/init:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+  # Одноразовый init: заглушка auth → миграции 0001–0007 → подписка → вьюхи и гранты.
+  replica-init:
+    image: postgres:16
+    depends_on:
+      replica:
+        condition: service_healthy
+    environment:
+      PGHOST: replica
+      PGPORT: '5432'
+      PGDATABASE: ${REPLICA_DB:-nova}
+      PGUSER: ${REPLICA_USER:-postgres}
+      PGPASSWORD: ${REPLICA_PASSWORD:?REPLICA_PASSWORD обязателен}
+      # Строка подключения к primary для CREATE SUBSCRIPTION. Только env, не файл.
+      REPLICATOR_CONNINFO: ${REPLICATOR_CONNINFO:?REPLICATOR_CONNINFO обязателен}
+    volumes:
+      - ../../supabase/migrations:/opt/nova/migrations:ro
+      - ./init:/opt/nova/init:ro
+    command:
+      - sh
+      - -c
+      - |
+        set -eu
+        psql -v ON_ERROR_STOP=1 -f /opt/nova/init/000_auth_stub.sql
+        for file in /opt/nova/migrations/0001_*.sql \
+                    /opt/nova/migrations/0002_*.sql \
+                    /opt/nova/migrations/0003_*.sql \
+                    /opt/nova/migrations/0004_*.sql \
+                    /opt/nova/migrations/0005_*.sql \
+                    /opt/nova/migrations/0006_*.sql \
+                    /opt/nova/migrations/0007_*.sql; do
+          psql -v ON_ERROR_STOP=1 -f "$$file"
+        done
+        psql -v ON_ERROR_STOP=1 -v replicator_conninfo="$$REPLICATOR_CONNINFO" \
+          -f /opt/nova/init/010_subscription.sql
+        psql -v ON_ERROR_STOP=1 -f /opt/nova/init/020_views.sql
+    restart: 'no'
+
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/replica/api.Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: '8080'
+      # Публичный адрес Supabase нужен только для конфигурации backend; записи он не делает.
+      SUPABASE_URL: ${SUPABASE_URL:?SUPABASE_URL обязателен}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY:-}
+      API_TOKEN: ${API_TOKEN:?API_TOKEN обязателен}
+      # Обе переменные указывают на реплику: D01 читает DATABASE_URL, D11 — DATABASE_URL_REPLICA.
+      DATABASE_URL: postgres://nova_ro:${NOVA_RO_PASSWORD:?NOVA_RO_PASSWORD обязателен}@replica:5432/${REPLICA_DB:-nova}
+      DATABASE_URL_REPLICA: postgres://nova_ro:${NOVA_RO_PASSWORD:?NOVA_RO_PASSWORD обязателен}@replica:5432/${REPLICA_DB:-nova}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173}
+      REPLICA_LAG_ALERT_SECONDS: '30'
+    ports:
+      - '${API_PORT:-8080}:8080'
+    depends_on:
+      replica-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  replica-data:

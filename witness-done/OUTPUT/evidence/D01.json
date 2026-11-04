@@ -26,15 +26,17 @@
     "depends_done": [],
     "conflicts_applied": [],
     "out_of_produces": [
-      "src/app/router.tsx",
-      "src/features/objects/ObjectArchiveDialog.test.tsx",
-      "src/features/objects/ObjectArchiveDialog.tsx",
-      "src/features/objects/ObjectForm.test.tsx",
-      "src/features/objects/ObjectForm.tsx",
-      "src/features/objects/ObjectsPage.test.tsx",
-      "src/features/objects/ObjectsPage.tsx",
-      "src/features/objects/objectKeys.ts",
-      "src/features/objects/useObjects.ts"
+      "package-lock.json",
+      "infra/replica/api.Dockerfile",
+      "infra/replica/check.mjs",
+      "infra/replica/check.test.mjs",
+      "infra/replica/compose.test.mjs",
+      "infra/replica/docker-compose.yml",
+      "infra/replica/init/000_auth_stub.sql",
+      "infra/replica/init/010_subscription.sql",
+      "infra/replica/init/020_views.sql",
+      "supabase/migrations/0008_publication_and_ro.sql",
+      "supabase/tests/views_test.sql"
     ],
     "missing_produces": [],
     "produces": [
@@ -82,18 +84,20 @@
         "src/server/lifecycle.test.ts"
       ],
       "touched": [
-        "src/app/router.tsx",
-        "src/features/objects/ObjectArchiveDialog.test.tsx",
-        "src/features/objects/ObjectArchiveDialog.tsx",
-        "src/features/objects/ObjectForm.test.tsx",
-        "src/features/objects/ObjectForm.tsx",
-        "src/features/objects/ObjectsPage.test.tsx",
-        "src/features/objects/ObjectsPage.tsx",
-        "src/features/objects/objectKeys.ts",
-        "src/features/objects/useObjects.ts"
+        "infra/replica/api.Dockerfile",
+        "infra/replica/check.mjs",
+        "infra/replica/check.test.mjs",
+        "infra/replica/compose.test.mjs",
+        "infra/replica/docker-compose.yml",
+        "infra/replica/init/000_auth_stub.sql",
+        "infra/replica/init/010_subscription.sql",
+        "infra/replica/init/020_views.sql",
+        "package-lock.json",
+        "package.json",
+        "supabase/migrations/0008_publication_and_ro.sql",
+        "supabase/tests/views_test.sql"
       ],
       "missing": [
-        "package.json",
         "tsconfig.json",
         "src/shared/config/env.ts",
         "src/shared/logger.ts",
@@ -167,14 +171,17 @@
       "GET /metrics",
       "GET /rest/v1/objects",
       "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
       "GET /rest/v1/tasks",
       "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
       "POST /auth/v1/factors",
       "POST /auth/v1/token",
       "POST /rest/v1/objects",
       "POST /rest/v1/rpc/archive_object",
       "POST /rest/v1/rpc/archive_task",
-      "POST /rest/v1/rpc/change_task_status"
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
     ],
     "missing": [],
     "note": null
@@ -211,10 +218,10 @@
     "file": "evidence/D01.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:34:30.330Z",
+  "timestamp": "2026-11-04T17:57:29.653Z",
   "code_hash": {
-    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
-    "git_dirty": false,
+    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_dirty": true,
     "produces": [
       "package.json",
       "src/server/app.test.ts",
@@ -227,8 +234,8 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
-    "produces_digest": "084dfc3df696cbd22fe3039d572455e26a3cee2e0f739705bd84d4ea11548ac4"
+    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
+    "produces_digest": "cdece9d6ba328a43cd47c447be5ccd2fd9047131e79502591af803974f7394bb"
   },
-  "evidence_hash": "24ee2085d2c8c753a560e3d64920185c96a03d7371d1b670558c9b1528a9984a"
+  "evidence_hash": "aa05e92c8f8f7dd9898eb6ee5081d85ea7a38444b41e2ddba1e40c0206462f26"
 }
