@@ -1,0 +1,35 @@
+{
+  "d": "D07",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: types/schema — поля §3.3, вход без status/author_id, strip лишних ключей, description 5000 по спецификации (DEC-016), uuid-поля; api — явный select, archived_at is.null, keyset created_at.desc,id.desc с limit+1 и or-фильтром без offset/COUNT, «мои задачи» без assignee_id (RLS), create без status, update без status, 0 строк → 404; маппинг P0422 по serverMessage (transition/comment/assignee), P0403/42501 → «Недостаточно прав», P0400/404 → «Задача не найдена», SQL не раскрывается; mutations — RPC change_task_status/archive_task, возврат статуса из скаляра, комментарий тримится; transitions — буквальная матрица domain-rules §1, помечена как UI-подсказка, не защита. Архивная задача недоступна по RLS (DEC-017). Обёртка PostgREST расширена serverMessage (DEC-018). Тесты 44/44, lint/typecheck зелёные, A07.1–A07.7 покрыты.",
+  "acceptance_ids": [
+    "A07.1",
+    "A07.2",
+    "A07.3",
+    "A07.4",
+    "A07.5",
+    "A07.6",
+    "A07.7"
+  ],
+  "code_hash": {
+    "git_head": "319be4b1de277847b336a1ab8c97eb23347a4e58",
+    "git_dirty": true,
+    "produces": [
+      "src/features/tasks/api.test.ts",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/mutations.test.ts",
+      "src/features/tasks/mutations.ts",
+      "src/features/tasks/schema.test.ts",
+      "src/features/tasks/schema.ts",
+      "src/features/tasks/transitions.ts",
+      "src/features/tasks/types.ts",
+      "src/shared/api/postgrest.ts"
+    ],
+    "git_tree": "19559dbdc2bc1bf142865b675dd6fc2a6282a44c",
+    "produces_digest": "b547171aec8a9c5a923e3fa9cfe0393b746ed5abbbb2b7d90bf979055639c220"
+  },
+  "evidence_ref": "evidence/D07.json",
+  "evidence_hash": "abd7d59c31245d74cff10c2d6652bbebb666dcf6357bc7726ec8b52b98191ec3",
+  "timestamp": "2026-11-04T17:38:17.851Z"
+}

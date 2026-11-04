@@ -2,7 +2,7 @@
   "d": "D05",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Повторное ревью после расширения PRODUCES (DEC-013): в набор вошёл src/features/auth/api.ts с экспортом supabaseUrl/supabaseAnonKey; значения уже прошли readClientEnv, service_role не участвует (INV-006), токен по-прежнему не логируется. Остальные файлы не менялись: types/schema (2 поля, trim, 200/300, strip служебных), postgrest (apikey+Bearer из supabase-js, ошибки без SQL/имён таблиц), listObjects (select, title.asc,id.asc, limit+1, keyset-or, без offset/COUNT), create/update (валидация до сети, 0 строк → ошибка), archiveObject (только rpc.archive_object, инвалидация ['objects']). Тесты 28/28, lint/typecheck зелёные, A05.1–A05.6 покрыты.",
+  "notes": "Переснято на новый produces_digest после DEC-018: в src/shared/api/postgrest.ts добавлено поле serverMessage (машинный payload.message) для различения причин P0422 в D07; тексты ошибок D05, проекции, keyset и поведение archive_object не менялись, SQL и имена таблиц по-прежнему не раскрываются.",
   "acceptance_ids": [
     "A05.1",
     "A05.2",
@@ -12,7 +12,7 @@
     "A05.6"
   ],
   "code_hash": {
-    "git_head": "7cfa627bcba1bb4e364e1110e5dde680e5c6dc89",
+    "git_head": "319be4b1de277847b336a1ab8c97eb23347a4e58",
     "git_dirty": true,
     "produces": [
       "src/features/auth/api.ts",
@@ -25,10 +25,10 @@
       "src/features/objects/types.ts",
       "src/shared/api/postgrest.ts"
     ],
-    "git_tree": "63c54ae6f7d979411ef653bf27c230a0875f8acd",
-    "produces_digest": "b418e604baeb7456961aab43d2c98a0eae950874a477bff27cd6c12a4adef5ed"
+    "git_tree": "19559dbdc2bc1bf142865b675dd6fc2a6282a44c",
+    "produces_digest": "07fb6da7eb711b3697191ea48238e31c259d05d52d7c7ac1eec3bc2d1544a67f"
   },
   "evidence_ref": "evidence/D05.json",
-  "evidence_hash": "3603dc39d8554b172dcefd33717500d5ad53b39d02ff86f99754d8e14449e099",
-  "timestamp": "2026-11-04T17:28:45.191Z"
+  "evidence_hash": "2a9fba015aa5c91d0b9728a0f2f9bd7492d65a0ed16409e8c66b6bbbea06f434",
+  "timestamp": "2026-11-04T17:38:36.722Z"
 }

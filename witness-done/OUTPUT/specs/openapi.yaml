@@ -121,6 +121,72 @@ paths:
           content:
             application/json:
               schema: { $ref: "#/components/schemas/Error" }
+    post:
+      operationId: postgrestCreateTask
+      summary: Создать задачу (только manager, RLS)
+      description: |
+        Статус не передаётся: БД ставит `new`, автора — `auth.uid()`.
+        Исполнитель должен иметь роль `executor`, объект — быть активным.
+      security:
+        - userJwt: []
+      parameters:
+        - { name: select, in: query, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/TaskInput" }
+      responses:
+        "201":
+          description: Созданная задача
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/TaskRow" }
+        "400":
+          description: Ошибка валидации или доменного правила (P0400/P0422)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "403":
+          description: Нет прав (RLS/гранты, P0403/42501)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+    patch:
+      operationId: postgrestUpdateTask
+      summary: Изменить поля задачи (только manager, RLS)
+      description: |
+        `status` не входит в тело: смена статуса — только `rpc.change_task_status`.
+        Смена `assignee_id` разрешена только в статусах `new` и `rework`, иначе P0422.
+      security:
+        - userJwt: []
+      parameters:
+        - { name: id, in: query, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/TaskInput" }
+      responses:
+        "200":
+          description: Изменённые строки; пустой массив означает «нет прав/не найдено»
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/TaskRow" }
+        "400":
+          description: Доменное правило (P0400/P0422)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "403":
+          description: Нет прав
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
   # Supabase Auth (GoTrue): внешний контракт, используемый фронтендом D04.
   /auth/v1/token:
     post:
@@ -471,6 +537,15 @@ components:
         created_at: { type: string, format: date-time }
         updated_at: { type: string, format: date-time }
         archived_at: { type: string, format: date-time, nullable: true }
+    TaskInput:
+      type: object
+      required: [object_id, title, assignee_id]
+      properties:
+        object_id: { type: string, format: uuid }
+        title: { type: string, minLength: 1, maxLength: 200 }
+        description: { type: string, maxLength: 5000 }
+        assignee_id: { type: string, format: uuid }
+      additionalProperties: false
     TaskRow:
       type: object
       required: [id, object_id, title, assignee_id, author_id, status, created_at, updated_at]

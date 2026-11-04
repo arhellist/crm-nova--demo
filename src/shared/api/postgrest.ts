@@ -12,16 +12,25 @@
 import { z } from 'zod';
 import { supabase, supabaseAnonKey, supabaseUrl } from '../../features/auth/api.js';
 
-/** Доменная ошибка границы; `status` повторяет HTTP, `code` — PostgREST/PostgreSQL. */
+/**
+ * Доменная ошибка границы; `status` повторяет HTTP, `code` — PostgREST/PostgreSQL.
+ *
+ * `serverMessage` — стабильный машинный текст PostgREST (`transition_not_allowed`,
+ * `assignee_change_not_allowed` и т.п.). Он нужен вызывающему коду, чтобы различить
+ * причины внутри одного SQLSTATE (P0422), но наружу показывается только доменный текст:
+ * SQL и имена таблиц в `serverMessage` не попадают (INV-007).
+ */
 export class PostgrestApiError extends Error {
   readonly status: number;
   readonly code: string | null;
+  readonly serverMessage: string | null;
 
-  constructor(message: string, status: number, code: string | null = null) {
+  constructor(message: string, status: number, code: string | null = null, serverMessage: string | null = null) {
     super(message);
     this.name = 'PostgrestApiError';
     this.status = status;
     this.code = code;
+    this.serverMessage = serverMessage;
   }
 }
 
@@ -35,19 +44,20 @@ const errorPayloadSchema = z
 
 function mapError(status: number, payload: z.infer<typeof errorPayloadSchema>): PostgrestApiError {
   const code = payload.code ?? null;
+  const serverMessage = payload.message ?? null;
   if (status === 401) {
-    return new PostgrestApiError('Требуется вход', 401, code);
+    return new PostgrestApiError('Требуется вход', 401, code, serverMessage);
   }
   if (status === 403 || code === '42501') {
-    return new PostgrestApiError('Недостаточно прав', 403, code);
+    return new PostgrestApiError('Недостаточно прав', 403, code, serverMessage);
   }
   if (status === 404 || status === 406) {
-    return new PostgrestApiError('Объект не найден или недоступен', 404, code);
+    return new PostgrestApiError('Объект не найден или недоступен', 404, code, serverMessage);
   }
   if (status === 400 || code === 'P0400') {
-    return new PostgrestApiError('Проверьте заполнение полей', 400, code);
+    return new PostgrestApiError('Проверьте заполнение полей', 400, code, serverMessage);
   }
-  return new PostgrestApiError('Не удалось выполнить запрос', status, code);
+  return new PostgrestApiError('Не удалось выполнить запрос', status, code, serverMessage);
 }
 
 async function buildHeaders(extra?: HeadersInit): Promise<Headers> {

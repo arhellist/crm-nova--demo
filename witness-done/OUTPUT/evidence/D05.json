@@ -34,7 +34,16 @@
       "crud-table × auth-jwt",
       "crud-table` offset/COUNT"
     ],
-    "out_of_produces": [],
+    "out_of_produces": [
+      "src/features/tasks/api.test.ts",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/mutations.test.ts",
+      "src/features/tasks/mutations.ts",
+      "src/features/tasks/schema.test.ts",
+      "src/features/tasks/schema.ts",
+      "src/features/tasks/transitions.ts",
+      "src/features/tasks/types.ts"
+    ],
     "missing_produces": [],
     "produces": [
       "src/features/objects/types.ts",
@@ -79,17 +88,26 @@
         "src/features/objects/authz.test.ts"
       ],
       "touched": [
-        "src/features/auth/api.ts",
-        "src/features/objects/api.test.ts",
-        "src/features/objects/api.ts",
-        "src/features/objects/authz.test.ts",
-        "src/features/objects/mutations.ts",
-        "src/features/objects/schema.test.ts",
-        "src/features/objects/schema.ts",
-        "src/features/objects/types.ts",
+        "src/features/tasks/api.test.ts",
+        "src/features/tasks/api.ts",
+        "src/features/tasks/mutations.test.ts",
+        "src/features/tasks/mutations.ts",
+        "src/features/tasks/schema.test.ts",
+        "src/features/tasks/schema.ts",
+        "src/features/tasks/transitions.ts",
+        "src/features/tasks/types.ts",
         "src/shared/api/postgrest.ts"
       ],
-      "missing": [],
+      "missing": [
+        "src/features/objects/types.ts",
+        "src/features/objects/schema.ts",
+        "src/features/objects/api.ts",
+        "src/features/objects/mutations.ts",
+        "src/features/auth/api.ts",
+        "src/features/objects/schema.test.ts",
+        "src/features/objects/api.test.ts",
+        "src/features/objects/authz.test.ts"
+      ],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -156,12 +174,14 @@
       "GET /rest/v1/profiles",
       "GET /rest/v1/tasks",
       "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
       "POST /auth/v1/factors",
       "POST /auth/v1/token",
       "POST /rest/v1/objects",
       "POST /rest/v1/rpc/archive_object",
       "POST /rest/v1/rpc/archive_task",
-      "POST /rest/v1/rpc/change_task_status"
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
     ],
     "missing": [],
     "note": null
@@ -202,9 +222,9 @@
     "file": "evidence/D05.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:28:50.379Z",
+  "timestamp": "2026-11-04T17:38:44.317Z",
   "code_hash": {
-    "git_head": "7cfa627bcba1bb4e364e1110e5dde680e5c6dc89",
+    "git_head": "319be4b1de277847b336a1ab8c97eb23347a4e58",
     "git_dirty": true,
     "produces": [
       "src/features/auth/api.ts",
@@ -217,8 +237,8 @@
       "src/features/objects/types.ts",
       "src/shared/api/postgrest.ts"
     ],
-    "git_tree": "63c54ae6f7d979411ef653bf27c230a0875f8acd",
-    "produces_digest": "b418e604baeb7456961aab43d2c98a0eae950874a477bff27cd6c12a4adef5ed"
+    "git_tree": "19559dbdc2bc1bf142865b675dd6fc2a6282a44c",
+    "produces_digest": "07fb6da7eb711b3697191ea48238e31c259d05d52d7c7ac1eec3bc2d1544a67f"
   },
-  "evidence_hash": "f600fe9211485953bf3c509f12e8b4e6e6e53c703d7782de25d3c0aa34709060"
+  "evidence_hash": "88bbd6af6da8c1101a3fb59c55172d8990578a90eb86cd40f2f5bedb75fc6c68"
 }

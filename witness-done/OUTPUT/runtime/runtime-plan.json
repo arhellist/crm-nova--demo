@@ -236,6 +236,41 @@
       "acceptance": "A06.6",
       "cmd": "npx vitest run src/features/objects/ObjectsPage.test.tsx -t A06.6",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A07.1",
+      "cmd": "npx vitest run src/features/tasks/api.test.ts -t A07.1",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A07.2",
+      "cmd": "npx vitest run src/features/tasks/api.test.ts -t A07.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A07.3",
+      "cmd": "npx vitest run src/features/tasks/mutations.test.ts -t A07.3",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A07.4",
+      "cmd": "npx vitest run src/features/tasks/mutations.test.ts -t A07.4",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A07.5",
+      "cmd": "npx vitest run src/features/tasks/mutations.test.ts -t A07.5 src/features/tasks/schema.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A07.6",
+      "cmd": "npx vitest run src/features/tasks/api.test.ts -t A07.6",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A07.7",
+      "cmd": "npx vitest run src/features/tasks/api.test.ts -t A07.7",
+      "expect_exit": 0
     }
   ]
 }

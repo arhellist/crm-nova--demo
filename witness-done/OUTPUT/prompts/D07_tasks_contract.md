@@ -94,7 +94,7 @@ GATE: none
 | module | crud-table |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#1-конфликты-включённых-модулей` |
 | conflicts_applied | `crud-table × auth-jwt`, `crud-table` offset/COUNT |
-| app_contracts | `GET /rest/v1/tasks`, `POST /rest/v1/tasks`, `PATCH /rest/v1/tasks`, `POST /rest/v1/rpc/change_task_status` |
+| app_contracts | GET /rest/v1/tasks, POST /rest/v1/tasks, PATCH /rest/v1/tasks, POST /rest/v1/rpc/change_task_status |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D01, D02, D03 |
@@ -120,6 +120,7 @@ GATE: none
 - `src/features/tasks/api.ts` — создать
 - `src/features/tasks/mutations.ts` — создать
 - `src/features/tasks/transitions.ts` — создать
+- `src/shared/api/postgrest.ts` — изменить (проброс `serverMessage` для маппинга RPC; DEC-018)
 
 Тесты:
 
