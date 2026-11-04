@@ -26,17 +26,19 @@
     "depends_done": [],
     "conflicts_applied": [],
     "out_of_produces": [
+      ".eslintrc.cjs",
       "package-lock.json",
-      "infra/replica/api.Dockerfile",
-      "infra/replica/check.mjs",
-      "infra/replica/check.test.mjs",
-      "infra/replica/compose.test.mjs",
-      "infra/replica/docker-compose.yml",
-      "infra/replica/init/000_auth_stub.sql",
-      "infra/replica/init/010_subscription.sql",
-      "infra/replica/init/020_views.sql",
-      "supabase/migrations/0008_publication_and_ro.sql",
-      "supabase/tests/views_test.sql"
+      "README.md",
+      "docs/decisions.md",
+      "docs/readme.test.md",
+      "e2e/global-setup.ts",
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "e2e/tsconfig.json",
+      "scripts/release/check-no-secrets.sh",
+      "scripts/release/check-no-secrets.test.sh",
+      "scripts/release/deploy.sh",
+      "scripts/release/deploy.test.sh"
     ],
     "missing_produces": [],
     "produces": [
@@ -84,21 +86,23 @@
         "src/server/lifecycle.test.ts"
       ],
       "touched": [
-        "infra/replica/api.Dockerfile",
-        "infra/replica/check.mjs",
-        "infra/replica/check.test.mjs",
-        "infra/replica/compose.test.mjs",
-        "infra/replica/docker-compose.yml",
-        "infra/replica/init/000_auth_stub.sql",
-        "infra/replica/init/010_subscription.sql",
-        "infra/replica/init/020_views.sql",
+        ".eslintrc.cjs",
+        "README.md",
+        "docs/decisions.md",
+        "docs/readme.test.md",
+        "e2e/global-setup.ts",
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "e2e/tsconfig.json",
         "package-lock.json",
         "package.json",
-        "supabase/migrations/0008_publication_and_ro.sql",
-        "supabase/tests/views_test.sql"
+        "scripts/release/check-no-secrets.sh",
+        "scripts/release/check-no-secrets.test.sh",
+        "scripts/release/deploy.sh",
+        "scripts/release/deploy.test.sh",
+        "tsconfig.json"
       ],
       "missing": [
-        "tsconfig.json",
         "src/shared/config/env.ts",
         "src/shared/logger.ts",
         "src/server/app.ts",
@@ -218,9 +222,9 @@
     "file": "evidence/D01.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:57:29.653Z",
+  "timestamp": "2026-11-04T18:29:06.543Z",
   "code_hash": {
-    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
     "git_dirty": true,
     "produces": [
       "package.json",
@@ -234,8 +238,8 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
-    "produces_digest": "cdece9d6ba328a43cd47c447be5ccd2fd9047131e79502591af803974f7394bb"
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
+    "produces_digest": "143db3d6957abf53643e23f11aa2dae84a26f48474b6edb8311ebded6fe3f8d9"
   },
-  "evidence_hash": "aa05e92c8f8f7dd9898eb6ee5081d85ea7a38444b41e2ddba1e40c0206462f26"
+  "evidence_hash": "0dc3158475c1c7d52f024fa17b1c25d2b5249ceac69d07f81815db45c6e10303"
 }

@@ -2,7 +2,7 @@
   "d": "D04",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Переснято после D12: в router.tsx маршрут /reports отдаёт ReportsPage, исполнителю 404-состояние вместо редиректа; остальные guard'ы и оболочка не менялись. Тесты D12 (8/8) и полный прогон 94/94.",
+  "notes": "Повторная приёмка после изменения package.json/tsconfig: код D01/D04 не менялся, тесты и digest пересняты.",
   "acceptance_ids": [
     "A04.1",
     "A04.2",
@@ -12,7 +12,7 @@
     "A04.6"
   ],
   "code_hash": {
-    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -30,10 +30,10 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
-    "produces_digest": "a7453cddafd57c5acee217d168380a9eb10f4a41062e25d45744837f026315a4"
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
+    "produces_digest": "847893385484b81579c6680a685346fac9ec46873059311ef1598fe2f23763df"
   },
   "evidence_ref": "evidence/D04.json",
-  "evidence_hash": "30a7fadc00d7133f3efb46dcdc911fdd182722f6e4a55688c72b9e4a6dfbcb7f",
-  "timestamp": "2026-11-04T18:09:07.876Z"
+  "evidence_hash": "fb0e7a037e85b69afa2ed8f0a925bfc60f9bda3f4cd3e3b1ecb959366081e395",
+  "timestamp": "2026-11-04T18:29:06.587Z"
 }

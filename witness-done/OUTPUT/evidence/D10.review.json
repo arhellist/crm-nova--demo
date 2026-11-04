@@ -2,7 +2,7 @@
   "d": "D10",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Проверено: 0008 — публикация ровно четырёх таблиц, nova_ro без пароля в файле, порядок revoke→usage→select, default_transaction_read_only; 010 — подписка через \\gexec вне транзакции, copy_data/create_slot только при создании, conninfo из psql-переменной; 020 — три вьюхи §9 без email/description/комментариев, role nova_ro на подписчике, только select; 000_auth_stub — минимальная совместимость Supabase-миграций на PG16; compose — replica healthy, init после healthy, api после init, DATABASE_URL_* только на реплику, пароли только env, Dockerfile без root; check.mjs — env-only параметры, streaming/лаг/сверка/25006, exit 0/1/2, тесты 72/72. PRODUCES расширены DEC-023.",
+  "notes": "Повторная приёмка после изменения package.json: код D10 не менялся, проверки и digest пересняты.",
   "acceptance_ids": [
     "A10.1",
     "A10.2",
@@ -10,7 +10,7 @@
     "A10.4"
   ],
   "code_hash": {
-    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
     "git_dirty": true,
     "produces": [
       "infra/replica/api.Dockerfile",
@@ -25,10 +25,10 @@
       "supabase/migrations/0008_publication_and_ro.sql",
       "supabase/tests/views_test.sql"
     ],
-    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
-    "produces_digest": "bb0f714616b6d16a5180c3088b9d1e9b82f0e76fc1144eac7386f2a4a893a83e"
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
+    "produces_digest": "83e237707e5596214438eb668eee551db436b1d6c9a98d1d39e7592a95cb2deb"
   },
   "evidence_ref": "evidence/D10.json",
-  "evidence_hash": "b89c5a1a821d3bf3d8ce66b3a7430813cb7c9e8c609db1089ba64972b35c8d82",
-  "timestamp": "2026-11-04T17:56:58.795Z"
+  "evidence_hash": "09cc9d45f7c2981e3169a94ef50b7e6114ce67254b7d582d974b7c0b403f6ed0",
+  "timestamp": "2026-11-04T18:29:48.158Z"
 }

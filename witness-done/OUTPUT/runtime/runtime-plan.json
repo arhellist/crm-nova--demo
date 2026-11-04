@@ -436,6 +436,26 @@
       "acceptance": "A13.4",
       "cmd": "npx vitest run observability/rules.test.mjs -t A13.4",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A14.1",
+      "cmd": "npm run e2e",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A14.2",
+      "cmd": "sh scripts/release/check-no-secrets.test.sh",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A14.3",
+      "cmd": "sh -c 'test -s README.md && test -s docs/decisions.md && test -s docs/readme.test.md'",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A14.4",
+      "cmd": "sh scripts/release/deploy.test.sh",
+      "expect_exit": 0
     }
   ]
 }

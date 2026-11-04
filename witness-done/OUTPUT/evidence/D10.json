@@ -26,7 +26,20 @@
     ],
     "conflicts_applied": [],
     "out_of_produces": [
-      "package-lock.json"
+      ".eslintrc.cjs",
+      "package-lock.json",
+      "tsconfig.json",
+      "README.md",
+      "docs/decisions.md",
+      "docs/readme.test.md",
+      "e2e/global-setup.ts",
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "e2e/tsconfig.json",
+      "scripts/release/check-no-secrets.sh",
+      "scripts/release/check-no-secrets.test.sh",
+      "scripts/release/deploy.sh",
+      "scripts/release/deploy.test.sh"
     ],
     "missing_produces": [],
     "produces": [
@@ -76,20 +89,34 @@
         "supabase/tests/views_test.sql"
       ],
       "touched": [
-        "infra/replica/api.Dockerfile",
-        "infra/replica/check.mjs",
-        "infra/replica/check.test.mjs",
-        "infra/replica/compose.test.mjs",
-        "infra/replica/docker-compose.yml",
-        "infra/replica/init/000_auth_stub.sql",
-        "infra/replica/init/010_subscription.sql",
-        "infra/replica/init/020_views.sql",
+        ".eslintrc.cjs",
+        "README.md",
+        "docs/decisions.md",
+        "docs/readme.test.md",
+        "e2e/global-setup.ts",
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "e2e/tsconfig.json",
         "package-lock.json",
         "package.json",
+        "scripts/release/check-no-secrets.sh",
+        "scripts/release/check-no-secrets.test.sh",
+        "scripts/release/deploy.sh",
+        "scripts/release/deploy.test.sh",
+        "tsconfig.json"
+      ],
+      "missing": [
         "supabase/migrations/0008_publication_and_ro.sql",
+        "infra/replica/docker-compose.yml",
+        "infra/replica/init/010_subscription.sql",
+        "infra/replica/init/020_views.sql",
+        "infra/replica/check.mjs",
+        "infra/replica/api.Dockerfile",
+        "infra/replica/init/000_auth_stub.sql",
+        "infra/replica/check.test.mjs",
+        "infra/replica/compose.test.mjs",
         "supabase/tests/views_test.sql"
       ],
-      "missing": [],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -196,9 +223,9 @@
     "issues": []
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:57:07.991Z",
+  "timestamp": "2026-11-04T18:30:00.884Z",
   "code_hash": {
-    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
     "git_dirty": true,
     "produces": [
       "infra/replica/api.Dockerfile",
@@ -213,8 +240,8 @@
       "supabase/migrations/0008_publication_and_ro.sql",
       "supabase/tests/views_test.sql"
     ],
-    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
-    "produces_digest": "bb0f714616b6d16a5180c3088b9d1e9b82f0e76fc1144eac7386f2a4a893a83e"
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
+    "produces_digest": "83e237707e5596214438eb668eee551db436b1d6c9a98d1d39e7592a95cb2deb"
   },
-  "evidence_hash": "f6a8016bc566c28214d78659ce90195f727a7ae53f5f1fd451879a7a200e2c04"
+  "evidence_hash": "b161291feafc45660b4ec1bd0c7d0ed1de4a0fa248c94bc6083b6d2039dd3a0e"
 }

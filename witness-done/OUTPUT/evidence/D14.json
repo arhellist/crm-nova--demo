@@ -1,0 +1,248 @@
+{
+  "d": "D14",
+  "level": "L1",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /api/reports/objects",
+      "POST /rest/v1/rpc/change_task_status",
+      "GET /health"
+    ],
+    "acceptance_ids": [
+      "A14.1",
+      "A14.2",
+      "A14.3",
+      "A14.4"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D09",
+      "D12",
+      "D13"
+    ],
+    "conflicts_applied": [],
+    "out_of_produces": [],
+    "missing_produces": [],
+    "produces": [
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "scripts/release/check-no-secrets.sh",
+      "scripts/release/deploy.sh",
+      "docs/decisions.md",
+      "README.md",
+      "e2e/global-setup.ts",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json",
+      "e2e/tsconfig.json",
+      ".eslintrc.cjs",
+      "e2e/smoke.spec.ts",
+      "scripts/release/check-no-secrets.test.sh",
+      "scripts/release/deploy.test.sh",
+      "docs/readme.test.md"
+    ],
+    "acceptance_min": 3,
+    "acceptance_max": null,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": null,
+      "selected": [],
+      "referenced": [
+        "INV-006",
+        "INV-010",
+        "INV-011"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "scripts/release/check-no-secrets.sh",
+        "scripts/release/deploy.sh",
+        "docs/decisions.md",
+        "README.md",
+        "e2e/global-setup.ts",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "e2e/tsconfig.json",
+        ".eslintrc.cjs",
+        "e2e/smoke.spec.ts",
+        "scripts/release/check-no-secrets.test.sh",
+        "scripts/release/deploy.test.sh",
+        "docs/readme.test.md"
+      ],
+      "touched": [
+        ".eslintrc.cjs",
+        "README.md",
+        "docs/decisions.md",
+        "docs/readme.test.md",
+        "e2e/global-setup.ts",
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "e2e/tsconfig.json",
+        "package-lock.json",
+        "package.json",
+        "scripts/release/check-no-secrets.sh",
+        "scripts/release/check-no-secrets.test.sh",
+        "scripts/release/deploy.sh",
+        "scripts/release/deploy.test.sh",
+        "tsconfig.json"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A14.3"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A14.1",
+        "A14.2",
+        "A14.4"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "docs/readme.test.md",
+        "e2e/global-setup.ts",
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "e2e/tsconfig.json",
+        "scripts/release/check-no-secrets.test.sh",
+        "scripts/release/deploy.test.sh"
+      ],
+      "binding_hash": "2b0ba660b019517abd1c7aa40546543efc85adc22f8dcdbbb9275e4030dfde65"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /api/reports/objects",
+      "POST /rest/v1/rpc/change_task_status",
+      "GET /health"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "no-secrets, design-tokens, logging",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D09",
+      "D12",
+      "D13"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D14.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": false,
+    "ok": true,
+    "issues": []
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T18:27:47.398Z",
+  "code_hash": {
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
+    "git_dirty": true,
+    "produces": [
+      ".eslintrc.cjs",
+      "README.md",
+      "docs/decisions.md",
+      "docs/readme.test.md",
+      "e2e/global-setup.ts",
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "e2e/tsconfig.json",
+      "package-lock.json",
+      "package.json",
+      "scripts/release/check-no-secrets.sh",
+      "scripts/release/check-no-secrets.test.sh",
+      "scripts/release/deploy.sh",
+      "scripts/release/deploy.test.sh",
+      "tsconfig.json"
+    ],
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
+    "produces_digest": "54f3417ae7c8432c27d2deecfd90a786f414097ba53868594cb9f2a732413c92"
+  },
+  "evidence_hash": "b39bda7d5ae854026b8e54c216ca5110c022e9681929f43b50c8cb3dfbc399ea"
+}

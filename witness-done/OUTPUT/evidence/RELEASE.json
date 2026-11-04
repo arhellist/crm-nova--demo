@@ -1,0 +1,88 @@
+{
+  "d": null,
+  "gate": "pre_release",
+  "mode": "full",
+  "tax_pass": false,
+  "issues": [
+    "done D01: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
+    "done D04: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
+    "done D10: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
+    "coverage-matrix has P0 missing",
+    "smoke: смоук снят без исполнения (--skip-commands)",
+    "smoke: акт смоука без runtime.labels — нечем подтвердить фразы Axx",
+    "smoke: акт смоука не привязан к скрипту (нет script_sha256) — перепрогони product-smoke",
+    "runtime: нет акта RELEASE-runtime-verify.json — план есть, верификация в рантайме не прогонялась"
+  ],
+  "smoke": {
+    "required": true,
+    "ok": false,
+    "file": "evidence/RELEASE-product-smoke.json",
+    "issues": [
+      "смоук снят без исполнения (--skip-commands)",
+      "акт смоука без runtime.labels — нечем подтвердить фразы Axx",
+      "акт смоука не привязан к скрипту (нет script_sha256) — перепрогони product-smoke"
+    ],
+    "runtime": {
+      "labels": [],
+      "uncovered_acceptance": []
+    },
+    "code_hash": {
+      "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+      "git_dirty": null,
+      "produces": [],
+      "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+    },
+    "script_sha256": null
+  },
+  "runtime": {
+    "required": true,
+    "ok": false,
+    "issues": [
+      "нет акта RELEASE-runtime-verify.json — план есть, верификация в рантайме не прогонялась"
+    ]
+  },
+  "coverage_confidence": {
+    "value": 1,
+    "residual_risk": "низкий: почти всё заявленное подтверждено актами и тестами",
+    "components": {
+      "produces_with_act": {
+        "share": 1,
+        "confirmed": 133,
+        "total": 133
+      },
+      "acceptance_with_tests": {
+        "share": 1,
+        "confirmed": 82,
+        "total": 82
+      },
+      "l3_with_trace": {
+        "share": 0,
+        "confirmed": 0,
+        "total": 0
+      }
+    },
+    "weights_applied": {
+      "produces_with_act": {
+        "share": 1,
+        "confirmed": 133,
+        "total": 133,
+        "weight": 0.63
+      },
+      "acceptance_with_tests": {
+        "share": 1,
+        "confirmed": 82,
+        "total": 82,
+        "weight": 0.37
+      }
+    },
+    "note": "статистическая оценка, а не замена tax_pass: веса перераспределены по компонентам с непустым знаменателем"
+  },
+  "timestamp": "2026-11-04T18:27:59.247Z",
+  "code_hash": {
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a"
+  },
+  "evidence_hash": "33811e3470202cf121013e7715d31345d8f3d34c2626fe92e60e994a6ab1a3e8"
+}

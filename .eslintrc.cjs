@@ -22,7 +22,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     ecmaFeatures: { jsx: true },
-    project: ['./tsconfig.json'],
+    project: ['./tsconfig.json', './e2e/tsconfig.json'],
     tsconfigRootDir: __dirname,
   },
   settings: { react: { version: '18.3' } },

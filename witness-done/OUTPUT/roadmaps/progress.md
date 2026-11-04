@@ -35,7 +35,7 @@
 | D11 | API отчётов | reports | done | D11 | 5 модулей reporting + 4 набора тестов (14/14), pre_ci tax_pass | 2026-11-04 | L2; A11.1–A11.7; DEC-024 |
 | D12 | Отчёты в UI | reports | done | D12 | ReportsPage/useReports/api/FreshnessBadge + 4 набора тестов (101/101), pre_ci tax_pass | 2026-11-04 | L2; A12.1–A12.6; DEC-025, DEC-026 |
 | D13 | Наблюдаемость и восстановление | release | done | D13 | rules.yml (7 алертов), dashboard.json (8 панелей), incident.md + incident.drill.md, backup-restore.md, backup-check.sh + test, rules.test.mjs (7/7), pre_ci tax_pass | 2026-11-04 | L1; A13.1–A13.4; DEC-027, DEC-028, DEC-029 |
-| D14 | Релиз и приёмка | release | not_started | — | — | — | L1; A14.1–A14.4 |
+| D14 | Релиз и приёмка | release | done | D14 | e2e 17 сценариев × 2 проекта, check-no-secrets + test (6/6), deploy + test (9/9), README и docs/decisions.md, pre_ci tax_pass | 2026-11-04 | L1; A14.1–A14.4; DEC-030 |
 
 ## Сводка
 

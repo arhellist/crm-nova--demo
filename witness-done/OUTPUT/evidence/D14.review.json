@@ -1,0 +1,38 @@
+{
+  "d": "D14",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверены 17 сценариев A14.1 в двух проектах, security-гейт с принятыми рисками, протокол README и deploy/rollback; proof_debt пуст, tax_pass true.",
+  "acceptance_ids": [
+    "A14.1",
+    "A14.2",
+    "A14.3",
+    "A14.4"
+  ],
+  "code_hash": {
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
+    "git_dirty": true,
+    "produces": [
+      ".eslintrc.cjs",
+      "README.md",
+      "docs/decisions.md",
+      "docs/readme.test.md",
+      "e2e/global-setup.ts",
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "e2e/tsconfig.json",
+      "package-lock.json",
+      "package.json",
+      "scripts/release/check-no-secrets.sh",
+      "scripts/release/check-no-secrets.test.sh",
+      "scripts/release/deploy.sh",
+      "scripts/release/deploy.test.sh",
+      "tsconfig.json"
+    ],
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
+    "produces_digest": "54f3417ae7c8432c27d2deecfd90a786f414097ba53868594cb9f2a732413c92"
+  },
+  "evidence_ref": "evidence/D14.json",
+  "evidence_hash": "259c8638fffab3a2dc0209144b13c9751af52a69154748c90ddbcba98da86df1",
+  "timestamp": "2026-11-04T18:27:35.441Z"
+}

@@ -11,7 +11,7 @@ GATE: none
 | Поле | Значение |
 |------|----------|
 | surfaces | tooling |
-| produces_count | 6 |
+| produces_count | 12 |
 | entity | — |
 | delivery_slice | S10 |
 | split_group | release |
@@ -93,7 +93,7 @@ GATE: none
 | module | none |
 | conflicts_ref | none |
 | conflicts_applied | none |
-| app_contracts | `GET /api/reports/objects`, `POST /rest/v1/rpc/change_task_status`, `GET /health` |
+| app_contracts | GET /api/reports/objects, POST /rest/v1/rpc/change_task_status, GET /health |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D09, D12, D13 |
@@ -120,6 +120,12 @@ GATE: none
 - `scripts/release/deploy.sh` — создать
 - `docs/decisions.md` — создать
 - `README.md` — создать
+- `e2e/global-setup.ts` — создать (вход трёх учётных записей и storageState)
+- `package.json` — изменить (Playwright, скрипты e2e; DEC-030)
+- `package-lock.json` — изменить (зависимость Playwright; DEC-030)
+- `tsconfig.json` — изменить (e2e проверяется отдельным проектом; DEC-030)
+- `e2e/tsconfig.json` — создать (strict-проект e2e; DEC-030)
+- `.eslintrc.cjs` — изменить (project для e2e; DEC-030)
 
 Тесты:
 

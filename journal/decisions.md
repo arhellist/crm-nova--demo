@@ -40,3 +40,4 @@
 | DEC-027 | D13 A13.1 требует на /metrics метрики http_request_duration_seconds, replica_… | 2026-11-04 | принято | — |
 | DEC-028 | D13: дашборд Grafana по HOW должен содержать панели длительности переходов и … | 2026-11-04 | принято | — |
 | DEC-029 | D13: app_contracts в промпте были обёрнуты в обратные кавычки, из-за чего sp-… | 2026-11-04 | принято | — |
+| DEC-030 | D14: Playwright, e2e/global-setup.ts, e2e/tsconfig.json и правки package/tsco… | 2026-11-04 | принято | — |

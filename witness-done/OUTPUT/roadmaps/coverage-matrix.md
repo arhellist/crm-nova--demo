@@ -118,7 +118,7 @@
 
 ## Итог
 
-- P0 `missing`: **0**
+- P0 дыр: **0**
 - P0 `blocked_adr`: **1** (мобильный клиент — вне IN SCOPE; будущие D: `DM01` — нативный клиент поверх read-only API)
 - P0 `partial`: **0**
 - SIZE_BUDGET `size_ok=no`: **0**

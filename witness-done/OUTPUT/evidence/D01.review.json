@@ -2,7 +2,7 @@
   "d": "D01",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Переснято на новый produces_digest после DEC-023: в package.json добавлены pg и @types/pg для check.mjs D10 и отчётного API D11. Платформенный каркас, env-схема, логгер, health и graceful shutdown не менялись, A01.1–A01.6 зелёные.",
+  "notes": "Повторная приёмка после изменения package.json/tsconfig: код D01/D04 не менялся, тесты и digest пересняты.",
   "acceptance_ids": [
     "A01.1",
     "A01.2",
@@ -12,7 +12,7 @@
     "A01.6"
   ],
   "code_hash": {
-    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
     "git_dirty": true,
     "produces": [
       "package.json",
@@ -26,10 +26,10 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
-    "produces_digest": "cdece9d6ba328a43cd47c447be5ccd2fd9047131e79502591af803974f7394bb"
+    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
+    "produces_digest": "143db3d6957abf53643e23f11aa2dae84a26f48474b6edb8311ebded6fe3f8d9"
   },
   "evidence_ref": "evidence/D01.json",
-  "evidence_hash": "e7965121ae48a0f62de66b1d9801ea68baab99a24c121ea9cd9edd577e368542",
-  "timestamp": "2026-11-04T17:57:20.636Z"
+  "evidence_hash": "d2fba5b93b41090dfeb1d83ba3cfc1a3e417910c85a1137be46e758593d3a6bb",
+  "timestamp": "2026-11-04T18:28:54.259Z"
 }
