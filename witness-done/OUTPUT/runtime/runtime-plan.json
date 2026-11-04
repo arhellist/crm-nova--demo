@@ -106,6 +106,46 @@
       "acceptance": "A02.6",
       "cmd": "npx --yes supabase@latest test db supabase/tests/rls_test.sql",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.1",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/transitions_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.2",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/transitions_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.3",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/transitions_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.4",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/transitions_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.5",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/transitions_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.6",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/history_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.7",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/history_test.sql",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A03.8",
+      "cmd": "npx --yes supabase@latest test db supabase/tests/archive_test.sql",
+      "expect_exit": 0
     }
   ]
 }
