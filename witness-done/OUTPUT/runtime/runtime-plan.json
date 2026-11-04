@@ -386,6 +386,36 @@
       "acceptance": "A11.7",
       "cmd": "npx vitest run src/reporting/config.test.ts -t A11.7",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A12.1",
+      "cmd": "npx vitest run src/features/reports/ReportsPage.test.tsx -t A12.1",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A12.2",
+      "cmd": "npx vitest run src/features/reports/ReportsPage.test.tsx -t A12.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A12.3",
+      "cmd": "npx vitest run src/features/reports/ReportsPage.test.tsx -t A12.3",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A12.4",
+      "cmd": "npx vitest run src/features/reports/degraded.test.tsx -t A12.4",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A12.5",
+      "cmd": "npx vitest run src/features/reports/degraded.test.tsx -t A12.5",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A12.6",
+      "cmd": "npx vitest run src/features/reports/bundle.test.ts -t A12.6",
+      "expect_exit": 0
     }
   ]
 }

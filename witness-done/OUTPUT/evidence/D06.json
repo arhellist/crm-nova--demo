@@ -32,15 +32,13 @@
       "crud-table` offset/COUNT"
     ],
     "out_of_produces": [
-      "src/app/AppShell.test.tsx",
-      "src/features/tasks/api.test.ts",
-      "src/features/tasks/api.ts",
-      "src/features/tasks/MyTasksPage.test.tsx",
-      "src/features/tasks/MyTasksPage.tsx",
-      "src/features/tasks/TaskRow.test.tsx",
-      "src/features/tasks/TaskRow.tsx",
-      "src/features/tasks/filters.ts",
-      "src/features/tasks/useMyTasks.ts"
+      "src/features/reports/FreshnessBadge.tsx",
+      "src/features/reports/ReportsPage.test.tsx",
+      "src/features/reports/ReportsPage.tsx",
+      "src/features/reports/api.ts",
+      "src/features/reports/bundle.test.ts",
+      "src/features/reports/degraded.test.tsx",
+      "src/features/reports/useReports.ts"
     ],
     "missing_produces": [],
     "produces": [
@@ -87,16 +85,14 @@
         "src/features/objects/ObjectArchiveDialog.test.tsx"
       ],
       "touched": [
-        "src/app/AppShell.test.tsx",
         "src/app/router.tsx",
-        "src/features/tasks/MyTasksPage.test.tsx",
-        "src/features/tasks/MyTasksPage.tsx",
-        "src/features/tasks/TaskRow.test.tsx",
-        "src/features/tasks/TaskRow.tsx",
-        "src/features/tasks/api.test.ts",
-        "src/features/tasks/api.ts",
-        "src/features/tasks/filters.ts",
-        "src/features/tasks/useMyTasks.ts"
+        "src/features/reports/FreshnessBadge.tsx",
+        "src/features/reports/ReportsPage.test.tsx",
+        "src/features/reports/ReportsPage.tsx",
+        "src/features/reports/api.ts",
+        "src/features/reports/bundle.test.ts",
+        "src/features/reports/degraded.test.tsx",
+        "src/features/reports/useReports.ts"
       ],
       "missing": [
         "src/features/objects/objectKeys.ts",
@@ -221,9 +217,9 @@
     "file": "evidence/D06.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:51:32.756Z",
+  "timestamp": "2026-11-04T18:09:43.497Z",
   "code_hash": {
-    "git_head": "46faf1e65e0a877fa4e213b7397c84a54077f15d",
+    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -236,8 +232,8 @@
       "src/features/objects/objectKeys.ts",
       "src/features/objects/useObjects.ts"
     ],
-    "git_tree": "71ae4c272b4bdfca975c32e027630ec13ba43a01",
-    "produces_digest": "8d7d4be609be9f20598164ffddfecdb2f3f09675f7bbc2271c315dfb3c194d6b"
+    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
+    "produces_digest": "da5ff92c22d9f413342a1d1021bddaef601c2736ab01b97195012a2eea19c732"
   },
-  "evidence_hash": "112f27c4171418dd360fa6f6658a6c49ae7353e4a263cbdb63693010112974e5"
+  "evidence_hash": "290f9e73b9609fe5544d21838c5318a701dc4da7a6697c0885e8a430b97412c4"
 }

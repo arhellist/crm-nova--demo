@@ -35,17 +35,13 @@
       "crud-table × auth-jwt"
     ],
     "out_of_produces": [
-      "package.json",
-      "infra/replica/api.Dockerfile",
-      "infra/replica/check.mjs",
-      "infra/replica/check.test.mjs",
-      "infra/replica/compose.test.mjs",
-      "infra/replica/docker-compose.yml",
-      "infra/replica/init/000_auth_stub.sql",
-      "infra/replica/init/010_subscription.sql",
-      "infra/replica/init/020_views.sql",
-      "supabase/migrations/0008_publication_and_ro.sql",
-      "supabase/tests/views_test.sql"
+      "src/features/reports/FreshnessBadge.tsx",
+      "src/features/reports/ReportsPage.test.tsx",
+      "src/features/reports/ReportsPage.tsx",
+      "src/features/reports/api.ts",
+      "src/features/reports/bundle.test.ts",
+      "src/features/reports/degraded.test.tsx",
+      "src/features/reports/useReports.ts"
     ],
     "missing_produces": [],
     "produces": [
@@ -103,30 +99,26 @@
         "src/app/AppShell.test.tsx"
       ],
       "touched": [
-        "infra/replica/api.Dockerfile",
-        "infra/replica/check.mjs",
-        "infra/replica/check.test.mjs",
-        "infra/replica/compose.test.mjs",
-        "infra/replica/docker-compose.yml",
-        "infra/replica/init/000_auth_stub.sql",
-        "infra/replica/init/010_subscription.sql",
-        "infra/replica/init/020_views.sql",
-        "package-lock.json",
-        "package.json",
-        "supabase/migrations/0008_publication_and_ro.sql",
-        "supabase/tests/views_test.sql"
+        "src/app/router.tsx",
+        "src/features/reports/FreshnessBadge.tsx",
+        "src/features/reports/ReportsPage.test.tsx",
+        "src/features/reports/ReportsPage.tsx",
+        "src/features/reports/api.ts",
+        "src/features/reports/bundle.test.ts",
+        "src/features/reports/degraded.test.tsx",
+        "src/features/reports/useReports.ts"
       ],
       "missing": [
         "src/features/auth/api.ts",
         "src/features/auth/useSession.ts",
         "src/features/auth/LoginPage.tsx",
         "src/features/auth/MfaChallenge.tsx",
-        "src/app/router.tsx",
         "src/app/AppShell.tsx",
         "index.html",
         "src/main.tsx",
         "src/styles/tokens.css",
         "tailwind.config.cjs",
+        "package-lock.json",
         "src/features/auth/useSession.test.tsx",
         "src/features/auth/LoginPage.test.tsx",
         "src/app/AppShell.test.tsx"
@@ -246,9 +238,9 @@
     "file": "evidence/D04.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:57:51.346Z",
+  "timestamp": "2026-11-04T18:09:18.712Z",
   "code_hash": {
-    "git_head": "86168671e91a6e8fe32fd9b39d8f3d1adeb5e748",
+    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -266,8 +258,8 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "67160882be05259811c37066d9b8bddad09f0495",
-    "produces_digest": "4bc348c192202c3ccdfe10652bb4a177f28d626125fa476342e176f672cebc84"
+    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
+    "produces_digest": "a7453cddafd57c5acee217d168380a9eb10f4a41062e25d45744837f026315a4"
   },
-  "evidence_hash": "7ece034a365d85cea0dfe43ba07cc80e11a5d69a8169ff869ba10be44194d77a"
+  "evidence_hash": "88c0ccdbae7f078833042aeba3cd4b285d0df9aef4bbb7c5dd2c687ab5aceb24"
 }

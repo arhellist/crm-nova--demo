@@ -1,0 +1,218 @@
+{
+  "d": "D12",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /api/reports/objects",
+      "GET /api/reports/workload",
+      "GET /api/reports/status-ages"
+    ],
+    "acceptance_ids": [
+      "A12.1",
+      "A12.2",
+      "A12.3",
+      "A12.4",
+      "A12.5",
+      "A12.6"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D04",
+      "D11"
+    ],
+    "conflicts_applied": [
+      "caching-redis × NFR4"
+    ],
+    "out_of_produces": [],
+    "missing_produces": [],
+    "produces": [
+      "src/features/reports/api.ts",
+      "src/features/reports/useReports.ts",
+      "src/features/reports/FreshnessBadge.tsx",
+      "src/features/reports/ReportsPage.tsx",
+      "src/app/router.tsx",
+      "src/features/reports/ReportsPage.test.tsx",
+      "src/features/reports/degraded.test.tsx",
+      "src/features/reports/bundle.test.ts"
+    ],
+    "conflicts_ref": "`OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями`",
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": null,
+      "selected": [],
+      "referenced": [],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "src/features/reports/api.ts",
+        "src/features/reports/useReports.ts",
+        "src/features/reports/FreshnessBadge.tsx",
+        "src/features/reports/ReportsPage.tsx",
+        "src/app/router.tsx",
+        "src/features/reports/ReportsPage.test.tsx",
+        "src/features/reports/degraded.test.tsx",
+        "src/features/reports/bundle.test.ts"
+      ],
+      "touched": [
+        "src/app/router.tsx",
+        "src/features/reports/FreshnessBadge.tsx",
+        "src/features/reports/ReportsPage.test.tsx",
+        "src/features/reports/ReportsPage.tsx",
+        "src/features/reports/api.ts",
+        "src/features/reports/bundle.test.ts",
+        "src/features/reports/degraded.test.tsx",
+        "src/features/reports/useReports.ts"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A12.2",
+        "A12.3",
+        "A12.5",
+        "A12.6"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A12.1",
+        "A12.4"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "src/features/reports/ReportsPage.test.tsx",
+        "src/features/reports/bundle.test.ts",
+        "src/features/reports/degraded.test.tsx"
+      ],
+      "binding_hash": "aa81dc08050789cbd2a19dc915a2bea17e69ad9e35c866aac42e622dfea8d767"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /api/reports/objects",
+      "GET /api/reports/workload",
+      "GET /api/reports/status-ages"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "design-tokens, no-secrets",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D04",
+      "D11"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D12.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": true,
+    "issues": [],
+    "verdict": "supports",
+    "reviewer": "peer-reviewer",
+    "file": "evidence/D12.review.json"
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T18:08:36.780Z",
+  "code_hash": {
+    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/reports/FreshnessBadge.tsx",
+      "src/features/reports/ReportsPage.test.tsx",
+      "src/features/reports/ReportsPage.tsx",
+      "src/features/reports/api.ts",
+      "src/features/reports/bundle.test.ts",
+      "src/features/reports/degraded.test.tsx",
+      "src/features/reports/useReports.ts"
+    ],
+    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
+    "produces_digest": "6a7fbed848df81375dc0d849b9f9ab3587799134ee095d33ecad9c749f2e288d"
+  },
+  "evidence_hash": "97250b48521f89ebd7d01082da2b1ab8a4b59645ab2da6f0b3eb04d7cb6fe706"
+}

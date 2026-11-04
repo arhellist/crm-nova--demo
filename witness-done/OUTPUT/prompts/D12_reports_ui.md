@@ -65,7 +65,7 @@ GATE: none
 4. При 503 показывается деградация, а не пустая таблица и не глобальная ошибка приложения.
 5. Отчёты не кэшируются дольше 30 с; кнопка «Повторить» делает новый запрос.
 6. В UI нет email, описаний задач и комментариев — их нет и в контракте (защита ПДн).
-7. Никакие данные отчётов не пишутся в `localStorage`.
+7. Никакие данные отчётов не пишутся в хранилище браузера.
 8. Ошибка сети не ломает навигацию: пользователь может уйти на «Мои задачи».
 9. Токены дизайна соблюдены, таблицы адаптивны на 360/768/1440 (NFR8 дизайна).
 
@@ -87,7 +87,7 @@ GATE: none
 | module | none |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями` |
 | conflicts_applied | `caching-redis × NFR4` |
-| app_contracts | `GET /api/reports/objects`, `GET /api/reports/workload`, `GET /api/reports/status-ages` |
+| app_contracts | GET /api/reports/objects, GET /api/reports/workload, GET /api/reports/status-ages |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D04, D11 |

@@ -18,6 +18,7 @@ import { AppShell } from './AppShell.js';
 import { ObjectsPage } from '../features/objects/ObjectsPage.js';
 import { TaskPage } from '../features/tasks/TaskPage.js';
 import { MyTasksPage } from '../features/tasks/MyTasksPage.js';
+import { ReportsPage } from '../features/reports/ReportsPage.js';
 
 function LoadingScreen(): JSX.Element {
   return (
@@ -77,23 +78,32 @@ function PublicOnly(): JSX.Element {
   return <Outlet />;
 }
 
-/** Отчёты доступны только manager; остальным — свои задачи. */
+/**
+ * Отчёты доступны только manager (A12.2).
+ *
+ * Исполнителю отдаётся 404-состояние, а не пустой экран и не редирект: существование
+ * раздела для него не подтверждается, при этом навигация остаётся рабочей.
+ */
 function RequireManager({ children }: { children: ReactElement }): JSX.Element {
   const session = useSession();
   if (session.status !== 'authenticated') {
     return <Navigate to="/login" replace />;
   }
   if (session.profile?.role !== 'manager') {
-    return <Navigate to="/my" replace />;
+    return <NotFoundBlock />;
   }
   return children;
 }
 
-function StubPage({ title }: { title: string }): JSX.Element {
+/** 404-состояние внутри оболочки: используется и для чужих маршрутов, и для роли. */
+function NotFoundBlock(): JSX.Element {
   return (
-    <section className="p-6">
-      <h1 className="text-[22px] font-semibold text-text">{title}</h1>
-      <p className="mt-2 text-sm text-text-dim">Раздел подключается следующей задачей.</p>
+    <section className="flex min-h-[320px] flex-col items-center justify-center text-center">
+      <p className="font-mono text-sm text-text-mute">404</p>
+      <h1 className="mt-2 text-[28px] font-semibold text-text">Страница не найдена</h1>
+      <a href="/" className="mt-4 inline-block text-cyan underline">
+        Вернуться на главную
+      </a>
     </section>
   );
 }
@@ -101,13 +111,7 @@ function StubPage({ title }: { title: string }): JSX.Element {
 function NotFoundPage(): JSX.Element {
   return (
     <main className="flex min-h-screen items-center justify-center bg-bg-0 px-4">
-      <section className="text-center">
-        <p className="font-mono text-sm text-text-mute">404</p>
-        <h1 className="mt-2 text-[28px] font-semibold text-text">Страница не найдена</h1>
-        <a href="/" className="mt-4 inline-block text-cyan underline">
-          Вернуться на главную
-        </a>
-      </section>
+      <NotFoundBlock />
     </main>
   );
 }
@@ -130,7 +134,7 @@ export function AppRoutes(): JSX.Element {
           path="/reports"
           element={
             <RequireManager>
-              <StubPage title="Отчёты" />
+              <ReportsPage />
             </RequireManager>
           }
         />
