@@ -23,8 +23,8 @@
 | wave | C |
 | c_subwave | C4 |
 | c2_batch | 3/3 |
-| last_completed_step | 10b |
-| Текущий шаг | R01 — `PIPELINE/R01_baseline_specs.md` (SELF_AUDIT: PASS, см. `docs/10b_self_audit.md`) |
+| last_completed_step | R01 |
+| Текущий шаг | D01 — `OUTPUT/prompts/D01_platform_skeleton.md` (R01 закрыт) |
 | 10b_self_audit | done (PASS; `open_criteria: 28`, отложенные гейты перечислены в отчёте) |
 | git | ветка `nova-crm`, коммит `a2c68a1` (инструментовка шага 08; `main` канона не тронут — DEC-004) |
 | answers_attempts | 0 |
@@ -61,7 +61,7 @@
 | Шаг | Файл | Статус | Артефакты |
 |-----|------|--------|-----------|
 | R00 | reverse_engineer | pending | `docs/03_architecture.md`, `specs/*`, `coverage-matrix.md` |
-| R01 | baseline_specs | pending | `spec-state/config.yaml`, `spec-state/baseline/<domain>/spec.md` |
+| R01 | baseline_specs | done | `spec-state/config.yaml` (домены: auth, objects, tasks, reporting, platform), `spec-state/baseline/{auth,objects,tasks,reporting,platform}/spec.md` — 26 требований MUST/SHALL, 52 сценария; `--gate baseline` → `tax_pass: true` (`evidence/BASELINE.json`) |
 | R02 | propose_change | pending | `spec-state/changes/<id>/{proposal,design,tasks}.md`, `specs/*.md` |
 | R03 | apply_change | pending | код + тесты, `tasks.md` 100% |
 | R04 | verify_change | pending | `evidence/CHANGE-<id>.json` |

@@ -1,0 +1,27 @@
+# spec-state configuration
+# Каноническая конфигурация репозитория спецификаций (Brownfield / spec-state)
+# Версия схемы
+version: 1
+
+# Каталоги состояния спецификаций (относительно корня spec-state/)
+baseline_dir: baseline
+changes_dir: changes
+archive_dir: archive
+
+# Перечень бизнес- и системных доменов проекта
+# Каждый домен соответствует подкаталогу в baseline/ (например, baseline/auth/spec.md)
+domains:
+  - auth
+  - objects
+  - tasks
+  - reporting
+  - platform
+
+# Правила именования требований
+requirements:
+  keywords:
+    - MUST
+    - SHALL
+    - SHOULD
+    - MAY
+  scenario_format: GIVEN_WHEN_THEN

@@ -1,67 +1,63 @@
 {
   "version": 1,
-  "stack": ["node", "typescript", "react", "postgres", "supabase", "docker"],
+  "stack": [
+    "node20",
+    "typescript5.5",
+    "fastify4",
+    "pino9",
+    "zod3",
+    "postgresql16",
+    "supabase-cli",
+    "docker-compose"
+  ],
   "up": [
     {
-      "id": "db",
-      "cmd": "supabase start",
-      "ready": { "type": "cmd", "cmd": "pg_isready -h 127.0.0.1 -p 54322", "timeout_s": 120 }
-    },
-    {
-      "id": "replica",
-      "cmd": "docker compose -f infra/replica/docker-compose.yml up -d replica",
-      "ready": { "type": "cmd", "cmd": "pg_isready -h 127.0.0.1 -p 5433", "timeout_s": 120 }
-    },
-    {
       "id": "api",
-      "cmd": "npm run dev:api",
-      "ready": { "type": "http", "url": "http://127.0.0.1:3001/health", "expect": 200, "timeout_s": 90 }
-    },
-    {
-      "id": "frontend",
-      "cmd": "npm run dev",
-      "ready": { "type": "http", "url": "http://127.0.0.1:5173/login", "expect": 200, "timeout_s": 90 }
+      "cmd": "PORT=8080 LOG_LEVEL=silent NODE_ENV=test SUPABASE_URL=http://127.0.0.1:54321 API_TOKEN=local-dev-token DATABASE_URL=postgresql://nova_ro:local@127.0.0.1:5433/nova_replica ALLOWED_ORIGINS=http://127.0.0.1:5173 npm run dev &",
+      "ready": {
+        "type": "http",
+        "url": "http://127.0.0.1:8080/health",
+        "expect": 200,
+        "timeout_s": 90
+      }
     }
   ],
-  "seed": [
-    { "id": "db-reset", "cmd": "supabase db reset", "idempotent": true },
-    { "id": "replica-views", "cmd": "node infra/replica/check.mjs", "idempotent": true }
-  ],
+  "seed": [],
   "down": [
-    { "cmd": "docker compose -f infra/replica/docker-compose.yml down -v" },
-    { "cmd": "supabase stop --no-backup" }
+    {
+      "cmd": "pkill -f 'tsx watch src/server/index.ts' || true"
+    }
   ],
   "verify": [
-    { "acceptance": "A01.2", "cmd": "bash scripts/smoke/wave-api-smoke.sh platform", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A01.2.log"] },
-    { "acceptance": "A01.4", "cmd": "bash scripts/smoke/wave-api-smoke.sh platform", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A02.2", "cmd": "bash scripts/smoke/wave-api-smoke.sh schema", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A02.2.log"] },
-    { "acceptance": "A02.4", "cmd": "bash scripts/smoke/wave-api-smoke.sh schema", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A03.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh schema", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A03.1.log"] },
-    { "acceptance": "A03.2", "cmd": "bash scripts/smoke/wave-api-smoke.sh schema", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A04.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh auth", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A04.2", "cmd": "bash scripts/smoke/wave-api-smoke.sh auth", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A05.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh objects", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A05.1.log"] },
-    { "acceptance": "A05.3", "cmd": "bash scripts/smoke/wave-api-smoke.sh objects", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A07.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh tasks", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A07.1.log"] },
-    { "acceptance": "A07.3", "cmd": "bash scripts/smoke/wave-api-smoke.sh tasks", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A08.2", "cmd": "bash scripts/smoke/wave-api-smoke.sh tasks", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A08.4", "cmd": "bash scripts/smoke/wave-api-smoke.sh tasks", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A09.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh tasks", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A09.3", "cmd": "bash scripts/smoke/wave-api-smoke.sh tasks", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A10.2", "cmd": "bash scripts/smoke/wave-api-smoke.sh reports", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A10.2.log"] },
-    { "acceptance": "A10.3", "cmd": "bash scripts/smoke/wave-api-smoke.sh reports", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A11.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh reports", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A11.1.log"] },
-    { "acceptance": "A11.3", "cmd": "bash scripts/smoke/wave-api-smoke.sh reports", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A11.6", "cmd": "bash scripts/smoke/wave-api-smoke.sh reports", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A12.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh reports", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A12.4", "cmd": "bash scripts/smoke/wave-api-smoke.sh reports", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A13.1", "cmd": "bash scripts/smoke/wave-api-smoke.sh release", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A13.3", "cmd": "bash scripts/smoke/wave-api-smoke.sh release", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A13.3.log"] },
-    { "acceptance": "A14.1", "cmd": "bash scripts/smoke/product-smoke.sh", "expect_exit": 0, "artifacts": ["OUTPUT/evidence/trace/A14.1.log"] },
-    { "acceptance": "A14.2", "cmd": "bash scripts/release/check-no-secrets.sh", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A14.4", "cmd": "bash scripts/smoke/product-smoke.sh", "expect_exit": 0, "artifacts": [] },
-    { "acceptance": "A06.1", "na": "UI-кейс", "reason": "проверяется Playwright в e2e/smoke.spec.ts, фабрика не поднимает браузер" },
-    { "acceptance": "A08.1", "na": "UI-кейс", "reason": "проверяется Playwright в e2e/smoke.spec.ts" },
-    { "acceptance": "A12.2", "na": "UI-кейс", "reason": "проверяется Playwright в e2e/smoke.spec.ts" }
+    {
+      "acceptance": "A01.1",
+      "cmd": "npx vitest run src/shared/config/env.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A01.2",
+      "cmd": "npx vitest run src/server/app.test.ts -t A01.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A01.3",
+      "cmd": "npx vitest run src/shared/logger.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A01.4",
+      "cmd": "npx vitest run src/server/app.test.ts -t A01.4",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A01.5",
+      "cmd": "npx vitest run src/server/lifecycle.test.ts",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A01.6",
+      "cmd": "npx vitest run src/server/app.test.ts -t A01.6",
+      "expect_exit": 0
+    }
   ]
 }

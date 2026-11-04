@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NOVA CRM — Объекты и задачи</title>
+<style>
+  /* ============ ДИЗАЙН-ТОКЕНЫ ============ */
+  :root{
+    --bg-0:#070a12;
+    --bg-1:#0b1020;
+    --bg-2:#101830;
+    --panel:rgba(18,26,48,.72);
+    --panel-solid:#121a30;
+    --stroke:rgba(120,160,255,.16);
+    --stroke-strong:rgba(120,160,255,.34);
+
+    --cyan:#22d3ee;
+    --violet:#8b5cf6;
+    --magenta:#e879f9;
+    --lime:#a3e635;
+    --amber:#fbbf24;
+    --rose:#fb7185;
+
+    --text:#e8eeff;
+    --text-dim:#9aa8c9;
+    --text-mute:#65729a;
+
+    --r-sm:10px;
+    --r-md:16px;
+    --r-lg:24px;
+
+    --glow-cyan:0 0 24px rgba(34,211,238,.35);
+    --glow-violet:0 0 28px rgba(139,92,246,.35);
+
+    --font:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono","SF Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font);
+    background:var(--bg-0);
+    color:var(--text);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* Фоновое «свечение» и сетка */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(900px 600px at 12% -10%, rgba(34,211,238,.14), transparent 60%),
+      radial-gradient(800px 600px at 90% 0%, rgba(139,92,246,.16), transparent 60%),
+      radial-gradient(700px 700px at 50% 120%, rgba(232,121,249,.10), transparent 60%),
+      var(--bg-0);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(120,160,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,160,255,.05) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse at 50% 0%, #000 30%, transparent 78%);
+  }
+
+  /* ============ ОБЩИЕ КОМПОНЕНТЫ ============ */
+  .shell{max-width:1320px;margin:0 auto;padding:0 24px}
+
+  .glass{
+    background:var(--panel);
+    border:1px solid var(--stroke);
+    border-radius:var(--r-lg);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:4px 10px;border-radius:999px;
+    font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--stroke-strong);
+    color:var(--text-dim);background:rgba(120,160,255,.06);
+    white-space:nowrap;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+
+  /* Статусы */
+  .st-new     {color:#9aa8c9;background:rgba(154,168,201,.10);border-color:rgba(154,168,201,.30)}
+  .st-progress{color:var(--cyan);background:rgba(34,211,238,.10);border-color:rgba(34,211,238,.34)}
+  .st-review  {color:var(--violet);background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.40)}
+  .st-done    {color:var(--lime);background:rgba(163,230,53,.10);border-color:rgba(163,230,53,.34)}
+  .st-rework  {color:var(--amber);background:rgba(251,191,36,.10);border-color:rgba(251,191,36,.36)}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:10px 18px;border-radius:12px;
+    font-family:inherit;font-size:13.5px;font-weight:600;
+    cursor:pointer;border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s;
+    white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{
+    color:#04121a;
+    background:linear-gradient(135deg,var(--cyan),#67e8f9);
+    box-shadow:0 8px 24px -10px rgba(34,211,238,.7);
+  }
+  .btn-primary:hover{box-shadow:0 10px 30px -8px rgba(34,211,238,.9)}
+  .btn-violet{
+    color:#fff;
+    background:linear-gradient(135deg,var(--violet),var(--magenta));
+    box-shadow:0 8px 24px -10px rgba(139,92,246,.8);
+  }
+  .btn-ghost{
+    color:var(--text-dim);background:rgba(120,160,255,.06);
+    border-color:var(--stroke);
+  }
+  .btn-ghost:hover{color:var(--text);border-color:var(--stroke-strong);background:rgba(120,160,255,.10)}
+  .btn-sm{padding:7px 13px;font-size:12.5px;border-radius:10px}
+
+  .mono{font-family:var(--mono);font-size:12px;color:var(--text-mute)}
+
+  /* ============ ШАПКА / ВЕРХНЯЯ НАВИГАЦИЯ ============ */
+  header.topbar{
+    position:sticky;top:0;z-index:50;
+    border-bottom:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(7,10,18,.92), rgba(7,10,18,.65));
+    backdrop-filter:blur(20px);
+  }
+  .topbar-inner{
+    display:flex;align-items:center;gap:28px;
+    height:68px;
+  }
+  .logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.04em}
+  .logo-mark{
+    width:34px;height:34px;border-radius:11px;position:relative;
+    background:conic-gradient(from 210deg,var(--cyan),var(--violet),var(--magenta),var(--cyan));
+    box-shadow:var(--glow-violet);
+    display:grid;place-items:center;
+  }
+  .logo-mark::after{
+    content:"";position:absolute;inset:3px;border-radius:8px;background:var(--bg-1);
+  }
+  .logo-mark span{
+    position:relative;z-index:1;font-size:13px;font-weight:900;
+    background:linear-gradient(135deg,var(--cyan),var(--magenta));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .logo-name{font-size:15px}
+  .logo-name em{font-style:normal;color:var(--text-mute);font-weight:600;font-size:11px;letter-spacing:.14em;display:block}
+
+  nav.main{display:flex;gap:4px;margin-left:8px}
+  nav.main a{
+    color:var(--text-dim);text-decoration:none;font-size:13.5px;font-weight:600;
+    padding:9px 14px;border-radius:10px;transition:.2s;
+  }
+  nav.main a:hover{color:var(--text);background:rgba(120,160,255,.07)}
+  nav.main a.active{color:var(--cyan);background:rgba(34,211,238,.09);box-shadow:inset 0 0 0 1px rgba(34,211,238,.22)}
+
+  .topbar-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .role-chip{
+    display:flex;align-items:center;gap:9px;
+    padding:7px 12px 7px 8px;border-radius:999px;
+    border:1px solid var(--stroke-strong);background:rgba(139,92,246,.08);
+    font-size:12px;font-weight:600;color:var(--text);
+  }
+  .role-chip .avatar{width:24px;height:24px}
+  .avatar{
+    border-radius:50%;display:grid;place-items:center;
+    font-size:11px;font-weight:800;color:#04121a;
+    background:linear-gradient(135deg,var(--cyan),var(--violet));
+  }
+
+  /* ============ ЗАГОЛОВКИ СЕКЦИЙ ============ */
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:40px 0 22px}
+  .kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .kicker::before{content:"";width:22px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan))}
+  h1{font-size:clamp(26px,3.6vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  h1 .accent{background:linear-gradient(100deg,var(--cyan),var(--violet) 60%,var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .subtitle{color:var(--text-dim);font-size:14.5px;margin-top:10px;max-width:640px;line-height:1.55}
+
+  /* ============ ВХОД ============ */
+  .login-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:stretch;margin:48px 0 64px}
+  @media(max-width:900px){.login-wrap{grid-template-columns:1fr}}
+  .login-hero{
+    padding:42px;display:flex;flex-direction:column;justify-content:space-between;gap:34px;
+    position:relative;overflow:hidden;
+  }
+  .login-hero::after{
+    content:"";position:absolute;width:420px;height:420px;right:-140px;top:-140px;
+    background:radial-gradient(circle, rgba(139,92,246,.30), transparent 65%);
+    filter:blur(10px);pointer-events:none;
+  }
+  .login-hero h2{font-size:clamp(22px,2.8vw,32px);font-weight:800;letter-spacing:-.02em;line-height:1.18;max-width:440px}
+  .login-hero p{color:var(--text-dim);font-size:14px;line-height:1.6;max-width:420px;margin-top:14px}
+  .feature-list{display:grid;gap:12px;margin-top:26px}
+  .feature{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;color:var(--text-dim)}
+  .feature i{
+    flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.25);
+    color:var(--cyan);font-style:normal;font-size:13px;
+  }
+  .login-card{padding:38px;display:flex;flex-direction:column;justify-content:center}
+  .login-card h3{font-size:19px;font-weight:700;margin-bottom:6px}
+  .login-card .hint{font-size:13px;color:var(--text-mute);margin-bottom:26px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute);font-weight:700;margin-bottom:8px}
+  .input{
+    width:100%;padding:13px 15px;border-radius:12px;
+    background:rgba(7,10,18,.6);border:1px solid var(--stroke);
+    color:var(--text);font-family:inherit;font-size:14px;transition:.2s;
+  }
+  .input:focus{outline:none;border-color:rgba(34,211,238,.55);box-shadow:0 0 0 3px rgba(34,211,238,.12)}
+  .input::placeholder{color:var(--text-mute)}
+  .login-card .btn{width:100%;margin-top:8px}
+  .login-foot{margin-top:20px;font-size:12px;color:var(--text-mute);display:flex;align-items:center;gap:8px}
+  .login-foot .dot{color:var(--lime)}
+
+  /* ============ СТАТИСТИКА ============ */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+  @media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{padding:20px 22px;position:relative;overflow:hidden}
+  .stat::after{
+    content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;
+    background:radial-gradient(circle, var(--accent,rgba(34,211,238,.20)), transparent 70%);
+    pointer-events:none;
+  }
+  .stat .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute);font-weight:700}
+  .stat .value{font-size:32px;font-weight:800;letter-spacing:-.03em;margin-top:8px;font-variant-numeric:tabular-nums}
+  .stat .trend{font-size:12px;color:var(--text-dim);margin-top:6px;display:flex;align-items:center;gap:6px}
+  .stat .trend b{color:var(--lime);font-weight:700}
+
+  /* ============ ОБЪЕКТЫ ============ */
+  .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+  .search{
+    flex:1;min-width:220px;position:relative;
+  }
+  .search .input{padding-left:40px}
+  .search::before{
+    content:"⌕";position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    color:var(--text-mute);font-size:17px;pointer-events:none;
+  }
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{
+    padding:8px 14px;border-radius:999px;font-size:12.5px;font-weight:600;cursor:pointer;
+    color:var(--text-dim);background:rgba(120,160,255,.05);border:1px solid var(--stroke);transition:.2s;
+  }
+  .chip:hover{color:var(--text);border-color:var(--stroke-strong)}
+  .chip.on{color:var(--cyan);border-color:rgba(34,211,238,.45);background:rgba(34,211,238,.09)}
+
+  .objects{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .object-card{padding:24px;position:relative;overflow:hidden;transition:transform .2s ease, border-color .2s, box-shadow .25s}
+  .object-card:hover{transform:translateY(-3px);border-color:var(--stroke-strong);box-shadow:0 30px 60px -34px rgba(34,211,238,.45)}
+  .object-card .oc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .object-card h3{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .object-card .addr{font-size:12.5px;color:var(--text-mute);margin-top:5px;display:flex;align-items:center;gap:6px}
+  .object-card .addr::before{content:"◈";color:var(--violet)}
+  .object-icon{
+    width:46px;height:46px;border-radius:14px;flex:0 0 auto;display:grid;place-items:center;font-size:20px;
+    background:linear-gradient(135deg,rgba(34,211,238,.16),rgba(139,92,246,.16));
+    border:1px solid var(--stroke-strong);box-shadow:var(--glow-cyan);
+  }
+  .progress{margin-top:22px}
+  .progress .row{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-mute);margin-bottom:7px}
+  .progress .row b{color:var(--text)}
+  .bar{height:6px;border-radius:99px;background:rgba(120,160,255,.10);overflow:hidden}
+  .bar span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--violet));box-shadow:0 0 12px rgba(34,211,238,.6)}
+  .object-card .meta{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap}
+  .mini{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim)}
+  .mini .dot{box-shadow:none}
+
+  /* ============ КАРТОЧКА ОБЪЕКТА ============ */
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-mute);margin:28px 0 14px}
+  .breadcrumb a{color:var(--text-dim);text-decoration:none}
+  .breadcrumb a:hover{color:var(--cyan)}
+  .breadcrumb .sep{opacity:.4}
+
+  .detail-head{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:30px;margin-bottom:22px;align-items:center}
+  .detail-head .left{display:flex;gap:18px;align-items:center}
+  .detail-head h2{font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .detail-head .addr{margin-top:6px;color:var(--text-mute);font-size:13px}
+  .detail-head .right{display:flex;gap:10px;flex-wrap:wrap}
+
+  .task-table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .task-table th{
+    text-align:left;padding:14px 16px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text-mute);font-weight:800;border-bottom:1px solid var(--stroke);
+  }
+  .task-table td{padding:15px 16px;border-bottom:1px solid rgba(120,160,255,.07);vertical-align:middle}
+  .task-table tr{transition:background .15s}
+  .task-table tbody tr:hover{background:rgba(120,160,255,.04)}
+  .task-table .t-title{font-weight:600;color:var(--text)}
+  .task-table .t-id{font-family:var(--mono);font-size:11px;color:var(--text-mute);margin-left:8px}
+  .who{display:flex;align-items:center;gap:9px}
+  .who .avatar{width:28px;height:28px;font-size:10.5px}
+  .who span{font-size:13px}
+
+  /* ============ КАРТОЧКА ЗАДАЧИ ============ */
+  .task-layout{display:grid;grid-template-columns:1.35fr .85fr;gap:22px;align-items:start;margin-bottom:64px}
+  @media(max-width:960px){.task-layout{grid-template-columns:1fr}}
+  .card{padding:28px}
+  .card h3{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .card h3::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--stroke),transparent)}
+
+  .task-title{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+  .task-desc{color:var(--text-dim);font-size:14px;line-height:1.65;margin-top:12px}
+  .kv{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px}
+  .kv .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute);font-weight:700;margin-bottom:6px}
+  .kv .v{font-size:13.5px;color:var(--text)}
+  .kv .v.mono{font-size:12px}
+
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--stroke)}
+  .actions-note{font-size:12px;color:var(--text-mute);margin-top:14px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+  .actions-note i{font-style:normal;color:var(--amber)}
+
+  /* Таймлайн истории */
+  .timeline{position:relative;padding-left:26px}
+  .timeline::before{
+    content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--cyan),var(--violet),transparent);
+    border-radius:2px;opacity:.6;
+  }
+  .tl-item{position:relative;padding-bottom:22px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:"";position:absolute;left:-26px;top:4px;width:16px;height:16px;border-radius:50%;
+    background:var(--bg-1);border:2px solid var(--c,var(--cyan));box-shadow:0 0 12px var(--c,var(--cyan));
+  }
+  .tl-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .tl-head .who-name{font-size:13px;font-weight:700}
+  .tl-head .when{font-size:11.5px;color:var(--text-mute);font-family:var(--mono)}
+  .tl-flow{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:12px;color:var(--text-dim);flex-wrap:wrap}
+  .tl-flow .arrow{color:var(--text-mute)}
+  .tl-comment{
+    margin-top:9px;padding:10px 13px;border-radius:10px;font-size:12.5px;line-height:1.5;
+    background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.22);color:#fde9b8;
+  }
+
+  /* ============ «МОИ ЗАДАЧИ» ============ */
+  .kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;align-items:start}
+  @media(max-width:1100px){.kanban{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.kanban{grid-template-columns:1fr}}
+  .col{padding:16px;min-height:220px}
+  .col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .col-head .name{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--text-dim)}
+  .col-head .count{
+    font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:99px;
+    background:rgba(120,160,255,.09);border:1px solid var(--stroke);color:var(--text-dim);
+  }
+  .task-chip{
+    padding:14px;border-radius:14px;margin-bottom:10px;cursor:pointer;
+    background:rgba(7,10,18,.55);border:1px solid var(--stroke);transition:.2s;
+  }
+  .task-chip:hover{border-color:var(--stroke-strong);transform:translateY(-2px);box-shadow:0 14px 30px -20px rgba(34,211,238,.6)}
+  .task-chip .tc-title{font-size:13px;font-weight:600;line-height:1.4}
+  .task-chip .tc-obj{font-size:11px;color:var(--text-mute);margin-top:6px;display:flex;align-items:center;gap:5px}
+  .task-chip .tc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:11px}
+  .task-chip .avatar{width:22px;height:22px;font-size:9.5px}
+
+  /* ============ ПАЛИТРА / СПЕЦИФИКАЦИЯ ============ */
+  .spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:64px}
+  .spec-card{padding:22px}
+  .spec-card h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute);font-weight:800;margin-bottom:16px}
+  .swatches{display:flex;gap:10px;flex-wrap:wrap}
+  .swatch{width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+  .swatch-label{font-size:10.5px;color:var(--text-mute);margin-top:6px;font-family:var(--mono);text-align:center}
+  .type-row{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
+  .type-row .t{font-family:var(--mono);font-size:11px;color:var(--text-mute);width:64px;flex:0 0 auto}
+  .status-stack{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+
+  footer.foot{
+    border-top:1px solid var(--stroke);padding:28px 0 40px;margin-top:20px;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-size:12px;color:var(--text-mute);
+  }
+  footer.foot b{color:var(--text-dim);font-weight:600}
+
+  /* Анимация появления */
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .rise{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+  .rise-2{animation-delay:.08s}
+  .rise-3{animation-delay:.16s}
+</style>
+</head>
+<body>
+
+<!-- ================= ВЕРХНЯЯ НАВИГАЦИЯ ================= -->
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <div class="logo">
+      <div class="logo-mark"><span>N</span></div>
+      <div class="logo-name">NOVA CRM<em>ОБЪЕКТЫ · ЗАДАЧИ</em></div>
+    </div>
+    <nav class="main">
+      <a href="#objects" class="active">Объекты</a>
+      <a href="#object">Карточка объекта</a>
+      <a href="#task">Задача</a>
+      <a href="#mine">Мои задачи</a>
+      <a href="#spec">Дизайн-система</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="role-chip"><span class="avatar">РК</span> Р. Ковалёв · Постановщик</div>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- ================= ВХОД ================= -->
+  <section id="login">
+    <div class="page-head rise">
+      <div>
+        <div class="kicker">01 · Аутентификация</div>
+        <h1>Вход в <span class="accent">NOVA CRM</span></h1>
+        <p class="subtitle">Закрытая система для строительной компании. Открытая регистрация отключена — учётные записи создаются администратором в Supabase.</p>
+      </div>
+      <span class="badge"><span class="dot" style="color:var(--lime)"></span> RLS · защищено на уровне БД</span>
+    </div>
+
+    <div class="login-wrap rise rise-2">
+      <div class="login-hero glass">
+        <div>
+          <h2>Стройка под контролем — от постановки задачи до приёмки.</h2>
+          <p>Постановщик ставит задачи по объектам, исполнитель берёт их в работу и отправляет на проверку. Каждый переход статуса фиксируется в неизменяемой истории.</p>
+          <div class="feature-list">
+            <div class="feature"><i>◈</i><span>Объекты и задачи с полным циклом статусов</span></div>
+            <div class="feature"><i>◉</i><span>Исполнитель видит только свои задачи</span></div>
+            <div class="feature"><i>⌘</i><span>Переходы статусов проверяются в базе</span></div>
+            <div class="feature"><i>⟲</i><span>Историю нельзя подделать или удалить</span></div>
+          </div>
+        </div>
+        <div class="mono">nova-crm · build 1.0 · supabase edge</div>
+      </div>
+
+      <div class="login-card glass">
+        <h3>Вход по email и паролю</h3>
+        <p class="hint">Доступ выдаёт администратор компании</p>
+        <form onsubmit="return false">
+          <div class="field">
+            <label>Email</label>
+            <input class="input" type="email" placeholder="foreman@nova.build" autocomplete="username" />
+          </div>
+          <div class="field">
+            <label>Пароль</label>
+            <input class="input" type="password" placeholder="••••••••••" autocomplete="current-password" />
+          </div>
+          <button class="btn btn-primary" type="submit">Войти в систему →</button>
+        </form>
+        <div class="login-foot"><span class="dot"></span> Регистрация закрыта · сброс пароля у администратора</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= СПИСОК ОБЪЕКТОВ ================= -->
+  <section id="objects">
+    <div class="page-head rise">
+      <div>
+        <div class="kicker">02 · Список объектов</div>
+        <h1>Объекты <span class="accent">стройки</span></h1>
+        <p class="subtitle">Все активные стройки компании. В карточке объекта — его задачи со статусами и исполнителями.</p>
+      </div>
+      <button class="btn btn-primary">＋ Новый объект</button>
+    </div>
+
+    <div class="stats rise rise-2">
+      <div class="stat glass" style="--accent:rgba(34,211,238,.22)">
+        <div class="label">Объектов</div><div class="value">3</div>
+        <div class="trend">активных строек</div>
+      </div>
+      <div class="stat glass" style="--accent:rgba(139,92,246,.22)">
+        <div class="label">Задач всего</div><div class="value">18</div>
+        <div class="trend"><b>+4</b> за неделю</div>
+      </div>
+      <div class="stat glass" style="--accent:rgba(251,191,36,.22)">
+        <div class="label">На проверке</div><div class="value">3</div>
+        <div class="trend">ожидают приёмки</div>
+      </div>
+      <div class="stat glass" style="--accent:rgba(163,230,53,.22)">
+        <div class="label">Принято</div><div class="value">9</div>
+        <div class="trend"><b>50%</b> выполнено</div>
+      </div>
+    </div>
+
+    <div class="toolbar rise rise-3">
+      <div class="search"><input class="input" placeholder="Поиск по названию или адресу объекта…" /></div>
+      <div class="chips">
+        <div class="chip on">Все</div>
+        <div class="chip">Мои задачи</div>
+        <div class="chip">С активными работами</div>
+        <div class="chip">Завершённые</div>
+      </div>
+    </div>
+
+    <div class="objects rise rise-3">
+
+      <article class="object-card glass">
+        <div class="oc-top">
+          <div>
+            <h3>ЖК «Северные Линии»</h3>
+            <div class="addr">г. Москва, ул. Полярная, 24</div>
+          </div>
+          <div class="object-icon">🏗</div>
+        </div>
+        <div class="progress">
+          <div class="row"><span>Готовность задач</span><b>6 / 10</b></div>
+          <div class="bar"><span style="width:60%"></span></div>
+        </div>
+        <div class="meta">
+          <span class="mini"><span class="dot" style="color:var(--cyan)"></span>2 в работе</span>
+          <span class="mini"><span class="dot" style="color:var(--violet)"></span>1 на проверке</span>
+          <span class="mini"><span class="dot" style="color:var(--lime)"></span>6 принято</span>
+        </div>
+      </article>
+
+      <article class="object-card glass">
+        <div class="oc-top">
+          <div>
+            <h3>БЦ «Гелиос»</h3>
+            <div class="addr">г. Санкт-Петербург, Лиговский пр., 108</div>
+          </div>
+          <div class="object-icon">🏢</div>
+        </div>
+        <div class="progress">
+          <div class="row"><span>Готовность задач</span><b>3 / 6</b></div>
+          <div class="bar"><span style="width:50%"></span></div>
+        </div>
+        <div class="meta">
+          <span class="mini"><span class="dot" style="color:#9aa8c9"></span>1 новая</span>
+          <span class="mini"><span class="dot" style="color:var(--violet)"></span>1 на проверке</span>
+          <span class="mini"><span class="dot" style="color:var(--amber)"></span>1 на доработке</span>
+        </div>
+      </article>
+
+      <article class="object-card glass">
+        <div class="oc-top">
+          <div>
+            <h3>Склад «Логопарк Восток»</h3>
+            <div class="addr">Московская обл., г. Щёлково, индустриальный парк</div>
+          </div>
+          <div class="object-icon">📦</div>
+        </div>
+        <div class="progress">
+          <div class="row"><span>Готовность задач</span><b>1 / 2</b></div>
+          <div class="bar"><span style="width:50%"></span></div>
+        </div>
+        <div class="meta">
+          <span class="mini"><span class="dot" style="color:var(--cyan)"></span>1 в работе</span>
+          <span class="mini"><span class="dot" style="color:var(--lime)"></span>1 принято</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= КАРТОЧКА ОБЪЕКТА ================= -->
+  <section id="object">
+    <div class="breadcrumb">
+      <a href="#objects">Объекты</a><span class="sep">/</span><span>ЖК «Северные Линии»</span>
+    </div>
+
+    <div class="detail-head glass rise">
+      <div class="left">
+        <div class="object-icon" style="width:58px;height:58px;font-size:26px">🏗</div>
+        <div>
+          <h2>ЖК «Северные Линии»</h2>
+          <div class="addr">г. Москва, ул. Полярная, 24 · объект #OBJ-001</div>
+        </div>
+      </div>
+      <div class="right">
+        <button class="btn btn-ghost btn-sm">✎ Редактировать</button>
+        <button class="btn btn-primary btn-sm">＋ Новая задача</button>
+      </div>
+    </div>
+
+    <div class="card glass rise rise-2" style="margin-bottom:64px">
+      <h3>Задачи объекта · 10</h3>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Задача</th><th>Статус</th><th>Исполнитель</th><th>Автор</th><th>Создана</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="t-title">Монтаж опалубки секции А</span><span class="t-id">TSK-1041</span></td>
+            <td><span class="badge st-progress"><span class="dot"></span>В работе</span></td>
+            <td><div class="who"><span class="avatar">ИП</span><span>И. Петров</span></div></td>
+            <td>Р. Ковалёв</td>
+            <td class="mono">14.05.2026</td>
+            <td><a class="btn btn-ghost btn-sm" href="#task">Открыть →</a></td>
+          </tr>
+          <tr>
+            <td><span class="t-title">Заливка фундамента под лифтовые шахты</span><span class="t-id">TSK-1042</span></td>
+            <td><span class="badge st-review"><span class="dot"></span>На проверке</span></td>
+            <td><div class="who"><span class="avatar">СМ</span><span>С. Морозов</span></div></td>
+            <td>Р. Ковалёв</td>
+            <td class="mono">13.05.2026</td>
+            <td><a class="btn btn-ghost btn-sm" href="#task">Открыть →</a></td>
+          </tr>
+          <tr>
+            <td><span class="t-title">Прокладка кабельных трасс 3–4 этаж</span><span class="t-id">TSK-1039</span></td>
+            <td><span class="badge st-new"><span class="dot"></span>Новая</span></td>
+            <td><div class="who"><span class="avatar">АК</span><span>А. Кузнецов</span></div></td>
+            <td>Р. Ковалёв</td>
+            <td class="mono">15.05.2026</td>
+            <td><a class="btn btn-ghost btn-sm" href="#task">Открыть →</a></td>
+          </tr>
+          <tr>
+            <td><span class="t-title">Гидроизоляция кровли секции Б</span><span class="t-id">TSK-1036</span></td>
+            <td><span class="badge st-done"><span class="dot"></span>Принята</span></td>
+            <td><div class="who"><span class="avatar">ИП</span><span>И. Петров</span></div></td>
+            <td>Р. Ковалёв</td>
+            <td class="mono">08.05.2026</td>
+            <td><a class="btn btn-ghost btn-sm" href="#task">Открыть →</a></td>
+          </tr>
+          <tr>
+            <td><span class="t-title">Установка оконных блоков, 2 подъезд</span><span class="t-id">TSK-1034</span></td>
+            <td><span class="badge st-rework"><span class="dot"></span>На доработке</span></td>
+            <td><div class="who"><span class="avatar">СМ</span><span>С. Морозов</span></div></td>
+            <td>Р. Ковалёв</td>
+            <td class="mono">06.05.2026</td>
+            <td><a class="btn btn-ghost btn-sm" href="#task">Открыть →</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= КАРТОЧКА ЗАДАЧИ ================= -->
+  <section id="task">
+    <div class="breadcrumb">
+      <a href="#objects">Объекты</a><span class="sep">/</span>
+      <a href="#object">ЖК «Северные Линии»</a><span class="sep">/</span><span>TSK-1041</span>
+    </div>
+
+    <div class="page-head rise" style="margin-top:0">
+      <div>
+        <div class="kicker">04 · Карточка задачи</div>
+        <h1>Монтаж <span class="accent">опалубки</span> секции А</h1>
+        <p class="subtitle">Показываются только действия, доступные текущему пользователю в текущем статусе задачи.</p>
+      </div>
+      <span class="badge st-progress" style="padding:8px 14px;font-size:11.5px"><span class="dot"></span>В работе</span>
+    </div>
+
+    <div class="task-layout rise rise-2">
+
+      <!-- Левая колонка: данные + действия -->
+      <div class="card glass">
+        <h3>Данные задачи</h3>
+        <p class="task-desc">Смонтировать опалубку секции А до отметки +12.000. Проверить геометрию по исполнительной схеме, зафиксировать крепёж. По завершении — фотоотчёт и передача на проверку.</p>
+
+        <div class="kv">
+          <div><div class="k">Объект</div><div class="v">ЖК «Северные Линии»</div></div>
+          <div><div class="k">Исполнитель</div><div class="v"><div class="who"><span class="avatar">ИП</span><span>И. Петров</span></div></div></div>
+          <div><div class="k">Автор</div><div class="v">Р. Ковалёв</div></div>
+          <div><div class="k">Дата создания</div><div class="v mono">14.05.2026 · 09:42</div></div>
+          <div><div class="k">Статус</div><div class="v"><span class="badge st-progress"><span class="dot"></span>В работе</span></div></div>
+          <div><div class="k">ID</div><div class="v mono">TSK-1041</div></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary">Отправить на проверку →</button>
+          <button class="btn btn-ghost">✎ Редактировать</button>
+        </div>
+        <div class="actions-note"><i>◈</i><span>Действия видны и доступны только назначенному исполнителю. Переход «В работе → На проверке» проверяется на стороне БД.</span></div>
+      </div>
+
+      <!-- Правая колонка: история -->
+      <div class="card glass">
+        <h3>История статусов</h3>
+        <div class="timeline">
+          <div class="tl-item" style="--c:var(--violet)">
+            <div class="tl-head">
+              <span class="who-name">С. Морозов</span>
+              <span class="when">15.05 · 09:12</span>
+            </div>
+            <div class="tl-flow"><span class="badge st-review" style="padding:2px 8px;font-size:10px">На проверке</span><span class="arrow">→</span><span class="badge st-progress" style="padding:2px 8px;font-size:10px">В работе</span></div>
+          </div>
+          <div class="tl-item" style="--c:var(--amber)">
+            <div class="tl-head">
+              <span class="who-name">Р. Ковалёв</span>
+              <span class="when">14.05 · 18:30</span>
+            </div>
+            <div class="tl-flow"><span class="badge st-review" style="padding:2px 8px;font-size:10px">На проверке</span><span class="arrow">→</span><span class="badge st-rework" style="padding:2px 8px;font-size:10px">На доработке</span></div>
+            <div class="tl-comment">Крепёж по оси 3 не соответствует исполнительной схеме. Переделать и приложить фото.</div>
+          </div>
+          <div class="tl-item" style="--c:var(--violet)">
+            <div class="tl-head">
+              <span class="who-name">И. Петров</span>
+              <span class="when">14.05 · 16:05</span>
+            </div>
+            <div class="tl-flow"><span class="badge st-progress" style="padding:2px 8px;font-size:10px">В работе</span><span class="arrow">→</span><span class="badge st-review" style="padding:2px 8px;font-size:10px">На проверке</span></div>
+          </div>
+          <div class="tl-item" style="--c:var(--cyan)">
+            <div class="tl-head">
+              <span class="who-name">И. Петров</span>
+              <span class="when">14.05 · 10:20</span>
+            </div>
+            <div class="tl-flow"><span class="badge st-new" style="padding:2px 8px;font-size:10px">Новая</span><span class="arrow">→</span><span class="badge st-progress" style="padding:2px 8px;font-size:10px">В работе</span></div>
+          </div>
+          <div class="tl-item" style="--c:#9aa8c9">
+            <div class="tl-head">
+              <span class="who-name">Р. Ковалёв</span>
+              <span class="when">14.05 · 09:42</span>
+            </div>
+            <div class="tl-flow"><span class="badge st-new" style="padding:2px 8px;font-size:10px">Новая</span><span class="arrow">←</span><span>задача создана</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= МОИ ЗАДАЧИ ================= -->
+  <section id="mine">
+    <div class="page-head rise">
+      <div>
+        <div class="kicker">05 · Мои задачи</div>
+        <h1>Задачи <span class="accent">исполнителя</span></h1>
+        <p class="subtitle">Исполнитель видит только свои задачи и объекты, в которых у него есть задачи. Ниже — представление в виде канбана по статусам.</p>
+      </div>
+      <span class="badge"><span class="dot" style="color:var(--cyan)"></span> И. Петров · Исполнитель</span>
+    </div>
+
+    <div class="kanban rise rise-2">
+      <div class="col glass">
+        <div class="col-head"><span class="name">Новая</span><span class="count">1</span></div>
+        <div class="task-chip">
+          <div class="tc-title">Прокладка кабельных трасс 3–4 этаж</div>
+          <div class="tc-obj">◈ ЖК «Северные Линии»</div>
+          <div class="tc-foot"><span class="badge st-new" style="padding:2px 8px;font-size:10px">Новая</span><span class="avatar">ИП</span></div>
+        </div>
+      </div>
+      <div class="col glass">
+        <div class="col-head"><span class="name">В работе</span><span class="count">2</span></div>
+        <div class="task-chip">
+          <div class="tc-title">Монтаж опалубки секции А</div>
+          <div class="tc-obj">◈ ЖК «Северные Линии»</div>
+          <div class="tc-foot"><span class="badge st-progress" style="padding:2px 8px;font-size:10px">В работе</span><span class="avatar">ИП</span></div>
+        </div>
+        <div class="task-chip">
+          <div class="tc-title">Устройство временного ограждения</div>
+          <div class="tc-obj">◈ Склад «Логопарк Восток»</div>
+          <div class="tc-foot"><span class="badge st-progress" style="padding:2px 8px;font-size:10px">В работе</span><span class="avatar">ИП</span></div>
+        </div>
+      </div>
+      <div class="col glass">
+        <div class="col-head"><span class="name">На проверке</span><span class="count">1</span></div>
+        <div class="task-chip">
+          <div class="tc-title">Монтаж вентилируемого фасада, ось 5</div>
+          <div class="tc-obj">◈ ЖК «Северные Линии»</div>
+          <div class="tc-foot"><span class="badge st-review" style="padding:2px 8px;font-size:10px">На проверке</span><span class="avatar">ИП</span></div>
+        </div>
+      </div>
+      <div class="col glass">
+        <div class="col-head"><span class="name">На доработке</span><span class="count">1</span></div>
+        <div class="task-chip">
+          <div class="tc-title">Гидроизоляция стилобата</div>
+          <div class="tc-obj">◈ БЦ «Гелиос»</div>
+          <div class="tc-foot"><span class="badge st-rework" style="padding:2px 8px;font-size:10px">На доработке</span><span class="avatar">ИП</span></div>
+        </div>
+      </div>
+      <div class="col glass">
+        <div class="col-head"><span class="name">Принята</span><span class="count">2</span></div>
+        <div class="task-chip">
+          <div class="tc-title">Гидроизоляция кровли секции Б</div>
+          <div class="tc-obj">◈ ЖК «Северные Линии»</div>
+          <div class="tc-foot"><span class="badge st-done" style="padding:2px 8px;font-size:10px">Принята</span><span class="avatar">ИП</span></div>
+        </div>
+        <div class="task-chip">
+          <div class="tc-title">Планировка территории, 1 очередь</div>
+          <div class="tc-obj">◈ Склад «Логопарк Восток»</div>
+          <div class="tc-foot"><span class="badge st-done" style="padding:2px 8px;font-size:10px">Принята</span><span class="avatar">ИП</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ДИЗАЙН-СИСТЕМА ================= -->
+  <section id="spec">
+    <div class="page-head rise">
+      <div>
+        <div class="kicker">06 · Дизайн-система</div>
+        <h1>Спецификация <span class="accent">интерфейса</span></h1>
+        <p class="subtitle">Токены, палитра и компоненты, из которых собраны экраны. Тёмная футуристичная тема с неоновыми акцентами.</p>
+      </div>
+    </div>
+
+    <div class="spec-grid rise rise-2">
+      <div class="spec-card glass">
+        <h4>Палитра · акценты</h4>
+        <div class="swatches">
+          <div><div class="swatch" style="background:var(--cyan);box-shadow:var(--glow-cyan)"></div><div class="swatch-label">cyan</div></div>
+          <div><div class="swatch" style="background:var(--violet);box-shadow:var(--glow-violet)"></div><div class="swatch-label">violet</div></div>
+          <div><div class="swatch" style="background:var(--magenta)"></div><div class="swatch-label">magenta</div></div>
+          <div><div class="swatch" style="background:var(--lime)"></div><div class="swatch-label">lime</div></div>
+          <div><div class="swatch" style="background:var(--amber)"></div><div class="swatch-label">amber</div></div>
+        </div>
+      </div>
+      <div class="spec-card glass">
+        <h4>Палитра · поверхности</h4>
+        <div class="swatches">
+          <div><div class="swatch" style="background:var(--bg-0)"></div><div class="swatch-label">bg-0</div></div>
+          <div><div class="swatch" style="background:var(--bg-1)"></div><div class="swatch-label">bg-1</div></div>
+          <div><div class="swatch" style="background:var(--panel-solid)"></div><div class="swatch-label">panel</div></div>
+          <div><div class="swatch" style="background:var(--text)"></div><div class="swatch-label">text</div></div>
+          <div><div class="swatch" style="background:var(--text-mute)"></div><div class="swatch-label">mute</div></div>
+        </div>
+      </div>
+      <div class="spec-card glass">
+        <h4>Типографика</h4>
+        <div class="type-row"><span class="t">H1</span><span style="font-size:24px;font-weight:800;letter-spacing:-.02em">Объекты стройки</span></div>
+        <div class="type-row"><span class="t">H3</span><span style="font-size:16px;font-weight:700">Монтаж опалубки</span></div>
+        <div class="type-row"><span class="t">body</span><span style="font-size:13.5px;color:var(--text-dim)">Основной текст интерфейса</span></div>
+        <div class="type-row"><span class="t">mono</span><span class="mono">TSK-1041 · 14.05.2026</span></div>
+      </div>
+      <div class="spec-card glass">
+        <h4>Статусы задач</h4>
+        <div class="status-stack">
+          <span class="badge st-new"><span class="dot"></span>Новая</span>
+          <span class="badge st-progress"><span class="dot"></span>В работе</span>
+          <span class="badge st-review"><span class="dot"></span>На проверке</span>
+          <span class="badge st-rework"><span class="dot"></span>На доработке</span>
+          <span class="badge st-done"><span class="dot"></span>Принята</span>
+        </div>
+      </div>
+      <div class="spec-card glass">
+        <h4>Кнопки</h4>
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <button class="btn btn-primary btn-sm">Основное действие</button>
+          <button class="btn btn-violet btn-sm">Приёмка / возврат</button>
+          <button class="btn btn-ghost btn-sm">Второстепенное</button>
+        </div>
+      </div>
+      <div class="spec-card glass">
+        <h4>Принципы</h4>
+        <ul style="list-style:none;display:grid;gap:9px;font-size:12.5px;color:var(--text-dim);line-height:1.5">
+          <li>• Действия видны только по роли и статусу</li>
+          <li>• Статусы — цвет + подпись (не только цвет)</li>
+          <li>• История — неизменяемый таймлайн</li>
+          <li>• Контраст текста ≥ WCAG AA</li>
+          <li>• Сетка 8px, радиусы 10/16/24</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot shell">
+  <div><b>NOVA CRM</b> · дизайн-прототип мини-CRM «Объекты и задачи» · React + TypeScript + Supabase</div>
+  <div class="mono">роли: постановщик · исполнитель &nbsp;|&nbsp; RLS · защита на уровне БД</div>
+</footer>
+
+</body>
+</html>

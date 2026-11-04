@@ -1,0 +1,41 @@
+{
+  "gate": "baseline",
+  "domains": [
+    {
+      "domain": "auth",
+      "requirements": 4,
+      "scenarios": 8
+    },
+    {
+      "domain": "objects",
+      "requirements": 5,
+      "scenarios": 10
+    },
+    {
+      "domain": "platform",
+      "requirements": 5,
+      "scenarios": 10
+    },
+    {
+      "domain": "reporting",
+      "requirements": 5,
+      "scenarios": 10
+    },
+    {
+      "domain": "tasks",
+      "requirements": 7,
+      "scenarios": 14
+    }
+  ],
+  "issues": [],
+  "tax_pass": true,
+  "timestamp": "2026-11-04T16:59:19.456Z",
+  "evidence_name": "BASELINE.json",
+  "code_hash": {
+    "git_head": "b1a7f1c947a4e81009c373d996a3a95720591df2",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "3b2a706ef07d1a795a4ee129899d0e30e116bbd3"
+  },
+  "evidence_hash": "a69ec4399832cd075bc9ade70fac90930a02396fafc5f80166df878239ff2ce5"
+}

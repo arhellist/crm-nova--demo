@@ -15,3 +15,4 @@
 | DEC-002 | Гейт канона в проекте: `./validate.sh` внутри работающей установки падает … | 2026-11-04 | принято | 20261104-1743-razvernut-kanon-kak-project-witness-done |
 | DEC-003 | Результаты 10b переснимаются каноном 1.31.1 из MyProjects/WitnessDone; копия … | 2026-11-04 | принято | 20261104-2050-horosho-patch-etot-rep-no-ne-fabriku-a-e |
 | DEC-004 | Инструментовка шага 08 (.eslintrc.js, .github/workflows/ci.yml, .gitignore, e… | 2026-11-04 | принято | 20261104-2050-horosho-patch-etot-rep-no-ne-fabriku-a-e |
+| DEC-005 | Код пишется по цепочке D01…D14 строго по OUTPUT/prompts; структура продукта —… | 2026-11-04 | принято | 20261104-2057-davay-ebash-kod-po-proektu |

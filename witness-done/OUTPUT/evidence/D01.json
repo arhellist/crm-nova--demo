@@ -1,0 +1,223 @@
+{
+  "d": "D01",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /health"
+    ],
+    "acceptance_ids": [
+      "A01.1",
+      "A01.2",
+      "A01.3",
+      "A01.4",
+      "A01.5",
+      "A01.6"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [],
+    "conflicts_applied": [],
+    "out_of_produces": [
+      ".eslintrc.cjs",
+      "INPUT/TECH_SPEC.md"
+    ],
+    "missing_produces": [],
+    "produces": [
+      "package.json",
+      "tsconfig.json",
+      "src/shared/config/env.ts",
+      "src/shared/logger.ts",
+      "src/server/app.ts",
+      "src/server/index.ts",
+      "src/shared/config/env.test.ts",
+      "src/server/app.test.ts",
+      "src/shared/logger.test.ts",
+      "src/server/lifecycle.test.ts"
+    ],
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": "logging-pino, rate-limiting",
+      "selected": [],
+      "referenced": [
+        "INV-007",
+        "INV-006"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "package.json",
+        "tsconfig.json",
+        "src/shared/config/env.ts",
+        "src/shared/logger.ts",
+        "src/server/app.ts",
+        "src/server/index.ts",
+        "src/shared/config/env.test.ts",
+        "src/server/app.test.ts",
+        "src/shared/logger.test.ts",
+        "src/server/lifecycle.test.ts"
+      ],
+      "touched": [
+        ".eslintrc.cjs",
+        "INPUT/TECH_SPEC.md",
+        "package.json",
+        "src/server/app.test.ts",
+        "src/server/app.ts",
+        "src/server/index.ts",
+        "src/server/lifecycle.test.ts",
+        "src/shared/config/env.test.ts",
+        "src/shared/config/env.ts",
+        "src/shared/logger.test.ts",
+        "src/shared/logger.ts",
+        "tsconfig.json"
+      ],
+      "missing": [],
+      "extra": [
+        ".eslintrc.cjs",
+        "INPUT/TECH_SPEC.md"
+      ],
+      "proof_debt": [
+        ".eslintrc.cjs",
+        "INPUT/TECH_SPEC.md"
+      ],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A01.1",
+        "A01.3",
+        "A01.5",
+        "A01.6"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A01.2",
+        "A01.4"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "src/server/app.test.ts",
+        "src/server/lifecycle.test.ts",
+        "src/shared/config/env.test.ts",
+        "src/shared/logger.test.ts",
+        "src/shared/logger.ts"
+      ],
+      "binding_hash": "043643ccccdac93b690227f13cc29d8c7dd6f792d0ce2a43e9bdc6297506326a"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /health"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "logging, rate-limit, no-secrets",
+    "issues": []
+  },
+  "structural_ok": false,
+  "issues": [
+    "proof_debt: 2 файл(ов) тронуты, но не заявлены в PRODUCES — .eslintrc.cjs, INPUT/TECH_SPEC.md",
+    "review: review отсутствует: evidence/D01.review.json"
+  ],
+  "deps": {
+    "ok": true,
+    "depends": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": [
+      "proof_debt: 2 файл(ов) тронуты, но не заявлены в PRODUCES — .eslintrc.cjs, INPUT/TECH_SPEC.md",
+      "review: review отсутствует: evidence/D01.review.json"
+    ]
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D01.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": false,
+    "issues": [
+      "review отсутствует: evidence/D01.review.json"
+    ],
+    "verdict": null,
+    "reviewer": null,
+    "file": "evidence/D01.review.json"
+  },
+  "tax_pass": false,
+  "timestamp": "2026-11-04T17:09:03.010Z",
+  "code_hash": {
+    "git_head": "061353f964e6522c91c3dcd7649689b87e6bf27d",
+    "git_dirty": true,
+    "produces": [
+      "package.json",
+      "src/server/app.test.ts",
+      "src/server/app.ts",
+      "src/server/index.ts",
+      "src/server/lifecycle.test.ts",
+      "src/shared/config/env.test.ts",
+      "src/shared/config/env.ts",
+      "src/shared/logger.test.ts",
+      "src/shared/logger.ts",
+      "tsconfig.json"
+    ],
+    "git_tree": "f2ffebff2413d519812887fac2b874d0e2083411",
+    "produces_digest": "1c64f911d56c743da62ea9ea5d59a68a9850cb7d8df0e52f9b8530cac063afe7"
+  },
+  "evidence_hash": "93762639b0276a98345fdb8a2477a67b8bcdd8b581d3cecbe0aab14930df5158"
+}
