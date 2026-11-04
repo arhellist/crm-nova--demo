@@ -5,13 +5,13 @@
   "prompts_checked": 14,
   "issues": [],
   "tax_pass": true,
-  "timestamp": "2026-11-04T16:53:00.173Z",
+  "timestamp": "2026-11-04T16:55:33.766Z",
   "evidence_name": "SELF_AUDIT.json",
   "code_hash": {
-    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_head": "780c1652401c2c0d615559c6a8eddfd43a509cfa",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+    "git_tree": "b3b975a712c52dec5612f9e6e3d3830f0fde205e"
   },
-  "evidence_hash": "8d318d2dedf2d97b7200eb03a9a893704c362ead32413aea4e1924477de883df"
+  "evidence_hash": "850a586445a488c87cdc16e15545789c169513c0f80d6ef462e06192d4dc634e"
 }
