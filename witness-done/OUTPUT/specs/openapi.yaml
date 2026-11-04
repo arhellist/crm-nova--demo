@@ -1,0 +1,228 @@
+openapi: 3.1.0
+info:
+  title: NOVA CRM — reporting API (read-only)
+  version: 1.0.0
+  description: |
+    Контур отчётности: только чтение агрегатов с логической реплики PostgreSQL.
+    Запись в систему выполняется исключительно через Supabase (PostgREST/RPC) и здесь не описана.
+    Любой write-метод возвращает 405.
+servers:
+  - url: https://reports.nova-crm.example
+    description: production (TLS, приватный контур, доступ по токену)
+  - url: http://127.0.0.1:8080
+    description: локальный контур (docker compose)
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Живость процесса
+      security: []
+      responses:
+        "200":
+          description: Процесс жив
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, uptime_s]
+                properties:
+                  status: { type: string, const: ok }
+                  uptime_s: { type: number, minimum: 0 }
+  /health/replication:
+    get:
+      operationId: getReplicationHealth
+      summary: Состояние подписки и лаг репликации
+      responses:
+        "200":
+          description: Подписка в состоянии streaming
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReplicationStatus" }
+        "503":
+          description: Лаг выше порога или подписка не работает
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReplicationStatus" }
+  /metrics:
+    get:
+      operationId: getMetrics
+      summary: Метрики Prometheus (только внутренняя сеть)
+      responses:
+        "200":
+          description: Текст метрик
+          content:
+            text/plain:
+              schema: { type: string }
+  /api/reports/objects:
+    get:
+      operationId: getObjectsReport
+      summary: Сводка по объектам и статусам задач
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Агрегаты по объектам
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/ObjectReportRow" }
+        "503":
+          $ref: "#/components/responses/ReplicaLag"
+  /api/reports/workload:
+    get:
+      operationId: getWorkloadReport
+      summary: Загрузка исполнителей
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Агрегаты по исполнителям
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/WorkloadRow" }
+        "503":
+          $ref: "#/components/responses/ReplicaLag"
+  /api/reports/status-ages:
+    get:
+      operationId: getStatusAgesReport
+      summary: Сроки пребывания задачи на проверке
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Агрегаты по дням
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/StatusAgeRow" }
+        "503":
+          $ref: "#/components/responses/ReplicaLag"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API_TOKEN из менеджера секретов; не пользовательский JWT
+  parameters:
+    From:
+      name: from
+      in: query
+      required: false
+      schema: { type: string, format: date }
+      description: Начало периода (календарные сутки Europe/Moscow)
+    To:
+      name: to
+      in: query
+      required: false
+      schema: { type: string, format: date }
+      description: Конец периода включительно
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+  responses:
+    ReplicaLag:
+      description: Данные отчёта временно недоступны
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+  schemas:
+    ReplicationStatus:
+      type: object
+      required: [status, lag_seconds]
+      properties:
+        status: { type: string, enum: [streaming, lagging, broken] }
+        lag_seconds: { type: number, minimum: 0 }
+        last_error: { type: [string, "null"] }
+    Envelope:
+      type: object
+      required: [source, lag_seconds, generated_at, data]
+      properties:
+        source: { type: string, const: replica }
+        lag_seconds: { type: number, minimum: 0 }
+        generated_at: { type: string, format: date-time }
+        data: { type: array }
+    ObjectReportRow:
+      type: object
+      required: [object_id, title, tasks_total, accepted_share]
+      properties:
+        object_id: { type: string, format: uuid }
+        title: { type: string }
+        address: { type: string }
+        tasks_total: { type: integer, minimum: 0 }
+        tasks_new: { type: integer, minimum: 0 }
+        tasks_in_progress: { type: integer, minimum: 0 }
+        tasks_on_review: { type: integer, minimum: 0 }
+        tasks_rework: { type: integer, minimum: 0 }
+        tasks_accepted: { type: integer, minimum: 0 }
+        accepted_share: { type: number, minimum: 0, maximum: 100 }
+        last_activity_at: { type: [string, "null"], format: date-time }
+    WorkloadRow:
+      type: object
+      required: [assignee_id, full_name, tasks_total]
+      properties:
+        assignee_id: { type: string, format: uuid }
+        full_name: { type: string }
+        tasks_total: { type: integer, minimum: 0 }
+        tasks_in_progress: { type: integer, minimum: 0 }
+        tasks_on_review: { type: integer, minimum: 0 }
+        tasks_rework: { type: integer, minimum: 0 }
+        tasks_accepted: { type: integer, minimum: 0 }
+        oldest_open_at: { type: [string, "null"], format: date-time }
+    StatusAgeRow:
+      type: object
+      required: [day, avg_seconds_in_status]
+      properties:
+        day: { type: string, format: date }
+        avg_seconds_in_status: { type: number, minimum: 0 }
+        max_seconds_in_status: { type: number, minimum: 0 }
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              enum:
+                - E_VALIDATION
+                - E_UNAUTHORIZED
+                - E_FORBIDDEN_ORIGIN
+                - E_NOT_FOUND
+                - E_METHOD_NOT_ALLOWED
+                - E_RATE_LIMITED
+                - E_REPLICA_LAG
+                - E_REPLICA_DOWN
+                - E_INTERNAL
+            message: { type: string }
+            request_id: { type: string }

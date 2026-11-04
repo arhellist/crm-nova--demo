@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "must_hit_ok": true,
+  "must_hit_section": true,
+  "must_hit_paths": [
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/docs/adr/0003-logical-replication-readonly.md",
+    "OUTPUT/security/secrets-and-config.md",
+    "OUTPUT/security/data-protection.md",
+    "OUTPUT/tooling/deploy.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/tooling/observability.md"
+  ],
+  "missing_must_hit": [],
+  "anchors": [
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/docs/adr/0003-logical-replication-readonly.md",
+    "OUTPUT/security/secrets-and-config.md",
+    "OUTPUT/security/data-protection.md",
+    "OUTPUT/tooling/deploy.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/tooling/observability.md"
+  ],
+  "chunks": [
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/docs/adr/0003-logical-replication-readonly.md",
+    "OUTPUT/security/secrets-and-config.md",
+    "OUTPUT/security/data-protection.md",
+    "OUTPUT/tooling/deploy.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/tooling/observability.md"
+  ],
+  "dropped": [],
+  "missing": [],
+  "over_max_chunks": false,
+  "max_chunks": 12,
+  "canon_max_chunks": 12,
+  "meta_max_chunks": 9,
+  "meta_max_chunks_ok": true,
+  "timestamp": "2026-11-04T13:58:13.534Z"
+}

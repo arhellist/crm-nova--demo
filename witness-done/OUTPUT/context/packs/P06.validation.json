@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "must_hit_ok": true,
+  "must_hit_section": true,
+  "must_hit_paths": [
+    "OUTPUT/docs/design-notes.md",
+    "OUTPUT/prompts/D05_objects_contract.md",
+    "OUTPUT/specs/domain-rules.md",
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/docs/nfr.md"
+  ],
+  "missing_must_hit": [],
+  "anchors": [
+    "OUTPUT/docs/design-notes.md",
+    "OUTPUT/prompts/D05_objects_contract.md",
+    "OUTPUT/specs/domain-rules.md",
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/docs/nfr.md"
+  ],
+  "chunks": [
+    "OUTPUT/docs/design-notes.md",
+    "OUTPUT/prompts/D05_objects_contract.md",
+    "OUTPUT/specs/domain-rules.md",
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/docs/nfr.md"
+  ],
+  "dropped": [],
+  "missing": [],
+  "over_max_chunks": false,
+  "max_chunks": 12,
+  "canon_max_chunks": 12,
+  "meta_max_chunks": 8,
+  "meta_max_chunks_ok": true,
+  "timestamp": "2026-11-04T13:58:13.321Z"
+}

@@ -1,0 +1,103 @@
+{
+  "gate": "d-prompt-quality",
+  "batch": 1,
+  "batch_size": 5,
+  "batches_total": 3,
+  "prompts_total": 14,
+  "checked": [
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05"
+  ],
+  "results": [
+    {
+      "d": "D01",
+      "file": "D01_platform_skeleton.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A01.1",
+        "A01.2",
+        "A01.3",
+        "A01.4",
+        "A01.5",
+        "A01.6"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D02",
+      "file": "D02_schema_rls.md",
+      "level": "L1",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A02.1",
+        "A02.2",
+        "A02.3",
+        "A02.4",
+        "A02.5",
+        "A02.6"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D03",
+      "file": "D03_status_machine.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A03.1",
+        "A03.2",
+        "A03.3",
+        "A03.4",
+        "A03.5",
+        "A03.6",
+        "A03.7",
+        "A03.8"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D04",
+      "file": "D04_auth_ui_shell.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A04.1",
+        "A04.2",
+        "A04.3",
+        "A04.4",
+        "A04.5",
+        "A04.6"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D05",
+      "file": "D05_objects_contract.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A05.1",
+        "A05.2",
+        "A05.3",
+        "A05.4",
+        "A05.5",
+        "A05.6"
+      ],
+      "issues": []
+    }
+  ],
+  "tax_pass": true,
+  "timestamp": "2026-11-04T16:52:57.766Z",
+  "evidence_name": "prompt-quality-batch-1.json",
+  "code_hash": {
+    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+  },
+  "evidence_hash": "822582f83358a10c2c005dffdbd3f25ec86090773a278528db2d42760c039bfc"
+}

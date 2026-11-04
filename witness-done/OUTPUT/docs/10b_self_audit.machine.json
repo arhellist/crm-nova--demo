@@ -1,0 +1,107 @@
+{
+  "gate": "self-audit-10b",
+  "project": "NOVA CRM",
+  "suite_built_by": "1.31.0",
+  "gates_run_by": "1.31.1",
+  "factory_copy": "witness-done/ (1.31.0, не обновлялась — DEC-003)",
+  "date": "2026-11-04",
+  "verdict": "PASS",
+  "verdict_reason": "комплект пригоден к исполнению: задания полные, покрытие двустороннее, критерии проверяемы; гейты без предмета проверки вернули deferred/na с актом (DEC-041 канона)",
+  "open_criteria": 28,
+  "prompts_checked": 14,
+  "canon_audit": "OUTPUT/docs/AUDIT-witnessdone-1.31.0.md",
+  "gates": {
+    "d_prompt_quality": {
+      "pass": true,
+      "batches": [
+        { "batch": 1, "checked": ["D01", "D02", "D03", "D04", "D05"], "tax_pass": true, "evidence": "OUTPUT/evidence/prompt-quality-batch-1.json" },
+        { "batch": 2, "checked": ["D06", "D07", "D08", "D09", "D10"], "tax_pass": true, "evidence": "OUTPUT/evidence/prompt-quality-batch-2.json" },
+        { "batch": 3, "checked": ["D11", "D12", "D13", "D14"], "tax_pass": true, "evidence": "OUTPUT/evidence/prompt-quality-batch-3.json" }
+      ],
+      "checks": ["HOW", "INVARIANTS 5-12", "ACCEPTANCE с Given/When/Then", "SIZE_BUDGET", "PRODUCES <=6", "CONTEXT_PACK validation_ok подтверждён файлом"]
+    },
+    "self_audit": {
+      "pass": true,
+      "issues": 0,
+      "prompts_checked": 14,
+      "open_criteria": 28,
+      "evidence": "OUTPUT/evidence/SELF_AUDIT.json",
+      "note": "гейт вызывает проверку качества заданий, обратную сверку coverage-matrix с OUTPUT/prompts и проверку exit-criteria по существующим файлам"
+    },
+    "acceptance": {
+      "pass": true,
+      "scope": "deferred",
+      "deferred": ["D01", "D02", "D03", "D04", "D05", "D06", "D07", "D08", "D09", "D10", "D11", "D12", "D13", "D14"],
+      "evidence": "OUTPUT/evidence/ACCEPTANCE.json",
+      "note": "ни одно задание не done — связка «фраза ↔ тест» проверяется после выполнения; полная проверка — --require-all на pre_release"
+    },
+    "product_smoke": {
+      "pass": true,
+      "na": true,
+      "reason": "код D01–D14 не сгенерирован, staging-контура нет: smoke выполняется после pre_release",
+      "evidence": "OUTPUT/evidence/RELEASE-product-smoke.json"
+    },
+    "runtime_plan": {
+      "pass": true,
+      "planned": 28,
+      "na": 3,
+      "uncovered": 0,
+      "accepted_count": 0,
+      "coverage_scope": "no accepted D yet — план проверен статически, покрытие приёмки не подтверждено",
+      "evidence": "OUTPUT/evidence/RELEASE-runtime-plan.json"
+    },
+    "runtime": { "required": false, "reason": "на 10b не требуется (1.31.1); обязателен на pre_release" },
+    "baseline": { "required": false, "reason": "не вход 10b (1.31.1): spec-state создаётся и проверяется на R01" },
+    "rules_check": { "pass": true, "targets": 13 },
+    "doctor_strict": { "pass": true, "changed_outside_produces": 0 },
+    "progress_check": { "pass": true, "note": "фрагментов progress.d нет — одиночный режим источника истины, сверять нечего" },
+    "verify_evidence": { "pass": null, "note": "актов Dxx нет: ни одно задание не выполнено" }
+  },
+  "deferred": [
+    { "what": "связка «фраза ↔ тест» для всех заданий", "why": "тестов нет до D01–D14", "closes_with": "--gate acceptance --require-all", "act": "OUTPUT/evidence/ACCEPTANCE.json" },
+    { "what": "product-smoke на staging", "why": "нет кода и контура", "closes_with": "--gate product-smoke с FE_URL/API_URL/TOKEN", "act": "OUTPUT/evidence/RELEASE-product-smoke.json" },
+    { "what": "runtime-верификация", "why": "на 10b не требуется, стека нет", "closes_with": "--gate runtime", "act": "план OUTPUT/runtime/runtime-plan.json" },
+    { "what": "покрытие приёмки рантайм-планом", "why": "accepted_count = 0", "closes_with": "--gate runtime-plan после первых done", "act": "OUTPUT/evidence/RELEASE-runtime-plan.json" },
+    { "what": "базовая линия", "why": "spec-state создаётся на R01", "closes_with": "--gate baseline", "act": null },
+    { "what": "акты Dxx.json и Dxx.review.json", "why": "задания не выполнялись", "closes_with": "pre_ci и sp review по каждому D", "act": null },
+    { "what": "сверка progress.d/", "why": "фрагментов нет", "closes_with": "sp progress --check после D01", "act": null }
+  ],
+  "axes": [
+    { "axis": "evidence", "result": "deferred", "note": "ни одно D не done, актов нет по определению" },
+    { "axis": "prompt_quality", "result": "pass", "note": "14 заданий, 3/3 батча, issues = 0" },
+    { "axis": "test_plans", "result": "deferred", "note": "14 планов на 82 уникальные фразы; тестов нет до выполнения D" },
+    { "axis": "exit_criteria", "result": "pass", "note": "E1–E28 с проверкой и файлом-доказательством; pass без файла валит гейт; закрыто 0" },
+    { "axis": "coverage", "result": "pass", "note": "0 строк без D, 0 фантомных D, все задания покрыты" },
+    { "axis": "risks", "result": "pass", "note": "5 рисков с владельцами" },
+    { "axis": "size_budget", "result": "pass", "note": "14 D, OVER = 0, surfaces <= 2" },
+    { "axis": "traceability", "result": "pass", "note": "DEC-001…DEC-004 связаны с intake, doctor --strict = ok" },
+    { "axis": "baseline", "result": "n/a", "note": "ось 10b снята каноном 1.31.1; предмет — R01" }
+  ],
+  "canon_defects": [
+    { "id": "C-01", "what": "acceptance требовал тестов на 10b", "status": "fixed_1_31_1", "how": "scope: deferred при 0 done + --require-all для релиза" },
+    { "id": "C-02", "what": "product-smoke не умел n/a", "status": "fixed_1_31_1", "how": "--na \"<причина>\" пишет na: true" },
+    { "id": "C-03", "what": "runtime требовался до появления кода", "status": "fixed_1_31_1", "how": "runtime не входит в 10b, обязателен на pre_release" },
+    { "id": "C-04", "what": "ось baseline замкнута на R01", "status": "fixed_1_31_1", "how": "baseline убран из входов и чек-листа 10b" },
+    { "id": "C-05", "what": "self-audit не проверял задания и приёмку", "status": "fixed_1_31_1", "how": "self-audit вызывает проверку заданий, пишет prompts_checked" },
+    { "id": "C-06", "what": "runtime-plan зелёный при 0 принятых фраз", "status": "fixed_1_31_1", "how": "акт пишет accepted_count и coverage_scope" },
+    { "id": "C-07", "what": "exit-criteria проверял только текст", "status": "fixed_1_31_1", "how": "pass требует существующего файла-доказательства" },
+    { "id": "C-08", "what": "validation_ok пака — самодекларация", "status": "fixed_1_31_1", "how": "требуется *.validation.json" },
+    { "id": "C-09", "what": "coverage-matrix без обратной сверки", "status": "fixed_1_31_1", "how": "фантомные D и непокрытые задания валят self-audit" },
+    { "id": "C-10", "what": "progress --check зелёный без фрагментов", "status": "fixed_1_31_1", "how": "явный n/a в выводе" },
+    { "id": "C-11", "what": "d-prompt-quality без Given/When/Then", "status": "fixed_1_31_1", "how": "пустые колонки валят проверку" },
+    { "id": "C-12", "what": "product-smoke --skip-commands даёт зелёный акт без прогона", "status": "open", "how": "в 10b не используется: применён --na; правка канона — следующий патч" },
+    { "id": "C-13", "what": "selftest validate.sh негерметичен", "status": "fixed_1_31_1", "how": "герметичный фикстур, isCanonRoot без OUTPUT/MANIFEST" },
+    { "id": "C-14", "what": "doctor считал файлы канона кодом вне PRODUCES", "status": "fixed_1_31_1", "how": "witness-done/ в BOOKKEEPING_PREFIXES" },
+    { "id": "C-15", "what": "sp next игнорировал вердикт 10b", "status": "fixed_1_31_1", "how": "пока 10b_self_audit не done, next возвращает 10b" },
+    { "id": "C-16", "what": "01_contract.md никем не создаётся", "status": "fixed_1_31_1", "how": "runtime-plan берёт фразы из OUTPUT/prompts" },
+    { "id": "C-17", "what": "README предлагал validate.sh в проекте", "status": "fixed_1_31_1", "how": "оговорено: validate.sh — гейт репозитория канона" },
+    { "id": "C-18", "what": "шаблон exit-criteria: «E1…E90»", "status": "fixed_1_31_1", "how": "объём критериев по ТЗ" }
+  ],
+  "open_issues": [
+    { "id": "R1", "severity": "minor", "what": "--skip-commands в product-smoke даёт зелёный акт без прогона (C-12)", "mitigation": "на 10b используется --na с причиной; реальный прогон обязателен на pre_release" },
+    { "id": "R2", "severity": "info", "what": "копия фабрики в проекте 1.31.0, гейты сняты 1.31.1", "mitigation": "DEC-003; догоняется ближайшим sp update" },
+    { "id": "R3", "severity": "info", "what": "open_criteria = 28", "mitigation": "критерии закрываются выполнением D01…D14, число видно в акте" }
+  ],
+  "brownfield_transition": true,
+  "next": "PIPELINE/R01_baseline_specs.md"
+}

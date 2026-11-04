@@ -1,0 +1,18 @@
+{
+  "gate": "baseline",
+  "domains": [],
+  "issues": [
+    "missing spec-state/config.yaml",
+    "missing spec-state/baseline/ — run R01 first"
+  ],
+  "tax_pass": false,
+  "timestamp": "2026-11-04T16:30:46.443Z",
+  "evidence_name": "BASELINE.json",
+  "code_hash": {
+    "git_head": "25a7a13e55d2b55f50394061e1aa80d2b70c13eb",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "1dc0e1c8c8f992f5092bd034d12a41f81d50fb23"
+  },
+  "evidence_hash": "22872d8875e81101c73033e46830a72acc8467be83b72d5bb449f98536a2fd9c"
+}

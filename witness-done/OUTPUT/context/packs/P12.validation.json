@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "must_hit_ok": true,
+  "must_hit_section": true,
+  "must_hit_paths": [
+    "OUTPUT/prompts/D11_reports_api.md",
+    "OUTPUT/specs/openapi.yaml",
+    "OUTPUT/docs/design-notes.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/security/data-protection.md"
+  ],
+  "missing_must_hit": [],
+  "anchors": [
+    "OUTPUT/prompts/D11_reports_api.md",
+    "OUTPUT/specs/openapi.yaml",
+    "OUTPUT/docs/design-notes.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/security/data-protection.md"
+  ],
+  "chunks": [
+    "OUTPUT/prompts/D11_reports_api.md",
+    "OUTPUT/specs/openapi.yaml",
+    "OUTPUT/docs/design-notes.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/security/data-protection.md"
+  ],
+  "dropped": [],
+  "missing": [],
+  "over_max_chunks": false,
+  "max_chunks": 12,
+  "canon_max_chunks": 12,
+  "meta_max_chunks": 8,
+  "meta_max_chunks_ok": true,
+  "timestamp": "2026-11-04T13:59:42.362Z"
+}

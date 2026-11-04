@@ -1,0 +1,53 @@
+erDiagram
+    AUTH_USERS ||--|| PROFILES : "id = id"
+    PROFILES ||--o{ OBJECTS : "created_by"
+    PROFILES ||--o{ TASKS : "assignee_id"
+    PROFILES ||--o{ TASKS : "author_id"
+    OBJECTS ||--o{ TASKS : "object_id"
+    TASKS ||--o{ TASK_STATUS_HISTORY : "task_id"
+    PROFILES ||--o{ TASK_STATUS_HISTORY : "changed_by"
+
+    AUTH_USERS {
+        uuid id PK
+        text email
+    }
+
+    PROFILES {
+        uuid id PK
+        text full_name
+        user_role role
+        timestamptz created_at
+    }
+
+    OBJECTS {
+        uuid id PK
+        text title
+        text address
+        uuid created_by FK
+        timestamptz created_at
+        timestamptz updated_at
+        timestamptz deleted_at
+    }
+
+    TASKS {
+        uuid id PK
+        uuid object_id FK
+        text title
+        text description
+        uuid assignee_id FK
+        uuid author_id FK
+        task_status status
+        timestamptz created_at
+        timestamptz updated_at
+        timestamptz deleted_at
+    }
+
+    TASK_STATUS_HISTORY {
+        bigint id PK
+        uuid task_id FK
+        task_status from_status
+        task_status to_status
+        uuid changed_by FK
+        text comment
+        timestamptz created_at
+    }

@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "must_hit_ok": true,
+  "must_hit_section": true,
+  "must_hit_paths": [
+    "OUTPUT/tooling/env-vars.md",
+    "OUTPUT/tooling/tsconfig.strict-notes.md",
+    "OUTPUT/tooling/lint-setup.md",
+    "OUTPUT/tooling/verify-commands.md",
+    "OUTPUT/specs/openapi.yaml",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/docs/07_module_plan.md",
+    "OUTPUT/tooling/ci.yml.example"
+  ],
+  "missing_must_hit": [],
+  "anchors": [
+    "OUTPUT/tooling/env-vars.md",
+    "OUTPUT/tooling/tsconfig.strict-notes.md",
+    "OUTPUT/tooling/lint-setup.md",
+    "OUTPUT/tooling/verify-commands.md",
+    "OUTPUT/specs/openapi.yaml",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/docs/07_module_plan.md",
+    "OUTPUT/tooling/ci.yml.example"
+  ],
+  "chunks": [
+    "OUTPUT/tooling/env-vars.md",
+    "OUTPUT/tooling/tsconfig.strict-notes.md",
+    "OUTPUT/tooling/lint-setup.md",
+    "OUTPUT/tooling/verify-commands.md",
+    "OUTPUT/specs/openapi.yaml",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/docs/07_module_plan.md",
+    "OUTPUT/tooling/ci.yml.example"
+  ],
+  "dropped": [],
+  "missing": [],
+  "over_max_chunks": false,
+  "max_chunks": 12,
+  "canon_max_chunks": 12,
+  "meta_max_chunks": 9,
+  "meta_max_chunks_ok": true,
+  "timestamp": "2026-11-04T13:56:55.016Z"
+}

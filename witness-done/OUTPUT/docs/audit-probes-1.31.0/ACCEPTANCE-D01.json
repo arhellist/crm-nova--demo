@@ -1,0 +1,85 @@
+{
+  "gate": "acceptance",
+  "checked": [
+    "D01"
+  ],
+  "results": [
+    {
+      "d": "D01",
+      "level": "L2",
+      "na": false,
+      "ok": false,
+      "phrases": [
+        {
+          "id": "A01.1",
+          "digest": "dc0c52c73992",
+          "tests": [],
+          "exempt": false,
+          "satisfied": false
+        },
+        {
+          "id": "A01.2",
+          "digest": "583cec8a2a18",
+          "tests": [],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A01.3",
+          "digest": "d5762fc01e12",
+          "tests": [],
+          "exempt": false,
+          "satisfied": false
+        },
+        {
+          "id": "A01.4",
+          "digest": "e45f0ae2211a",
+          "tests": [],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A01.5",
+          "digest": "3ae264080e51",
+          "tests": [],
+          "exempt": false,
+          "satisfied": false
+        },
+        {
+          "id": "A01.6",
+          "digest": "f98127385384",
+          "tests": [],
+          "exempt": false,
+          "satisfied": false
+        }
+      ],
+      "binding_hash": "7529607f9343cc479fcf8658291bb288d9a032f8fb030a9e447a5c5a85b2ab6f",
+      "test_plan": "tests/test-plan-D01.md",
+      "files": [],
+      "issues": [
+        "фраза A01.1 без теста: нет теста с объявлением «A01.1» в PRODUCES задания",
+        "фраза A01.3 без теста: нет теста с объявлением «A01.3» в PRODUCES задания",
+        "фраза A01.5 без теста: нет теста с объявлением «A01.5» в PRODUCES задания",
+        "фраза A01.6 без теста: нет теста с объявлением «A01.6» в PRODUCES задания",
+        "в PRODUCES задания нет тестовых файлов: связь «фраза → тест» нечем подтвердить",
+        "tests/test-plan-D01.md: строка A01.1 ссылается на src/shared/config/env.test.ts, но этот тест фразу не объявляет",
+        "tests/test-plan-D01.md: строка A01.3 ссылается на src/shared/logger.test.ts, но этот тест фразу не объявляет",
+        "tests/test-plan-D01.md: строка A01.5 ссылается на src/server/lifecycle.test.ts, но этот тест фразу не объявляет",
+        "tests/test-plan-D01.md: строка A01.6 ссылается на src/server/app.test.ts, но этот тест фразу не объявляет",
+        "tests/test-plan-D01.md: строка A01.2 без пути к тесту",
+        "tests/test-plan-D01.md: строка A01.4 без пути к тесту"
+      ]
+    }
+  ],
+  "tax_pass": false,
+  "timestamp": "2026-11-04T16:33:56.265Z",
+  "d": "D01",
+  "evidence_name": "ACCEPTANCE-D01.json",
+  "code_hash": {
+    "git_head": "25a7a13e55d2b55f50394061e1aa80d2b70c13eb",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "1dc0e1c8c8f992f5092bd034d12a41f81d50fb23"
+  },
+  "evidence_hash": "b975c0c1418f380ced3e62349e745f06b6cf8161032fe194052d0c259ce86264"
+}

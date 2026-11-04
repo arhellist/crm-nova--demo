@@ -1,0 +1,82 @@
+{
+  "gate": "d-prompt-quality",
+  "batch": 3,
+  "batch_size": 4,
+  "batches_total": 3,
+  "prompts_total": 14,
+  "checked": [
+    "D11",
+    "D12",
+    "D13",
+    "D14"
+  ],
+  "results": [
+    {
+      "d": "D11",
+      "file": "D11_reports_api.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A11.1",
+        "A11.2",
+        "A11.3",
+        "A11.4",
+        "A11.5",
+        "A11.6",
+        "A11.7"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D12",
+      "file": "D12_reports_ui.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A12.1",
+        "A12.2",
+        "A12.3",
+        "A12.4",
+        "A12.5",
+        "A12.6"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D13",
+      "file": "D13_observability_restore.md",
+      "level": "L1",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A13.1",
+        "A13.2",
+        "A13.3",
+        "A13.4"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D14",
+      "file": "D14_release_acceptance.md",
+      "level": "L1",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A14.1",
+        "A14.2",
+        "A14.3",
+        "A14.4"
+      ],
+      "issues": []
+    }
+  ],
+  "tax_pass": true,
+  "timestamp": "2026-11-04T16:52:57.858Z",
+  "evidence_name": "prompt-quality-batch-3.json",
+  "code_hash": {
+    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+  },
+  "evidence_hash": "bff95065c75988c39c7519675af79fdae136ac2b40b2155b789b55332cb1b767"
+}

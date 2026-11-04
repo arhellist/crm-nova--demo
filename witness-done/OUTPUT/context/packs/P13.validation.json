@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "must_hit_ok": true,
+  "must_hit_section": true,
+  "must_hit_paths": [
+    "OUTPUT/tooling/observability.md",
+    "OUTPUT/tooling/deploy.md",
+    "OUTPUT/tooling/env-vars.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/security/secrets-and-config.md",
+    "OUTPUT/docs/runbooks/product-smoke.md",
+    "OUTPUT/specs/openapi.yaml"
+  ],
+  "missing_must_hit": [],
+  "anchors": [
+    "OUTPUT/tooling/observability.md",
+    "OUTPUT/tooling/deploy.md",
+    "OUTPUT/tooling/env-vars.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/security/secrets-and-config.md",
+    "OUTPUT/docs/runbooks/product-smoke.md",
+    "OUTPUT/specs/openapi.yaml"
+  ],
+  "chunks": [
+    "OUTPUT/tooling/observability.md",
+    "OUTPUT/tooling/deploy.md",
+    "OUTPUT/tooling/env-vars.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/security/secrets-and-config.md",
+    "OUTPUT/docs/runbooks/product-smoke.md",
+    "OUTPUT/specs/openapi.yaml"
+  ],
+  "dropped": [],
+  "missing": [],
+  "over_max_chunks": false,
+  "max_chunks": 12,
+  "canon_max_chunks": 12,
+  "meta_max_chunks": 9,
+  "meta_max_chunks_ok": true,
+  "timestamp": "2026-11-04T13:59:42.410Z"
+}

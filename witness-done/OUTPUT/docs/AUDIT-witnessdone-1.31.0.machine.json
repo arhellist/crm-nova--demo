@@ -1,0 +1,230 @@
+{
+  "audit": "witness-done-canon",
+  "factory_version": "1.31.0",
+  "project": "NOVA CRM",
+  "date": "2026-11-04",
+  "method": "gate runs + implementation reading + isolated reproduction",
+  "verdict": {
+    "waves_a_to_c2": "pass",
+    "step_10b": "unreachable_by_design",
+    "false_green_gates": 7,
+    "tooling_defects": 4,
+    "brownfield_transition": "blocked_by_contradiction"
+  },
+  "gates": {
+    "d_prompt_quality": { "exit": 0, "batches": 3, "batches_total": 3, "prompts_total": 14, "tax_pass": true },
+    "self_audit": { "exit": 0, "issues": 0, "tax_pass": true, "note": "не проверяет промпты, acceptance и product-smoke" },
+    "acceptance": { "exit": 2, "failed": 14, "reason": "нет тестовых файлов до выполнения D01–D14" },
+    "product_smoke": { "exit": 2, "reason": "нет контура; честный скрипт вернул 2" },
+    "product_smoke_skip": { "exit": 0, "commands": 0, "commands_skipped": true, "tax_pass": true, "note": "ложный зелёный" },
+    "runtime_plan": { "exit": 0, "executed": false, "accepted_count": 0, "uncovered": 0, "tax_pass": true, "note": "вакуумный зелёный" },
+    "runtime": { "exit": null, "reason": "не запускался: нет кода и контура" },
+    "baseline": { "exit": 2, "reason": "spec-state создаётся только в R01" },
+    "pre_release": { "exit": 2, "reason": "нет RELEASE-runtime-verify.json" },
+    "doctor_strict": { "exit": 2, "changed_outside_produces": 153 },
+    "rules_check": { "exit": 0, "targets": 13 },
+    "progress_check": { "exit": 0, "fragments": 0, "note": "сверять нечего" },
+    "journal_check": { "exit": 0, "decisions": 2 },
+    "validate_install": { "exit": 1, "reason": "OUTPUT занят, MANIFEST существует, doctor в корне канона падает" },
+    "validate_head_snapshot": { "exit": 0, "reason": "RESULT: PASS" }
+  },
+  "findings": [
+    {
+      "id": "C-01",
+      "severity": "blocker",
+      "type": "unsatisfiable_gate",
+      "title": "acceptance требует тестов до появления кода",
+      "canon_refs": ["PIPELINE/10b_self_audit.md:8", "PIPELINE/10b_self_audit.md:117", "ORCHESTRATOR.md:72", "SEED/sp-tools/acceptance-bind.mjs:289-317"],
+      "evidence": "14/14 D fail; src/ и тестовых файлов нет; 0 тестов",
+      "fix": "перенести acceptance в фазу после D-заданий или ввести design-only режим с причиной"
+    },
+    {
+      "id": "C-02",
+      "severity": "blocker",
+      "type": "unsatisfiable_gate",
+      "title": "product-smoke без n/a и с ложным зелёным при --skip-commands",
+      "canon_refs": ["PIPELINE/10b_self_audit.md:104", "SEED/sp-tools/sp-verify.mjs:1518-1535"],
+      "evidence": "честный прогон exit 2; --skip-commands: commands=[], tax_pass=true; pre_release отвергает такой акт",
+      "fix": "ввести --na с причиной; в 10b принимать только исполненный акт"
+    },
+    {
+      "id": "C-03",
+      "severity": "blocker",
+      "type": "unsatisfiable_gate",
+      "title": "runtime требует поднятого контура до появления кода",
+      "canon_refs": ["PIPELINE/10b_self_audit.md:106"],
+      "evidence": "RELEASE-runtime-verify.json отсутствует; executePlan нечего исполнять",
+      "fix": "оставить в 10b только runtime-plan; runtime — после D14/pre_release"
+    },
+    {
+      "id": "C-04",
+      "severity": "blocker",
+      "type": "circular_dependency",
+      "title": "10b требует spec-state/baseline, который создаёт R01 после PASS",
+      "canon_refs": ["PIPELINE/10b_self_audit.md:20", "PIPELINE/10b_self_audit.md:61", "PIPELINE/R01_baseline_specs.md:шаг 1", "SEED/sp-tools/sp-verify.mjs:1546-1628"],
+      "evidence": "baseline gate exit 2; self-audit вообще не проверяет spec-state",
+      "fix": "убрать ось из 10b или проверять baseline в R01"
+    },
+    {
+      "id": "C-05",
+      "severity": "major",
+      "type": "false_green",
+      "title": "self-audit не проверяет prompt quality, acceptance и product-smoke",
+      "canon_refs": ["SEED/sp-tools/sp-verify.mjs:101", "SEED/sp-tools/sp-verify.mjs:1546-1628"],
+      "evidence": "self-audit exit 0 при acceptance exit 2 (14/14)",
+      "fix": "вызывать нужные проверки или исправить справку и отчёт 10b"
+    },
+    {
+      "id": "C-06",
+      "severity": "major",
+      "type": "false_green",
+      "title": "runtime-plan вакуумен: accepted_count=0",
+      "canon_refs": ["SEED/sp-tools/runtime-plan.mjs:36-57", "SEED/sp-tools/runtime-plan.mjs:193-207", "SEED/sp-tools/sp-verify.mjs:2414-2421"],
+      "evidence": "planned=29, na=3, uncovered=0, executed=false; ни одного Dxx.json",
+      "fix": "писать accepted_count в акт; при 0 не объявлять полноту"
+    },
+    {
+      "id": "C-07",
+      "severity": "major",
+      "type": "false_green",
+      "title": "exit-criteria проверяет текст ячейки, а не наличие доказательства",
+      "canon_refs": ["SEED/sp-tools/sp-verify.mjs:1580-1592"],
+      "evidence": "E1–E28 со статусом pending и ожидаемым артефактом проходят",
+      "fix": "для pass проверять файл; pending считать незакрытым"
+    },
+    {
+      "id": "C-08",
+      "severity": "major",
+      "type": "false_green",
+      "title": "CONTEXT_PACK validation_ok — самодекларация",
+      "canon_refs": ["SEED/sp-tools/sp-verify.mjs:1389-1400"],
+      "evidence": "*.validation.json не читается, якоря не сверяются",
+      "fix": "открывать validation.json и сверять anchors с CONSUMES"
+    },
+    {
+      "id": "C-09",
+      "severity": "medium",
+      "type": "weak_gate",
+      "title": "coverage-matrix проверяется регуляркой на Dxx",
+      "canon_refs": ["SEED/sp-tools/sp-verify.mjs:1560-1570"],
+      "evidence": "любой D-id в строке проходит, соответствие фраз не проверяется",
+      "fix": "обратная проверка requirement → ACCEPTANCE D"
+    },
+    {
+      "id": "C-10",
+      "severity": "medium",
+      "type": "false_green",
+      "title": "progress --check зелёный при нуле фрагментов",
+      "canon_refs": ["SEED/sp-tools/sp.mjs (progress --check)", "PIPELINE/10b_self_audit.md:110"],
+      "evidence": "exit 0, «фрагментов нет — сверять нечего»",
+      "fix": "n/a вместо 0"
+    },
+    {
+      "id": "C-11",
+      "severity": "medium",
+      "type": "weak_gate",
+      "title": "d-prompt-quality не требует Given/When/Then",
+      "canon_refs": ["PIPELINE/10b_self_audit.md:51-52", "SEED/sp-tools/sp-verify.mjs:1367-1370"],
+      "evidence": "двухколоночная таблица ACCEPTANCE проходит",
+      "fix": "проверять три непустые колонки"
+    },
+    {
+      "id": "C-12",
+      "severity": "medium",
+      "type": "false_green",
+      "title": "product-smoke --skip-commands даёт tax_pass true без прогона",
+      "canon_refs": ["SEED/sp-tools/sp-verify.mjs:1509-1518"],
+      "evidence": "commands=[], commands_skipped=true, tax_pass=true",
+      "fix": "не писать tax_pass true при пропуске команд; либо отдельный акт"
+    },
+    {
+      "id": "C-13",
+      "severity": "major",
+      "type": "tooling_defect",
+      "title": "selftest validate.sh негерметичен, проверка артефакта в OUTPUT недостижима",
+      "canon_refs": ["SEED/sp-tools/selftest.sh:1040-1045", "SEED/sp-tools/sp.mjs:741-748", "SEED/sp-tools/sp.mjs:1830-1839"],
+      "evidence": "одинаковый сценарий: шаблонный TECH_SPEC → 2, реальный → 0; в установке validate.sh FAIL",
+      "fix": "герметичный фикстур, явный --canon, не использовать MANIFEST как переключатель"
+    },
+    {
+      "id": "C-14",
+      "severity": "major",
+      "type": "tooling_defect",
+      "title": "doctor --strict считает канон файлами вне PRODUCES",
+      "canon_refs": ["SEED/sp-tools/sp.mjs:2002-2020", "SEED/sp-tools/evidence-lib.mjs:20-39"],
+      "evidence": "153 файла, включая adapters/SEED/PIPELINE; strict = 2 на свежей установке",
+      "fix": "добавить witness-done/ в BOOKKEEPING_PREFIXES или сравнивать с коммитом установки"
+    },
+    {
+      "id": "C-15",
+      "severity": "major",
+      "type": "tooling_defect",
+      "title": "sp next игнорирует вердикт и ведёт в R01 после FAIL 10b",
+      "canon_refs": ["SEED/sp-tools/sp.mjs:65-84", "SEED/sp-tools/sp.mjs:608-611", "PIPELINE/10b_self_audit.md:126"],
+      "evidence": "status: last_completed_step=10b → next=R01 при 10b_self_audit=fail",
+      "fix": "учитывать статус шага и 10b_self_audit в NEXT_STEP"
+    },
+    {
+      "id": "C-16",
+      "severity": "medium",
+      "type": "dangling_artifact",
+      "title": "01_contract.md не создаётся ни одним шагом",
+      "canon_refs": ["PIPELINE/08_tooling_lint_cicd.md:99", "TEMPLATES/runtime-plan.md:13", "SEED/sp-tools/runtime-plan.mjs:60-68"],
+      "evidence": "файла нет; contractAcceptances=null; phantom-check выключен",
+      "fix": "создавать на 01/09 или удалить ссылки"
+    },
+    {
+      "id": "C-17",
+      "severity": "medium",
+      "type": "documentation_defect",
+      "title": "README предлагает validate.sh в установленном проекте без оговорки",
+      "canon_refs": ["README.md:434-435", "README.md:470"],
+      "evidence": "после шага 00 validate.sh всегда FAIL по занятому OUTPUT",
+      "fix": "оговорить, что это гейт канона; дать команду снимка"
+    },
+    {
+      "id": "C-18",
+      "severity": "minor",
+      "type": "documentation_defect",
+      "title": "E1…E90 против «или сколько требует объём»",
+      "canon_refs": ["PIPELINE/10b_self_audit.md:15", "TEMPLATES/exit-criteria.md:33"],
+      "evidence": "28 критериев допустимы шаблоном, но текст 10b читается как требование 90",
+      "fix": "согласовать формулировку"
+    }
+  ],
+  "own_errors": [
+    { "id": "O-1", "what": "last_completed_step=10b при FAIL", "fix": "поставлено 10; 10b = needs_human" },
+    { "id": "O-2", "what": "runtime-plan pass назван покрытием", "fix": "оговорка о вакуумности" },
+    { "id": "O-3", "what": "self-audit pass назван доказательством качества", "fix": "уточнено: гейт узкий" },
+    { "id": "O-4", "what": "«84 фразы» в первой редакции", "fix": "104 строки планов, 82 уникальные фразы" },
+    { "id": "O-5", "what": "зелёный акт product-smoke после --skip-commands", "fix": "перепрогнан честно, tax_pass=false" }
+  ],
+  "good_parts": [
+    "evidence_hash/code_hash/script_sha256",
+    "acceptance-bind: @acceptance + digest фразы",
+    "pre_release ловит commands_skipped и устаревший скрипт",
+    "d-prompt-quality режет размер и плейсхолдеры",
+    "journal/intake traceability",
+    "sp rules --sync: 13 адаптеров"
+  ],
+  "status_after_1_31_1": {
+    "patched_in": "WitnessDone v1.31.1 (тег v1.31.1, DEC-041 канона)",
+    "step_10b": "pass",
+    "brownfield_transition": "allowed",
+    "closed": ["C-01", "C-02", "C-03", "C-04", "C-05", "C-06", "C-07", "C-08", "C-09", "C-10", "C-11", "C-13", "C-14", "C-15", "C-16", "C-17", "C-18"],
+    "open": [
+      { "id": "C-12", "what": "product-smoke --skip-commands по-прежнему даёт зелёный акт без прогона", "mitigation": "на 10b используется --na с причиной; правка канона — следующий патч" }
+    ],
+    "rerun": {
+      "gates_run_by": "1.31.1",
+      "self_audit": { "exit": 0, "open_criteria": 28, "prompts_checked": 14 },
+      "acceptance": { "exit": 0, "scope": "deferred" },
+      "product_smoke": { "exit": 0, "na": true },
+      "runtime_plan": { "exit": 0, "accepted_count": 0, "uncovered": 0 },
+      "doctor_strict": { "exit": 0 },
+      "rules_check": { "exit": 0, "targets": 13 }
+    },
+    "evidence": "OUTPUT/docs/10b_self_audit.md, OUTPUT/docs/10b_self_audit.machine.json, OUTPUT/evidence/*.json",
+    "decisions": ["DEC-003", "DEC-004"]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "gate": "runtime-plan",
+  "plan": "runtime/runtime-plan.json",
+  "executed": false,
+  "stack": [
+    "node",
+    "typescript",
+    "react",
+    "postgres",
+    "supabase",
+    "docker"
+  ],
+  "planned": [
+    "A01.2",
+    "A01.4",
+    "A02.2",
+    "A02.4",
+    "A03.1",
+    "A03.2",
+    "A04.1",
+    "A04.2",
+    "A05.1",
+    "A05.3",
+    "A07.1",
+    "A07.3",
+    "A08.2",
+    "A08.4",
+    "A09.1",
+    "A09.3",
+    "A10.2",
+    "A10.3",
+    "A11.1",
+    "A11.3",
+    "A11.6",
+    "A12.1",
+    "A12.4",
+    "A13.1",
+    "A13.3",
+    "A14.1",
+    "A14.2",
+    "A14.4"
+  ],
+  "na": [
+    "A06.1",
+    "A08.1",
+    "A12.2"
+  ],
+  "uncovered": [],
+  "accepted_count": 0,
+  "coverage_scope": "no accepted D yet — план проверен статически, покрытие приёмки не подтверждено",
+  "issues": [],
+  "tax_pass": true,
+  "timestamp": "2026-11-04T16:53:05.009Z",
+  "evidence_name": "RELEASE-runtime-plan.json",
+  "code_hash": {
+    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+  },
+  "evidence_hash": "1dcd23005e33197b99d564c3982484b1e2ec0aa22bdbfba0709e4497aac3bdc7"
+}

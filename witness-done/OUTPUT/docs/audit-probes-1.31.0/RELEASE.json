@@ -1,0 +1,68 @@
+{
+  "d": null,
+  "gate": "pre_release",
+  "mode": "full",
+  "tax_pass": false,
+  "issues": [
+    "D01 status=not_started",
+    "D02 status=not_started",
+    "D03 status=not_started",
+    "D04 status=not_started",
+    "D05 status=not_started",
+    "D06 status=not_started",
+    "D07 status=not_started",
+    "D08 status=not_started",
+    "D09 status=not_started",
+    "D10 status=not_started",
+    "D11 status=not_started",
+    "D12 status=not_started",
+    "D13 status=not_started",
+    "D14 status=not_started",
+    "coverage-matrix has P0 missing",
+    "runtime: нет акта RELEASE-runtime-verify.json — план есть, верификация в рантайме не прогонялась"
+  ],
+  "smoke": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/RELEASE-product-smoke.json",
+    "issues": []
+  },
+  "runtime": {
+    "required": true,
+    "ok": false,
+    "issues": [
+      "нет акта RELEASE-runtime-verify.json — план есть, верификация в рантайме не прогонялась"
+    ]
+  },
+  "coverage_confidence": {
+    "value": 0,
+    "residual_risk": "высокий: значительная часть работы не подтверждена воспроизводимыми артефактами",
+    "components": {
+      "produces_with_act": {
+        "share": 0,
+        "confirmed": 0,
+        "total": 0
+      },
+      "acceptance_with_tests": {
+        "share": 0,
+        "confirmed": 0,
+        "total": 0
+      },
+      "l3_with_trace": {
+        "share": 0,
+        "confirmed": 0,
+        "total": 0
+      }
+    },
+    "weights_applied": {},
+    "note": "статистическая оценка, а не замена tax_pass: доказательств для оценки нет"
+  },
+  "timestamp": "2026-11-04T16:29:49.800Z",
+  "code_hash": {
+    "git_head": "25a7a13e55d2b55f50394061e1aa80d2b70c13eb",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "1dc0e1c8c8f992f5092bd034d12a41f81d50fb23"
+  },
+  "evidence_hash": "2e4ca12691f906db3020a5754bc00f3ec133b41f3920207d63f3eb63b2bc1bd3"
+}

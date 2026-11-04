@@ -1,0 +1,231 @@
+# CI — NOVA CRM. Канон: witness-done/catalogs/cicd-environments.md, verification-tax.md
+# Правила:
+#   - PR: lint + typecheck + test + doctor + rules, без деплоя;
+#   - app-джобы не имеют continue-on-error;
+#   - deploy — только отдельные workflow с environment и подтверждением;
+#   - локальный pre_ci (sp-verify) — первая приёмка, CI — второй контур.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  lint-and-typecheck:
+    name: lint + typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: ESLint (frontend + backend)
+        run: npm run lint
+      - name: TypeScript strict
+        run: npm run typecheck
+      - name: Запрет any/@ts-ignore и console.log в app-коде
+        run: npm run lint:guards
+
+  test:
+    name: unit (frontend + backend)
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run test -- --coverage
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
+
+  db-test:
+    name: SQL / RLS / переходы (pgTAP)
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: supabase start
+      - run: supabase db reset
+      - name: pgTAP
+        run: supabase test db
+      - name: Seed минимального набора
+        run: psql "$SUPABASE_DB_URL" -f supabase/seed.sql
+        env:
+          SUPABASE_DB_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+      - name: Откат локального контура
+        if: always()
+        run: supabase stop --no-backup
+
+  backend:
+    name: backend (integration, read-only)
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: nova_ro
+          POSTGRES_PASSWORD: nova_ro_test
+          POSTGRES_DB: nova_replica
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U nova_ro -d nova_replica"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Интеграционные тесты отчётного API
+        run: npm run test:backend
+        env:
+          DATABASE_URL: postgresql://nova_ro:nova_ro_test@127.0.0.1:5432/nova_replica
+          API_TOKEN: test-token-not-a-secret
+          ALLOWED_ORIGINS: http://localhost:5173
+      - name: Write-методы запрещены (405)
+        run: npm run test:readonly
+
+  replication-test:
+    name: логическая репликация (публикация → подписка)
+    runs-on: ubuntu-latest
+    services:
+      primary:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nova
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d nova"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+      replica:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nova_replica
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d nova_replica"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Инициализация публикации и подписки
+        run: npm run test:replication:setup
+        env:
+          PRIMARY_URL: postgresql://postgres:postgres@127.0.0.1:5432/nova
+          REPLICA_URL: postgresql://postgres:postgres@127.0.0.1:5433/nova_replica
+      - name: Сверка счётчиков и лага
+        run: npm run test:replication
+        env:
+          PRIMARY_URL: postgresql://postgres:postgres@127.0.0.1:5432/nova
+          REPLICA_URL: postgresql://postgres:postgres@127.0.0.1:5433/nova_replica
+
+  security:
+    name: security-гейты
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Секреты в истории и рабочем дереве
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: service_role не попадает в код и сборку
+        run: npm run guard:no-service-role
+      - name: Зависимости (high/critical)
+        run: npm audit --audit-level=high
+      - name: CSP-конфигурация присутствует
+        run: npm run guard:csp
+
+  e2e:
+    name: e2e smoke (Playwright)
+    runs-on: ubuntu-latest
+    needs: [test, db-test, backend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: e2e против локального Supabase
+        run: npm run test:e2e
+        env:
+          SUPABASE_URL: http://127.0.0.1:54321
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.LOCAL_SERVICE_ROLE_KEY }}
+          VITE_SUPABASE_URL: http://127.0.0.1:54321
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.LOCAL_ANON_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  entry-and-rules:
+    name: вход, правила, акты
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Адаптеры IDE синхронны с AGENTS.md
+        run: node witness-done/SEED/sp-tools/sp.mjs rules --check
+      - name: Протокол входа, журнал, акты (strict)
+        run: node witness-done/SEED/sp-tools/sp.mjs doctor --strict
+
+  evidence-gate:
+    name: done ↔ evidence
+    runs-on: ubuntu-latest
+    needs: entry-and-rules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: node witness-done/SEED/sp-tools/sp-verify.mjs --gate evidence-sync
+
+  # Деплой в этот workflow НЕ входит. Staging и production — отдельные workflow
+  # с environment и подтверждением: .github/workflows/deploy-staging.yml, deploy-production.yml

@@ -1,0 +1,100 @@
+{
+  "gate": "d-prompt-quality",
+  "batch": 2,
+  "batch_size": 5,
+  "batches_total": 3,
+  "prompts_total": 14,
+  "checked": [
+    "D06",
+    "D07",
+    "D08",
+    "D09",
+    "D10"
+  ],
+  "results": [
+    {
+      "d": "D06",
+      "file": "D06_objects_ui.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A06.1",
+        "A06.2",
+        "A06.3",
+        "A06.4",
+        "A06.5",
+        "A06.6"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D07",
+      "file": "D07_tasks_contract.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A07.1",
+        "A07.2",
+        "A07.3",
+        "A07.4",
+        "A07.5",
+        "A07.6",
+        "A07.7"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D08",
+      "file": "D08_tasks_ui.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A08.1",
+        "A08.2",
+        "A08.3",
+        "A08.4",
+        "A08.5",
+        "A08.6"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D09",
+      "file": "D09_my_tasks_ui.md",
+      "level": "L2",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A09.1",
+        "A09.2",
+        "A09.3",
+        "A09.4",
+        "A09.5",
+        "A09.6"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D10",
+      "file": "D10_replica_views.md",
+      "level": "L1",
+      "size_ok": true,
+      "acceptance_ids": [
+        "A10.1",
+        "A10.2",
+        "A10.3",
+        "A10.4"
+      ],
+      "issues": []
+    }
+  ],
+  "tax_pass": true,
+  "timestamp": "2026-11-04T16:52:57.816Z",
+  "evidence_name": "prompt-quality-batch-2.json",
+  "code_hash": {
+    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+  },
+  "evidence_hash": "ce0cebd647a869c9f25e599b1b59db5d5046aa89d2abd0b03b1581c7207d0a92"
+}

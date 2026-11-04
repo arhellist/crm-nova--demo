@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "must_hit_ok": true,
+  "must_hit_section": true,
+  "must_hit_paths": [
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/specs/erd.mermaid",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/security/data-protection.md",
+    "OUTPUT/docs/adr/0002-supabase-single-write-path.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/docs/07_module_plan.md"
+  ],
+  "missing_must_hit": [],
+  "anchors": [
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/specs/erd.mermaid",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/security/data-protection.md",
+    "OUTPUT/docs/adr/0002-supabase-single-write-path.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/docs/07_module_plan.md"
+  ],
+  "chunks": [
+    "OUTPUT/specs/data-model.md",
+    "OUTPUT/specs/erd.mermaid",
+    "OUTPUT/security/authn-authz.md",
+    "OUTPUT/security/data-protection.md",
+    "OUTPUT/docs/adr/0002-supabase-single-write-path.md",
+    "OUTPUT/docs/nfr.md",
+    "OUTPUT/docs/07_module_plan.md"
+  ],
+  "dropped": [],
+  "missing": [],
+  "over_max_chunks": false,
+  "max_chunks": 12,
+  "canon_max_chunks": 12,
+  "meta_max_chunks": 9,
+  "meta_max_chunks_ok": true,
+  "timestamp": "2026-11-04T13:56:55.074Z"
+}
