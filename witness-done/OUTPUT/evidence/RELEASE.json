@@ -4,10 +4,6 @@
   "mode": "full",
   "tax_pass": false,
   "issues": [
-    "done D01: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
-    "done D04: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
-    "done D10: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
-    "coverage-matrix has P0 missing",
     "smoke: смоук снят без исполнения (--skip-commands)",
     "smoke: акт смоука без runtime.labels — нечем подтвердить фразы Axx",
     "smoke: акт смоука не привязан к скрипту (нет script_sha256) — перепрогони product-smoke",
@@ -77,12 +73,12 @@
     },
     "note": "статистическая оценка, а не замена tax_pass: веса перераспределены по компонентам с непустым знаменателем"
   },
-  "timestamp": "2026-11-04T18:27:59.247Z",
+  "timestamp": "2026-11-04T18:30:29.625Z",
   "code_hash": {
-    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
+    "git_head": "064e031929e85fd2b0d33a1f37bbbd4d6081e540",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a"
+    "git_tree": "ded1d6095cfb229813847cca8cbfad8ed48e8258"
   },
-  "evidence_hash": "33811e3470202cf121013e7715d31345d8f3d34c2626fe92e60e994a6ab1a3e8"
+  "evidence_hash": "7905da84155decab0a7333cdf5295c160f7c2ab0c061aeafb6d38b4eb51bbffa"
 }
