@@ -1,0 +1,34 @@
+{
+  "d": "D03",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: change_task_status — security definer, search_path, FOR UPDATE, P0400/P0403/P0422 по specs; матрица 5×5 литеральная, комментарий возврата обязателен; guard_task_status блокирует прямой UPDATE (проверено и клиентом 42501, и владельцем P0403); история append-only через гранты и guard_history_immutable; changed_by = auth.uid(); archive_task/archive_object только manager и идемпотентны; validate_task_actors и touch_updated_at на месте; execute только authenticated. pgTAP: schema 5/5, rls 9/9, transitions 6/6 (включая полную матрицу 25 пар), history 5/5, archive 6/6 на PostgreSQL 16. A03.1–A03.8 покрыты.",
+  "acceptance_ids": [
+    "A03.1",
+    "A03.2",
+    "A03.3",
+    "A03.4",
+    "A03.5",
+    "A03.6",
+    "A03.7",
+    "A03.8"
+  ],
+  "code_hash": {
+    "git_head": "01e55b55db8038c832334e256d44490238b220af",
+    "git_dirty": true,
+    "produces": [
+      "supabase/migrations/0004_status_machine.sql",
+      "supabase/migrations/0005_history_triggers.sql",
+      "supabase/migrations/0006_archive_rpc.sql",
+      "supabase/migrations/0007_grants.sql",
+      "supabase/tests/archive_test.sql",
+      "supabase/tests/history_test.sql",
+      "supabase/tests/transitions_test.sql"
+    ],
+    "git_tree": "68c845c678972d25e9fe655c2852dedab057859d",
+    "produces_digest": "8ddb4a8e4e77c9f5583aba1aff8735c8b609bf7bf1ead936082c888c1f149438"
+  },
+  "evidence_ref": "evidence/D03.json",
+  "evidence_hash": "4b3776363eef91966c2162504dc59cec519637e484da13555b13e5dc4ee0255d",
+  "timestamp": "2026-11-04T17:20:03.136Z"
+}

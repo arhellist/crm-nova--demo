@@ -70,16 +70,16 @@
         "supabase/tests/schema_test.sql",
         "supabase/tests/rls_test.sql"
       ],
-      "touched": [
-        "supabase/config.toml",
+      "touched": [],
+      "missing": [
         "supabase/migrations/0001_enums_and_tables.sql",
         "supabase/migrations/0002_helpers.sql",
         "supabase/migrations/0003_rls_policies.sql",
         "supabase/seed.sql",
-        "supabase/tests/rls_test.sql",
-        "supabase/tests/schema_test.sql"
+        "supabase/config.toml",
+        "supabase/tests/schema_test.sql",
+        "supabase/tests/rls_test.sql"
       ],
-      "missing": [],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -177,10 +177,10 @@
     "issues": []
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:15:51.230Z",
+  "timestamp": "2026-11-04T17:16:38.316Z",
   "code_hash": {
-    "git_head": "e9f2903229b02f183058166b68c474945be06a7a",
-    "git_dirty": true,
+    "git_head": "01e55b55db8038c832334e256d44490238b220af",
+    "git_dirty": false,
     "produces": [
       "supabase/config.toml",
       "supabase/migrations/0001_enums_and_tables.sql",
@@ -190,8 +190,8 @@
       "supabase/tests/rls_test.sql",
       "supabase/tests/schema_test.sql"
     ],
-    "git_tree": "0bd690dc8b0c0bdb81fa440a76312b5cea1c461a",
+    "git_tree": "68c845c678972d25e9fe655c2852dedab057859d",
     "produces_digest": "2471297cd6409d6f9054165c7643e740a58ad0e150a2aefe168fe7834b96df54"
   },
-  "evidence_hash": "ecf1593a9b2ff3416749bfe3019b4cdffdc295fda97762891ecb7a3e874c0071"
+  "evidence_hash": "bbcb115414b6748394c864ef80365d701acd3f7fce896f0937cb5022d118986e"
 }

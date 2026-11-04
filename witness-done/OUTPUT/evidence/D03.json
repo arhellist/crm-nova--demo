@@ -1,0 +1,211 @@
+{
+  "d": "D03",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/archive_object"
+    ],
+    "acceptance_ids": [
+      "A03.1",
+      "A03.2",
+      "A03.3",
+      "A03.4",
+      "A03.5",
+      "A03.6",
+      "A03.7",
+      "A03.8"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D01",
+      "D02"
+    ],
+    "conflicts_applied": [],
+    "out_of_produces": [],
+    "missing_produces": [],
+    "produces": [
+      "supabase/migrations/0004_status_machine.sql",
+      "supabase/migrations/0005_history_triggers.sql",
+      "supabase/migrations/0006_archive_rpc.sql",
+      "supabase/migrations/0007_grants.sql",
+      "supabase/tests/transitions_test.sql",
+      "supabase/tests/history_test.sql",
+      "supabase/tests/archive_test.sql"
+    ],
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": null,
+      "selected": [],
+      "referenced": [
+        "INV-003",
+        "INV-004",
+        "INV-008"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "supabase/migrations/0004_status_machine.sql",
+        "supabase/migrations/0005_history_triggers.sql",
+        "supabase/migrations/0006_archive_rpc.sql",
+        "supabase/migrations/0007_grants.sql",
+        "supabase/tests/transitions_test.sql",
+        "supabase/tests/history_test.sql",
+        "supabase/tests/archive_test.sql"
+      ],
+      "touched": [
+        "supabase/migrations/0004_status_machine.sql",
+        "supabase/migrations/0005_history_triggers.sql",
+        "supabase/migrations/0006_archive_rpc.sql",
+        "supabase/migrations/0007_grants.sql",
+        "supabase/tests/archive_test.sql",
+        "supabase/tests/history_test.sql",
+        "supabase/tests/transitions_test.sql"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A03.3",
+        "A03.4",
+        "A03.5",
+        "A03.6",
+        "A03.7",
+        "A03.8"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A03.1",
+        "A03.2"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "supabase/tests/archive_test.sql",
+        "supabase/tests/history_test.sql",
+        "supabase/tests/transitions_test.sql"
+      ],
+      "binding_hash": "373a3e6d3ad7d74f0b7ce59d57cf7dfb20e3ff4ad1709b7a9c39f8799c4aee2a"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/archive_object"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/tasks",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "no-secrets",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D01",
+      "D02"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D03.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": true,
+    "issues": [],
+    "verdict": "supports",
+    "reviewer": "peer-reviewer",
+    "file": "evidence/D03.review.json"
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T17:20:07.624Z",
+  "code_hash": {
+    "git_head": "01e55b55db8038c832334e256d44490238b220af",
+    "git_dirty": true,
+    "produces": [
+      "supabase/migrations/0004_status_machine.sql",
+      "supabase/migrations/0005_history_triggers.sql",
+      "supabase/migrations/0006_archive_rpc.sql",
+      "supabase/migrations/0007_grants.sql",
+      "supabase/tests/archive_test.sql",
+      "supabase/tests/history_test.sql",
+      "supabase/tests/transitions_test.sql"
+    ],
+    "git_tree": "68c845c678972d25e9fe655c2852dedab057859d",
+    "produces_digest": "8ddb4a8e4e77c9f5583aba1aff8735c8b609bf7bf1ead936082c888c1f149438"
+  },
+  "evidence_hash": "fd516ca99c477517c4a55ee0de87dd7bd90be6b8647e4aa7a028a526f3556d3d"
+}

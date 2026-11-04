@@ -19,3 +19,5 @@
 | DEC-006 | Поле архивации называется archived_at | 2026-11-04 | принято | 20261104-2057-davay-ebash-kod-po-proektu |
 | DEC-007 | Первым подключаемым контуром Supabase выбран облачный проект (staging), а не … | 2026-11-04 | принято | 20261104-2109-kak-podklyuchit-k-proektu-supabase-kakie |
 | DEC-008 | В объём D02 добавляются supabase init (создание supabase/config.toml, который… | 2026-11-04 | принято | 20261104-2109-kak-podklyuchit-k-proektu-supabase-kakie |
+| DEC-009 | D03: стабильные SQLSTATE берём из specs (P0400 — валидация/не найдено/пустой … | 2026-11-04 | принято | 20261104-2057-davay-ebash-kod-po-proektu |
+| DEC-010 | D03: функции записи создаём в схеме public (public.change_task_status, public… | 2026-11-04 | принято | 20261104-2057-davay-ebash-kod-po-proektu |

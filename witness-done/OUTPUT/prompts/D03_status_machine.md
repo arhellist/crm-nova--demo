@@ -85,7 +85,7 @@ append-only история и архивирование — так, чтобы 
 | module | none |
 | conflicts_ref | none |
 | conflicts_applied | none |
-| app_contracts | `POST /rest/v1/rpc/change_task_status`, `POST /rest/v1/rpc/archive_task`, `POST /rest/v1/rpc/archive_object` |
+| app_contracts | POST /rest/v1/rpc/change_task_status, POST /rest/v1/rpc/archive_task, POST /rest/v1/rpc/archive_object |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D01, D02 |

@@ -66,6 +66,74 @@ paths:
           content:
             application/json:
               schema: { $ref: "#/components/schemas/Error" }
+  # Write-контур Supabase: единственный путь смены статуса и архивирования (ADR-0002).
+  # Функции объявлены в схеме public, поэтому PostgREST отдаёт их по маршруту /rpc/.
+  /rest/v1/rpc/change_task_status:
+    post:
+      operationId: rpcChangeTaskStatus
+      summary: Сменить статус задачи
+      description: |
+        security definer-функция; матрица переходов и роль проверяются в БД (INV-003).
+        Ошибки: P0400 — задача не найдена/архивирована, P0403 — нет прав,
+        P0422 — переход запрещён или отсутствует комментарий возврата.
+      security:
+        - userJwt: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ChangeTaskStatusInput" }
+      responses:
+        "200":
+          description: Новый статус задачи
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { type: string, enum: [new, in_progress, on_review, rework, accepted] }
+        "400":
+          description: P0400/P0403/P0422 без SQL-деталей
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /rest/v1/rpc/archive_task:
+    post:
+      operationId: rpcArchiveTask
+      summary: Архивировать задачу (только manager, идемпотентно)
+      security:
+        - userJwt: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/IdInput" }
+      responses:
+        "204": { description: Задача архивирована или уже была архивирована }
+        "400":
+          description: P0400/P0403 без SQL-деталей
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /rest/v1/rpc/archive_object:
+    post:
+      operationId: rpcArchiveObject
+      summary: Архивировать объект (только manager, идемпотентно)
+      security:
+        - userJwt: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ObjectIdInput" }
+      responses:
+        "204": { description: Объект архивирован или уже был архивирован }
+        "400":
+          description: P0400/P0403 без SQL-деталей
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
   /health:
     get:
       operationId: getHealth
@@ -212,6 +280,23 @@ components:
         application/json:
           schema: { $ref: "#/components/schemas/Error" }
   schemas:
+    ChangeTaskStatusInput:
+      type: object
+      required: [p_task_id, p_target]
+      properties:
+        p_task_id: { type: string, format: uuid }
+        p_target: { type: string, enum: [new, in_progress, on_review, rework, accepted] }
+        p_comment: { type: string, maxLength: 2000, nullable: true }
+    IdInput:
+      type: object
+      required: [p_task_id]
+      properties:
+        p_task_id: { type: string, format: uuid }
+    ObjectIdInput:
+      type: object
+      required: [p_object_id]
+      properties:
+        p_object_id: { type: string, format: uuid }
     ObjectRow:
       type: object
       required: [id, title, address, created_by, created_at, updated_at]

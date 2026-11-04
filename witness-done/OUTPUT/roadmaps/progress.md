@@ -24,7 +24,7 @@
 |---|--------|-------------|--------|--------------|--------------------------|-----------|---------|
 | D01 | Каркас, env, логгер, health | platform | done | `evidence/D01.json`, `evidence/D01.review.json`, `evidence/BASELINE.json` | `src/shared/config/env.ts`, `src/shared/logger.ts`, `src/server/app.ts`, `src/server/index.ts`, тесты A01.1–A01.6 | 2026-11-04 | A01.1–A01.6 зелёные; env-валидация, redact, rate limit 60/мин, health, SIGTERM; pre_ci tax_pass |
 | D02 | Схема, enum, RLS | schema | done | `evidence/D02.json`, `evidence/D02.review.json`, `evidence/BASELINE.json` | `supabase/migrations/0001_enums_and_tables.sql`, `0002_helpers.sql`, `0003_rls_policies.sql`, `supabase/seed.sql`, `supabase/tests/schema_test.sql`, `supabase/tests/rls_test.sql` | 2026-11-04 | A02.1–A02.6 зелёные; RLS на всех таблицах, grants без anon, append-only история, seed идемпотентен; pgTAP 14/14; pre_ci tax_pass |
-| D03 | Машина статусов и история | schema | not_started | — | — | — | L2; A03.1–A03.7 |
+| D03 | Машина статусов и история | schema | done | `evidence/D03.json`, `evidence/D03.review.json`, `evidence/BASELINE.json` | `supabase/migrations/0004_status_machine.sql`, `0005_history_triggers.sql`, `0006_archive_rpc.sql`, `0007_grants.sql`, `supabase/tests/transitions_test.sql`, `history_test.sql`, `archive_test.sql` | 2026-11-04 | A03.1–A03.8 зелёные; матрица 5×25 проверена (5 проходят, 20 отклоняются), guard P0403, история append-only, архив идемпотентен; pgTAP 31/31; pre_ci tax_pass |
 | D04 | Вход с MFA и оболочка | auth | not_started | — | — | — | L2; A04.1–A04.6 |
 | D05 | Объекты: контракт записи | objects | not_started | — | — | — | L2; A05.1–A05.6 |
 | D06 | Объекты: экран | objects | not_started | — | — | — | L2; A06.1–A06.6 |
