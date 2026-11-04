@@ -89,7 +89,7 @@ GATE: none
 | module | crud-table |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями` |
 | conflicts_applied | `crud-table` offset/COUNT |
-| app_contracts | `GET /rest/v1/objects`, `POST /rest/v1/rpc/archive_object` |
+| app_contracts | GET /rest/v1/objects, POST /rest/v1/rpc/archive_object |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D04, D05 |

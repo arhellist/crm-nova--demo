@@ -25,7 +25,17 @@
     "acceptance_source": "prompt",
     "depends_done": [],
     "conflicts_applied": [],
-    "out_of_produces": [],
+    "out_of_produces": [
+      "src/app/router.tsx",
+      "src/features/objects/ObjectArchiveDialog.test.tsx",
+      "src/features/objects/ObjectArchiveDialog.tsx",
+      "src/features/objects/ObjectForm.test.tsx",
+      "src/features/objects/ObjectForm.tsx",
+      "src/features/objects/ObjectsPage.test.tsx",
+      "src/features/objects/ObjectsPage.tsx",
+      "src/features/objects/objectKeys.ts",
+      "src/features/objects/useObjects.ts"
+    ],
     "missing_produces": [],
     "produces": [
       "package.json",
@@ -71,7 +81,17 @@
         "src/shared/logger.test.ts",
         "src/server/lifecycle.test.ts"
       ],
-      "touched": [],
+      "touched": [
+        "src/app/router.tsx",
+        "src/features/objects/ObjectArchiveDialog.test.tsx",
+        "src/features/objects/ObjectArchiveDialog.tsx",
+        "src/features/objects/ObjectForm.test.tsx",
+        "src/features/objects/ObjectForm.tsx",
+        "src/features/objects/ObjectsPage.test.tsx",
+        "src/features/objects/ObjectsPage.tsx",
+        "src/features/objects/objectKeys.ts",
+        "src/features/objects/useObjects.ts"
+      ],
       "missing": [
         "package.json",
         "tsconfig.json",
@@ -148,8 +168,10 @@
       "GET /rest/v1/objects",
       "GET /rest/v1/profiles",
       "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
       "POST /auth/v1/factors",
       "POST /auth/v1/token",
+      "POST /rest/v1/objects",
       "POST /rest/v1/rpc/archive_object",
       "POST /rest/v1/rpc/archive_task",
       "POST /rest/v1/rpc/change_task_status"
@@ -189,9 +211,9 @@
     "file": "evidence/D01.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:25:44.675Z",
+  "timestamp": "2026-11-04T17:34:30.330Z",
   "code_hash": {
-    "git_head": "c0d360b42096c40ef3d4f13e9e8717edabc5038b",
+    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
     "git_dirty": false,
     "produces": [
       "package.json",
@@ -205,8 +227,8 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "31f1d15cd82cadc79bc9827d86dc417cee9488f7",
-    "produces_digest": "98d25e3c90a5f2716e606ad76b3727592a0f34610cc154e201e35822bfeb7170"
+    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
+    "produces_digest": "084dfc3df696cbd22fe3039d572455e26a3cee2e0f739705bd84d4ea11548ac4"
   },
-  "evidence_hash": "d40de868372d8c3b222260eff9b3dc0ee451fe1166ce1eac26aa7861859f5a4e"
+  "evidence_hash": "24ee2085d2c8c753a560e3d64920185c96a03d7371d1b670558c9b1528a9984a"
 }

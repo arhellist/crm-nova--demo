@@ -206,6 +206,36 @@
       "acceptance": "A05.6",
       "cmd": "npx vitest run src/features/objects/authz.test.ts",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A06.1",
+      "cmd": "npx vitest run src/features/objects/ObjectsPage.test.tsx -t A06.1",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A06.2",
+      "cmd": "npx vitest run src/features/objects/ObjectsPage.test.tsx -t A06.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A06.3",
+      "cmd": "npx vitest run src/features/objects/ObjectForm.test.tsx",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A06.4",
+      "cmd": "npx vitest run src/features/objects/ObjectArchiveDialog.test.tsx",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A06.5",
+      "cmd": "npx vitest run src/features/objects/ObjectsPage.test.tsx -t A06.5",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A06.6",
+      "cmd": "npx vitest run src/features/objects/ObjectsPage.test.tsx -t A06.6",
+      "expect_exit": 0
     }
   ]
 }

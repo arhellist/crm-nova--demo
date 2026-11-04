@@ -15,6 +15,7 @@ import { MfaChallenge } from '../features/auth/MfaChallenge.js';
 import { signOut } from '../features/auth/api.js';
 import { useSession } from '../features/auth/useSession.js';
 import { AppShell } from './AppShell.js';
+import { ObjectsPage } from '../features/objects/ObjectsPage.js';
 
 function LoadingScreen(): JSX.Element {
   return (
@@ -120,8 +121,8 @@ export function AppRoutes(): JSX.Element {
       <Route element={<ProtectedShell />}>
         <Route path="/" element={<Navigate to="/my" replace />} />
         <Route path="/my" element={<StubPage title="Мои задачи" />} />
-        <Route path="/objects" element={<StubPage title="Объекты" />} />
-        <Route path="/objects/:id" element={<StubPage title="Объект" />} />
+        <Route path="/objects" element={<ObjectsPage />} />
+        <Route path="/objects/:id" element={<ObjectsPage />} />
         <Route path="/tasks/:id" element={<StubPage title="Задача" />} />
         <Route
           path="/reports"

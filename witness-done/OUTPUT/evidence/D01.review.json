@@ -2,7 +2,7 @@
   "d": "D01",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Повторная приёмка после D04: package.json получил зависимости фронтенда и тестов (DEC-011), поведение D01 не изменилось. Проверено: env-валидация и exit 1 без утечки значений, redact pino, GET /health с version, rate limit 429 и retry-after, request_id в логах, SIGTERM <5 с. Тесты A01.1–A01.6 зелёные, lint/typecheck/test зелёные.",
+  "notes": "Переснято на новый produces_digest: package.json получил dev-скрипт с --env-file=.env.local (chore-коммит), зависимости и остальные поля не менялись; .env.example и игнор supabase/.temp вынесены отдельно, секретов в репозитории нет (INV-006).",
   "acceptance_ids": [
     "A01.1",
     "A01.2",
@@ -12,7 +12,7 @@
     "A01.6"
   ],
   "code_hash": {
-    "git_head": "c0d360b42096c40ef3d4f13e9e8717edabc5038b",
+    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
     "git_dirty": false,
     "produces": [
       "package.json",
@@ -26,10 +26,10 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "31f1d15cd82cadc79bc9827d86dc417cee9488f7",
-    "produces_digest": "98d25e3c90a5f2716e606ad76b3727592a0f34610cc154e201e35822bfeb7170"
+    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
+    "produces_digest": "084dfc3df696cbd22fe3039d572455e26a3cee2e0f739705bd84d4ea11548ac4"
   },
   "evidence_ref": "evidence/D01.json",
-  "evidence_hash": "78e056f0d0200d037d6f325a4415022475f31aee772cc79379b638466f5dcaa5",
-  "timestamp": "2026-11-04T17:25:39.587Z"
+  "evidence_hash": "3183aa53b74fd9b61e7d6db64247a7a3dd18c1902d322d4d6fa2abfd54c1be9f",
+  "timestamp": "2026-11-04T17:34:21.434Z"
 }

@@ -1,0 +1,34 @@
+{
+  "d": "D06",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: список — один DOM без дублей table/cards (ul+grid), 20 строк и «Показать ещё» курсором D05 (limit 20, без offset/COUNT), склейка страниц дедуплицирует по id; поиск локальный по загруженным страницам, ключ без q; управляющие кнопки только manager и только для неархивных, права всё равно в RLS; форма валидирует Zod до сети, блокируется на время мутации, ошибки D05 без SQL; диалог архива — text «объект и задачи останутся в истории», синхронный inFlight-флаг даёт ровно один RPC при двойном клике, Esc/Tab удерживают фокус; архивная карточка читаема, помечена бейджем, без кнопок правки, задачи — состояние «Задачи загружаются» по HOW п.6; пустое состояние без таблицы. Решения: DEC-014 (прочерк в колонке задач до D07), DEC-015 (моки контракта D05 вместо MSW). Тесты 34/34, lint/typecheck зелёные, A06.1–A06.6 покрыты.",
+  "acceptance_ids": [
+    "A06.1",
+    "A06.2",
+    "A06.3",
+    "A06.4",
+    "A06.5",
+    "A06.6"
+  ],
+  "code_hash": {
+    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/objects/ObjectArchiveDialog.test.tsx",
+      "src/features/objects/ObjectArchiveDialog.tsx",
+      "src/features/objects/ObjectForm.test.tsx",
+      "src/features/objects/ObjectForm.tsx",
+      "src/features/objects/ObjectsPage.test.tsx",
+      "src/features/objects/ObjectsPage.tsx",
+      "src/features/objects/objectKeys.ts",
+      "src/features/objects/useObjects.ts"
+    ],
+    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
+    "produces_digest": "b6d117362a4df56998e3a5259e28acc94df66fb99f6e70712525c590ab71479e"
+  },
+  "evidence_ref": "evidence/D06.json",
+  "evidence_hash": "13141c51407cc86b1297d93e8f98ca5eddb40749aae04876201d1ede765dbe57",
+  "timestamp": "2026-11-04T17:33:33.861Z"
+}

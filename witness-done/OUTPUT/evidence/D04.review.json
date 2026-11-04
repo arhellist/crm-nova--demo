@@ -2,7 +2,7 @@
   "d": "D04",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Переснято на новый produces_digest после DEC-013: в src/features/auth/api.ts добавлен только экспорт уже вычисленных supabaseUrl/supabaseAnonKey для обёртки PostgREST (D05). Логика входа, TOTP, refresh и guard не менялись; service_role в клиент не попадает, токены не логируются и не идут в URL. Тесты A04.1–A04.6 и lint/typecheck остаются зелёными.",
+  "notes": "Переснято на новый produces_digest: в src/app/router.tsx маршруты /objects и /objects/:id подключены к ObjectsPage (D06), остальные маршруты и guard'ы не менялись; src/features/auth/api.ts без изменений с прошлой приёмки. Поведение входа, MFA и ролей прежнее, A04.1–A04.6 зелёные.",
   "acceptance_ids": [
     "A04.1",
     "A04.2",
@@ -12,7 +12,7 @@
     "A04.6"
   ],
   "code_hash": {
-    "git_head": "7cfa627bcba1bb4e364e1110e5dde680e5c6dc89",
+    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -30,10 +30,10 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "63c54ae6f7d979411ef653bf27c230a0875f8acd",
-    "produces_digest": "16793e3409ae22e5327a488c83cd4f4dbafa62c74465882dc13161b946a4c7f0"
+    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
+    "produces_digest": "572e9b26424ab6d06ca17e86ab37b824df5fa782ef174856edfd9ee6b1e16ae2"
   },
   "evidence_ref": "evidence/D04.json",
-  "evidence_hash": "9985d2d4dfa9aecc3f6736f3b0ab136101afd0e435d21be97a7eaf1e750e594b",
-  "timestamp": "2026-11-04T17:28:53.049Z"
+  "evidence_hash": "a69c93bc9a7837a868f9550b910290eb364ffd5cd1d33e5fd39af0cc9dee5dfa",
+  "timestamp": "2026-11-04T17:34:38.168Z"
 }

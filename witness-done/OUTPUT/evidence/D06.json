@@ -1,0 +1,220 @@
+{
+  "d": "D06",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object"
+    ],
+    "acceptance_ids": [
+      "A06.1",
+      "A06.2",
+      "A06.3",
+      "A06.4",
+      "A06.5",
+      "A06.6"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D04",
+      "D05"
+    ],
+    "conflicts_applied": [
+      "crud-table` offset/COUNT"
+    ],
+    "out_of_produces": [],
+    "missing_produces": [],
+    "produces": [
+      "src/features/objects/objectKeys.ts",
+      "src/features/objects/useObjects.ts",
+      "src/features/objects/ObjectsPage.tsx",
+      "src/features/objects/ObjectForm.tsx",
+      "src/features/objects/ObjectArchiveDialog.tsx",
+      "src/app/router.tsx",
+      "src/features/objects/ObjectsPage.test.tsx",
+      "src/features/objects/ObjectForm.test.tsx",
+      "src/features/objects/ObjectArchiveDialog.test.tsx"
+    ],
+    "conflicts_ref": "`OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями`",
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": "crud-table",
+      "selected": [],
+      "referenced": [
+        "INV-002",
+        "INV-007"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "src/features/objects/objectKeys.ts",
+        "src/features/objects/useObjects.ts",
+        "src/features/objects/ObjectsPage.tsx",
+        "src/features/objects/ObjectForm.tsx",
+        "src/features/objects/ObjectArchiveDialog.tsx",
+        "src/app/router.tsx",
+        "src/features/objects/ObjectsPage.test.tsx",
+        "src/features/objects/ObjectForm.test.tsx",
+        "src/features/objects/ObjectArchiveDialog.test.tsx"
+      ],
+      "touched": [
+        "src/app/router.tsx",
+        "src/features/objects/ObjectArchiveDialog.test.tsx",
+        "src/features/objects/ObjectArchiveDialog.tsx",
+        "src/features/objects/ObjectForm.test.tsx",
+        "src/features/objects/ObjectForm.tsx",
+        "src/features/objects/ObjectsPage.test.tsx",
+        "src/features/objects/ObjectsPage.tsx",
+        "src/features/objects/objectKeys.ts",
+        "src/features/objects/useObjects.ts"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A06.3",
+        "A06.4",
+        "A06.5",
+        "A06.6"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A06.1",
+        "A06.2"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "src/features/objects/ObjectArchiveDialog.test.tsx",
+        "src/features/objects/ObjectForm.test.tsx",
+        "src/features/objects/ObjectsPage.test.tsx"
+      ],
+      "binding_hash": "835453ce1313f197c3bf2a3d42b5e10f3700bc9d15227b2fff3ede9858226b8a"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "design-tokens",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D04",
+      "D05"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D06.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": true,
+    "issues": [],
+    "verdict": "supports",
+    "reviewer": "peer-reviewer",
+    "file": "evidence/D06.review.json"
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T17:33:40.693Z",
+  "code_hash": {
+    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/objects/ObjectArchiveDialog.test.tsx",
+      "src/features/objects/ObjectArchiveDialog.tsx",
+      "src/features/objects/ObjectForm.test.tsx",
+      "src/features/objects/ObjectForm.tsx",
+      "src/features/objects/ObjectsPage.test.tsx",
+      "src/features/objects/ObjectsPage.tsx",
+      "src/features/objects/objectKeys.ts",
+      "src/features/objects/useObjects.ts"
+    ],
+    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
+    "produces_digest": "b6d117362a4df56998e3a5259e28acc94df66fb99f6e70712525c590ab71479e"
+  },
+  "evidence_hash": "3b6b8c05ebef4c7f397ecfac461dcdfe58e2cdd0f68cfcb650ce392d3208b8c2"
+}

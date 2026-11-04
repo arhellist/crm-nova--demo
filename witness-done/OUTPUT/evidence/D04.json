@@ -35,14 +35,14 @@
       "crud-table × auth-jwt"
     ],
     "out_of_produces": [
-      "src/features/objects/api.test.ts",
-      "src/features/objects/api.ts",
-      "src/features/objects/authz.test.ts",
-      "src/features/objects/mutations.ts",
-      "src/features/objects/schema.test.ts",
-      "src/features/objects/schema.ts",
-      "src/features/objects/types.ts",
-      "src/shared/api/postgrest.ts"
+      "src/features/objects/ObjectArchiveDialog.test.tsx",
+      "src/features/objects/ObjectArchiveDialog.tsx",
+      "src/features/objects/ObjectForm.test.tsx",
+      "src/features/objects/ObjectForm.tsx",
+      "src/features/objects/ObjectsPage.test.tsx",
+      "src/features/objects/ObjectsPage.tsx",
+      "src/features/objects/objectKeys.ts",
+      "src/features/objects/useObjects.ts"
     ],
     "missing_produces": [],
     "produces": [
@@ -100,21 +100,21 @@
         "src/app/AppShell.test.tsx"
       ],
       "touched": [
-        "src/features/auth/api.ts",
-        "src/features/objects/api.test.ts",
-        "src/features/objects/api.ts",
-        "src/features/objects/authz.test.ts",
-        "src/features/objects/mutations.ts",
-        "src/features/objects/schema.test.ts",
-        "src/features/objects/schema.ts",
-        "src/features/objects/types.ts",
-        "src/shared/api/postgrest.ts"
+        "src/app/router.tsx",
+        "src/features/objects/ObjectArchiveDialog.test.tsx",
+        "src/features/objects/ObjectArchiveDialog.tsx",
+        "src/features/objects/ObjectForm.test.tsx",
+        "src/features/objects/ObjectForm.tsx",
+        "src/features/objects/ObjectsPage.test.tsx",
+        "src/features/objects/ObjectsPage.tsx",
+        "src/features/objects/objectKeys.ts",
+        "src/features/objects/useObjects.ts"
       ],
       "missing": [
+        "src/features/auth/api.ts",
         "src/features/auth/useSession.ts",
         "src/features/auth/LoginPage.tsx",
         "src/features/auth/MfaChallenge.tsx",
-        "src/app/router.tsx",
         "src/app/AppShell.tsx",
         "index.html",
         "src/main.tsx",
@@ -237,9 +237,9 @@
     "file": "evidence/D04.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T17:28:58.295Z",
+  "timestamp": "2026-11-04T17:35:14.964Z",
   "code_hash": {
-    "git_head": "7cfa627bcba1bb4e364e1110e5dde680e5c6dc89",
+    "git_head": "5528d9d4134a1394830493715779422d1e85223d",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -257,8 +257,8 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "63c54ae6f7d979411ef653bf27c230a0875f8acd",
-    "produces_digest": "16793e3409ae22e5327a488c83cd4f4dbafa62c74465882dc13161b946a4c7f0"
+    "git_tree": "2e031a3a14841ce80089849d5f14b20f401f7afc",
+    "produces_digest": "572e9b26424ab6d06ca17e86ab37b824df5fa782ef174856edfd9ee6b1e16ae2"
   },
-  "evidence_hash": "f1540c87376d78095d4e0a7759c4da834a8f79f104356eb4670f1c2ba20d2b7c"
+  "evidence_hash": "7fefeb5a07d8a03a441ccac0faaa136705f71512fe19ea8eaaabf2203d588e39"
 }
