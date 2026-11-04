@@ -1,0 +1,247 @@
+{
+  "d": "D04",
+  "level": "L2",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "POST /auth/v1/token",
+      "GET /rest/v1/profiles",
+      "POST /auth/v1/factors"
+    ],
+    "acceptance_ids": [
+      "A04.1",
+      "A04.2",
+      "A04.3",
+      "A04.4",
+      "A04.5",
+      "A04.6"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D01",
+      "D02"
+    ],
+    "conflicts_applied": [
+      "auth-jwt × rate-limiting",
+      "auth-jwt × logging-pino",
+      "crud-table × auth-jwt"
+    ],
+    "out_of_produces": [
+      "package.json"
+    ],
+    "missing_produces": [],
+    "produces": [
+      "src/features/auth/api.ts",
+      "src/features/auth/useSession.ts",
+      "src/features/auth/LoginPage.tsx",
+      "src/features/auth/MfaChallenge.tsx",
+      "src/app/router.tsx",
+      "src/app/AppShell.tsx",
+      "index.html",
+      "src/main.tsx",
+      "src/styles/tokens.css",
+      "tailwind.config.cjs",
+      "package-lock.json",
+      "src/features/auth/useSession.test.tsx",
+      "src/features/auth/LoginPage.test.tsx",
+      "src/app/AppShell.test.tsx"
+    ],
+    "conflicts_ref": "`OUTPUT/docs/07_conflicts.md#1-конфликты-включённых-модулей`",
+    "acceptance_min": 6,
+    "acceptance_max": 12,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": "auth-jwt",
+      "selected": [],
+      "referenced": [
+        "INV-005",
+        "INV-007",
+        "INV-006"
+      ],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "src/features/auth/api.ts",
+        "src/features/auth/useSession.ts",
+        "src/features/auth/LoginPage.tsx",
+        "src/features/auth/MfaChallenge.tsx",
+        "src/app/router.tsx",
+        "src/app/AppShell.tsx",
+        "index.html",
+        "src/main.tsx",
+        "src/styles/tokens.css",
+        "tailwind.config.cjs",
+        "package-lock.json",
+        "src/features/auth/useSession.test.tsx",
+        "src/features/auth/LoginPage.test.tsx",
+        "src/app/AppShell.test.tsx"
+      ],
+      "touched": [
+        "index.html",
+        "package-lock.json",
+        "package.json",
+        "src/app/AppShell.test.tsx",
+        "src/app/AppShell.tsx",
+        "src/app/router.tsx",
+        "src/features/auth/LoginPage.test.tsx",
+        "src/features/auth/LoginPage.tsx",
+        "src/features/auth/MfaChallenge.tsx",
+        "src/features/auth/api.ts",
+        "src/features/auth/useSession.test.tsx",
+        "src/features/auth/useSession.ts",
+        "src/main.tsx",
+        "src/styles/tokens.css",
+        "tailwind.config.cjs"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A04.3",
+        "A04.4",
+        "A04.5",
+        "A04.6"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A04.1",
+        "A04.2"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "src/app/AppShell.test.tsx",
+        "src/features/auth/LoginPage.test.tsx",
+        "src/features/auth/MfaChallenge.tsx",
+        "src/features/auth/useSession.test.tsx"
+      ],
+      "binding_hash": "705bebe6512e9c42875563debed306de140fc49618fcff4663b346eb161700a3"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "POST /auth/v1/token",
+      "GET /rest/v1/profiles",
+      "POST /auth/v1/factors"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "no-credentials, design-tokens",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D01",
+      "D02"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D04.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": true,
+    "ok": true,
+    "issues": [],
+    "verdict": "supports",
+    "reviewer": "peer-reviewer",
+    "file": "evidence/D04.review.json"
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T17:25:06.405Z",
+  "code_hash": {
+    "git_head": "50f2408d3e0797c0498e81da0d8012e8bcea80c9",
+    "git_dirty": true,
+    "produces": [
+      "index.html",
+      "package-lock.json",
+      "src/app/AppShell.test.tsx",
+      "src/app/AppShell.tsx",
+      "src/app/router.tsx",
+      "src/features/auth/LoginPage.test.tsx",
+      "src/features/auth/LoginPage.tsx",
+      "src/features/auth/MfaChallenge.tsx",
+      "src/features/auth/api.ts",
+      "src/features/auth/useSession.test.tsx",
+      "src/features/auth/useSession.ts",
+      "src/main.tsx",
+      "src/styles/tokens.css",
+      "tailwind.config.cjs"
+    ],
+    "git_tree": "5dbf489724e8c1cd8a1cdec4645cbb9721fc5c98",
+    "produces_digest": "b576d0e0ef28bd0660fb963fd67c6bf4a72a7bfd24a710545cd76bc589c5ed47"
+  },
+  "evidence_hash": "42d8c0fd6161223e87e4b10184de6980def2b90c74ac259080de720f37556fda"
+}

@@ -1,0 +1,39 @@
+{
+  "d": "D04",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверено: api.ts — единая граница Supabase, env через Zod, в бандле только anon-ключ, тексты ошибок без деталей, профиль Zod-валидируется, getSession отдаёт минимум без токенов; useSession — loading/anonymous/mfa_required/authenticated, роль из profiles, один refresh при 401 с повтором, кэш профиля TanStack, очистка при выходе; LoginPage — generic-ошибка, нет регистрации/reset, пароль не сохраняется, TOTP без перезагрузки; MfaChallenge — 6 цифр, ошибка сохраняет email, выход отзывает сессию; guard'ы редиректят анонима и не рендерят защищённый экран, mfa_required показывает только код; AppShell рендерит «Отчёты» только manager (нет в DOM у executor); токены design-notes, кастомных цветов/CDN нет; token не в URL/логах. Vitest: 20/20 (auth 8, существующие 12), lint/typecheck зелёные. A04.1–A04.6 покрыты.",
+  "acceptance_ids": [
+    "A04.1",
+    "A04.2",
+    "A04.3",
+    "A04.4",
+    "A04.5",
+    "A04.6"
+  ],
+  "code_hash": {
+    "git_head": "50f2408d3e0797c0498e81da0d8012e8bcea80c9",
+    "git_dirty": true,
+    "produces": [
+      "index.html",
+      "package-lock.json",
+      "src/app/AppShell.test.tsx",
+      "src/app/AppShell.tsx",
+      "src/app/router.tsx",
+      "src/features/auth/LoginPage.test.tsx",
+      "src/features/auth/LoginPage.tsx",
+      "src/features/auth/MfaChallenge.tsx",
+      "src/features/auth/api.ts",
+      "src/features/auth/useSession.test.tsx",
+      "src/features/auth/useSession.ts",
+      "src/main.tsx",
+      "src/styles/tokens.css",
+      "tailwind.config.cjs"
+    ],
+    "git_tree": "5dbf489724e8c1cd8a1cdec4645cbb9721fc5c98",
+    "produces_digest": "b576d0e0ef28bd0660fb963fd67c6bf4a72a7bfd24a710545cd76bc589c5ed47"
+  },
+  "evidence_ref": "evidence/D04.json",
+  "evidence_hash": "9e48eee813e9f5ba96da2110b50e3f081500d0244919005531a8dafbd1caee57",
+  "timestamp": "2026-11-04T17:25:01.331Z"
+}

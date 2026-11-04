@@ -95,11 +95,11 @@ GATE: none
 | module | auth-jwt |
 | conflicts_ref | `OUTPUT/docs/07_conflicts.md#1-конфликты-включённых-модулей` |
 | conflicts_applied | `auth-jwt × rate-limiting`, `auth-jwt × logging-pino`, `crud-table × auth-jwt` |
-| app_contracts | `POST /auth/v1/token`, `GET /rest/v1/profiles`, `POST /auth/v1/factors` |
+| app_contracts | POST /auth/v1/token, GET /rest/v1/profiles, POST /auth/v1/factors |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D01, D02 |
-| eco_invariants | no-secrets, design-tokens |
+| eco_invariants | no-credentials, design-tokens |
 | acceptance_ops | A04.1, A04.2 |
 | pre_ci | required |
 | pre_release | required |
@@ -122,6 +122,11 @@ GATE: none
 - `src/features/auth/MfaChallenge.tsx` — создать
 - `src/app/router.tsx` — создать
 - `src/app/AppShell.tsx` — создать
+- `index.html` — создать (точка входа Vite; см. DEC-011)
+- `src/main.tsx` — создать (BrowserRouter + QueryClientProvider)
+- `src/styles/tokens.css` — создать (токены `design-notes.md` + директивы Tailwind; DEC-011)
+- `tailwind.config.cjs` — создать (content и токены; DEC-011)
+- `package-lock.json` — изменить (следствие установки зависимостей, DEC-011)
 
 Тесты:
 

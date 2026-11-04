@@ -1,0 +1,75 @@
+/* src/styles/tokens.css
+ * Дизайн-токены NOVA CRM из OUTPUT/docs/design-notes.md.
+ * Значения менять нельзя: это единственный визуальный источник (design_input: present).
+ * Tailwind подключается здесь же, чтобы точка входа импортировала один файл стилей.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* поверхности */
+  --bg-0: #070a12;
+  --bg-1: #0b1020;
+  --bg-2: #101830;
+  --panel: rgba(18, 26, 48, 0.72);
+  --panel-solid: #121a30;
+  --stroke: rgba(120, 160, 255, 0.16);
+  --stroke-strong: rgba(120, 160, 255, 0.34);
+
+  /* акценты */
+  --cyan: #22d3ee;
+  --violet: #8b5cf6;
+  --magenta: #e879f9;
+  --lime: #a3e635;
+  --amber: #fbbf24;
+  --rose: #fb7185;
+
+  /* текст */
+  --text: #e8eeff;
+  --text-dim: #9aa8c9;
+  --text-mute: #65729a;
+
+  /* радиусы */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+
+  /* свечения */
+  --glow-cyan: 0 0 24px rgba(34, 211, 238, 0.35);
+  --glow-violet: 0 0 28px rgba(139, 92, 246, 0.35);
+
+  /* шрифты */
+  --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-0);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Видимый фокус обязателен для клавиатуры (NFR-07). */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

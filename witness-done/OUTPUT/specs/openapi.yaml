@@ -66,6 +66,73 @@ paths:
           content:
             application/json:
               schema: { $ref: "#/components/schemas/Error" }
+  # Supabase Auth (GoTrue): внешний контракт, используемый фронтендом D04.
+  /auth/v1/token:
+    post:
+      operationId: authSignIn
+      summary: Вход по email и паролю (grant_type=password)
+      description: |
+        Supabase Auth; при включённом TOTP сессия остаётся на aal1 и требует шага MFA.
+        Открытая регистрация отключена, поэтому signup-эндпоинт в контракт не входит.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PasswordGrantInput" }
+      responses:
+        "200":
+          description: Сессия aal1 и токены
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthTokenResponse" }
+        "400":
+          description: Неверный email или пароль без деталей
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /rest/v1/profiles:
+    get:
+      operationId: postgrestListProfiles
+      summary: Профиль текущего пользователя (RLS)
+      security:
+        - userJwt: []
+      parameters:
+        - { name: select, in: query, schema: { type: string } }
+        - { name: id, in: query, schema: { type: string, format: uuid } }
+      responses:
+        "200":
+          description: Массив видимых профилей
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ProfileRow" }
+        "401":
+          description: Нет или истёк JWT
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /auth/v1/factors:
+    post:
+      operationId: authMfaChallenge
+      summary: Запрос/проверка второго фактора TOTP
+      description: Supabase Auth MFA; код не логируется и не передаётся в URL.
+      security:
+        - userJwt: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/MfaChallengeInput" }
+      responses:
+        "200":
+          description: Фактор подтверждён, сессия повышена до aal2
+        "400":
+          description: Неверный или просроченный код
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
   # Write-контур Supabase: единственный путь смены статуса и архивирования (ADR-0002).
   # Функции объявлены в схеме public, поэтому PostgREST отдаёт их по маршруту /rpc/.
   /rest/v1/rpc/change_task_status:
@@ -280,6 +347,40 @@ components:
         application/json:
           schema: { $ref: "#/components/schemas/Error" }
   schemas:
+    PasswordGrantInput:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 1 }
+    AuthTokenResponse:
+      type: object
+      required: [access_token, refresh_token, token_type, expires_in, user]
+      properties:
+        access_token: { type: string }
+        refresh_token: { type: string }
+        token_type: { type: string }
+        expires_in: { type: integer }
+        user:
+          type: object
+          required: [id, email]
+          properties:
+            id: { type: string, format: uuid }
+            email: { type: string, format: email }
+    MfaChallengeInput:
+      type: object
+      required: [factor_id, code]
+      properties:
+        factor_id: { type: string, format: uuid }
+        challenge_id: { type: string }
+        code: { type: string, pattern: "^[0-9]{6}$" }
+    ProfileRow:
+      type: object
+      required: [id, full_name, role]
+      properties:
+        id: { type: string, format: uuid }
+        full_name: { type: string, maxLength: 120 }
+        role: { type: string, enum: [manager, executor] }
     ChangeTaskStatusInput:
       type: object
       required: [p_task_id, p_target]
