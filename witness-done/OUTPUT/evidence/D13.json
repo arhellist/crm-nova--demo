@@ -1,0 +1,212 @@
+{
+  "d": "D13",
+  "level": "L1",
+  "gate": "pre_ci",
+  "producer": "arhellist@mail.ru",
+  "commands_skipped": false,
+  "scopes": {
+    "unit": true,
+    "module": true,
+    "app": true,
+    "eco": true
+  },
+  "fit": {
+    "ops_checked": [
+      "GET /metrics",
+      "GET /health/replication"
+    ],
+    "acceptance_ids": [
+      "A13.1",
+      "A13.2",
+      "A13.3",
+      "A13.4"
+    ],
+    "acceptance_source": "prompt",
+    "depends_done": [
+      "D01",
+      "D11"
+    ],
+    "conflicts_applied": [],
+    "out_of_produces": [
+      "src/reporting/routes/health.test.ts",
+      "src/reporting/routes/health.ts",
+      "src/reporting/server.ts"
+    ],
+    "missing_produces": [],
+    "produces": [
+      "observability/prometheus/rules.yml",
+      "observability/grafana/dashboard.json",
+      "docs/runbooks/incident.md",
+      "docs/runbooks/backup-restore.md",
+      "scripts/ops/backup-check.sh",
+      "scripts/ops/backup-check.test.sh",
+      "observability/rules.test.mjs",
+      "docs/runbooks/incident.drill.md"
+    ],
+    "acceptance_min": 3,
+    "acceptance_max": null,
+    "conflicts_ref_file": "docs/07_conflicts.md",
+    "conflicts_blockers": [],
+    "invariants": {
+      "catalog": "/home/alex/Документы/MyProjects/TestCRM/witness-done/OUTPUT/docs/project-invariants.md",
+      "catalog_exists": false,
+      "module": null,
+      "selected": [],
+      "referenced": [],
+      "waived": [],
+      "skip_reason": "пусто",
+      "issues": []
+    },
+    "plan": {
+      "ok": true,
+      "base": "HEAD",
+      "declared": [
+        "observability/prometheus/rules.yml",
+        "observability/grafana/dashboard.json",
+        "docs/runbooks/incident.md",
+        "docs/runbooks/backup-restore.md",
+        "scripts/ops/backup-check.sh",
+        "scripts/ops/backup-check.test.sh",
+        "observability/rules.test.mjs",
+        "docs/runbooks/incident.drill.md"
+      ],
+      "touched": [
+        "docs/runbooks/backup-restore.md",
+        "docs/runbooks/incident.drill.md",
+        "docs/runbooks/incident.md",
+        "observability/grafana/dashboard.json",
+        "observability/prometheus/rules.yml",
+        "observability/rules.test.mjs",
+        "scripts/ops/backup-check.sh",
+        "scripts/ops/backup-check.test.sh",
+        "src/reporting/routes/health.test.ts",
+        "src/reporting/routes/health.ts",
+        "src/reporting/server.ts"
+      ],
+      "missing": [],
+      "extra": [],
+      "proof_debt": [],
+      "note": null
+    },
+    "acceptance_binding": {
+      "ok": true,
+      "bound_ids": [
+        "A13.2",
+        "A13.4"
+      ],
+      "unbound": [],
+      "phantom": [],
+      "hollow": [],
+      "skipped": [],
+      "exempt": [
+        "A13.1",
+        "A13.3"
+      ],
+      "phrase_missing": [],
+      "files": [
+        "observability/rules.test.mjs",
+        "scripts/ops/backup-check.test.sh"
+      ],
+      "binding_hash": "eab5c8e03bb5243bdf5d927c76dc37ad5f5e9fa1032ed5c8887b7be661b34426"
+    }
+  },
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "module": {
+    "ok": true,
+    "module": "none"
+  },
+  "app": {
+    "ok": true,
+    "ops_checked": [
+      "GET /metrics",
+      "GET /health/replication"
+    ],
+    "declared_ops": [
+      "GET /api/reports/objects",
+      "GET /api/reports/status-ages",
+      "GET /api/reports/workload",
+      "GET /health",
+      "GET /health/replication",
+      "GET /metrics",
+      "GET /rest/v1/objects",
+      "GET /rest/v1/profiles",
+      "GET /rest/v1/task_status_history",
+      "GET /rest/v1/tasks",
+      "PATCH /rest/v1/objects",
+      "PATCH /rest/v1/tasks",
+      "POST /auth/v1/factors",
+      "POST /auth/v1/token",
+      "POST /rest/v1/objects",
+      "POST /rest/v1/rpc/archive_object",
+      "POST /rest/v1/rpc/archive_task",
+      "POST /rest/v1/rpc/change_task_status",
+      "POST /rest/v1/tasks"
+    ],
+    "missing": [],
+    "note": null
+  },
+  "eco": {
+    "ok": true,
+    "eco_invariants": "logging, no-secrets",
+    "issues": []
+  },
+  "structural_ok": true,
+  "issues": [],
+  "deps": {
+    "ok": true,
+    "depends": [
+      "D01",
+      "D11"
+    ],
+    "notDone": []
+  },
+  "structural": {
+    "acceptance_ok": true,
+    "issues": []
+  },
+  "trace": {
+    "required": false,
+    "ok": true,
+    "file": "evidence/D13.trace.json",
+    "hash": null,
+    "entries": 0,
+    "issues": []
+  },
+  "review": {
+    "required": false,
+    "ok": true,
+    "issues": []
+  },
+  "tax_pass": true,
+  "timestamp": "2026-11-04T18:18:01.977Z",
+  "code_hash": {
+    "git_head": "43c07276265806a8ee6fdda9b823b07af1781215",
+    "git_dirty": true,
+    "produces": [
+      "docs/runbooks/backup-restore.md",
+      "docs/runbooks/incident.drill.md",
+      "docs/runbooks/incident.md",
+      "observability/grafana/dashboard.json",
+      "observability/prometheus/rules.yml",
+      "observability/rules.test.mjs",
+      "scripts/ops/backup-check.sh",
+      "scripts/ops/backup-check.test.sh"
+    ],
+    "git_tree": "cb27798f9d341c0ac787076b978e8f9309a23a0c",
+    "produces_digest": "f32b54d8e702973727f432f900d3638f70c82369030d309643e92eb6e6adfb5b"
+  },
+  "evidence_hash": "57f6b310d21206fe52a1b0242aba34400c4bbfa5c439ee9abf6fad61f312d82a"
+}

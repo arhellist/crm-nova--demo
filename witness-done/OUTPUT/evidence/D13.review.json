@@ -1,0 +1,31 @@
+{
+  "d": "D13",
+  "verdict": "supports",
+  "reviewer": "peer-reviewer",
+  "notes": "Проверены правила, дашборд, runbook, бэкап-проверка и учения A13.4; серии соответствуют /metrics, порог 5xx 0.5%, секретов нет.",
+  "acceptance_ids": [
+    "A13.1",
+    "A13.2",
+    "A13.3",
+    "A13.4"
+  ],
+  "code_hash": {
+    "git_head": "43c07276265806a8ee6fdda9b823b07af1781215",
+    "git_dirty": true,
+    "produces": [
+      "docs/runbooks/backup-restore.md",
+      "docs/runbooks/incident.drill.md",
+      "docs/runbooks/incident.md",
+      "observability/grafana/dashboard.json",
+      "observability/prometheus/rules.yml",
+      "observability/rules.test.mjs",
+      "scripts/ops/backup-check.sh",
+      "scripts/ops/backup-check.test.sh"
+    ],
+    "git_tree": "cb27798f9d341c0ac787076b978e8f9309a23a0c",
+    "produces_digest": "f32b54d8e702973727f432f900d3638f70c82369030d309643e92eb6e6adfb5b"
+  },
+  "evidence_ref": "evidence/D13.json",
+  "evidence_hash": "3f27abc6c375582c4d040a04795e24bec20a7cc61e5052c9c50762422348d8c6",
+  "timestamp": "2026-11-04T18:17:47.103Z"
+}

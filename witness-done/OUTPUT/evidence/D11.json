@@ -82,17 +82,18 @@
         "src/reporting/aggregates.test.ts"
       ],
       "touched": [
-        "src/reporting/aggregates.test.ts",
-        "src/reporting/config.test.ts",
-        "src/reporting/config.ts",
-        "src/reporting/db.ts",
         "src/reporting/routes/health.test.ts",
         "src/reporting/routes/health.ts",
-        "src/reporting/routes/reports.test.ts",
-        "src/reporting/routes/reports.ts",
         "src/reporting/server.ts"
       ],
-      "missing": [],
+      "missing": [
+        "src/reporting/config.ts",
+        "src/reporting/db.ts",
+        "src/reporting/routes/reports.ts",
+        "src/reporting/config.test.ts",
+        "src/reporting/routes/reports.test.ts",
+        "src/reporting/aggregates.test.ts"
+      ],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -211,9 +212,9 @@
     "file": "evidence/D11.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T18:03:12.817Z",
+  "timestamp": "2026-11-04T18:12:55.047Z",
   "code_hash": {
-    "git_head": "9faa485d32d3c117edfee629612e62101e566861",
+    "git_head": "43c07276265806a8ee6fdda9b823b07af1781215",
     "git_dirty": true,
     "produces": [
       "src/reporting/aggregates.test.ts",
@@ -226,8 +227,8 @@
       "src/reporting/routes/reports.ts",
       "src/reporting/server.ts"
     ],
-    "git_tree": "d75b18be310c97c932b0f64e828cc8ec86c73c37",
-    "produces_digest": "58e15b38d4a942ad8518d236f5d8c9a57a04a1efef53a48a93ebbe31d18498ce"
+    "git_tree": "cb27798f9d341c0ac787076b978e8f9309a23a0c",
+    "produces_digest": "029937fccb666db5e09fc158308c14802f9d32f42a7948843d22237e61843f96"
   },
-  "evidence_hash": "205b8f5ce64917aee39dd152535a4b04107bd4d95244061a6ee601105033edd8"
+  "evidence_hash": "326da283c224c8fe5bda22d4861415f5fd1e72343020434efca4b49f6503d557"
 }

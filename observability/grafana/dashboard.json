@@ -1,0 +1,215 @@
+{
+  "title": "NOVA CRM — продукт и репликация",
+  "uid": "nova-product",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-6h", "to": "now" },
+  "tags": ["nova", "reports", "replication"],
+  "templating": {
+    "list": [
+      {
+        "name": "datasource",
+        "label": "Prometheus",
+        "type": "datasource",
+        "query": "prometheus",
+        "current": { "text": "Nova Prometheus", "value": "nova-prometheus" }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Доступность отчётного API",
+      "description": "Среднее по целям scraping; 1 — цель доступна (NFR6).",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg(up{job=\"nova-reporting\"})",
+          "legendFormat": "up"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 0.999 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "p95 длительности запросов по маршрутам",
+      "description": "Гистограмма http_request_duration_seconds из /metrics (NFR4).",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 6, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.95, sum by (le, route) (rate(http_request_duration_seconds_bucket[5m])))",
+          "legendFormat": "{{route}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "s", "min": 0 },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "Доля 5xx",
+      "description": "Порог NFR17 — 0.5% за 5 минут.",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / clamp_min(sum(rate(http_requests_total[5m])), 0.001)",
+          "legendFormat": "5xx"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 0.005 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Лаг репликации",
+      "description": "Пороговые линии 5 с (цель NFR7) и 30 с (алерт).",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "replica_lag_seconds",
+          "legendFormat": "lag"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 5 },
+              { "color": "red", "value": 30 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Подписка streaming",
+      "description": "1 — nova_sub доставляет изменения, 0 — отчёты деградированы.",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "replica_streaming",
+          "legendFormat": "streaming"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Пул соединений реплики",
+      "description": "NFR12: очередь ожидания не должна расти.",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 8 },
+      "targets": [
+        { "refId": "A", "expr": "db_pool_total", "legendFormat": "total" },
+        { "refId": "B", "expr": "db_pool_acquired", "legendFormat": "acquired" },
+        { "refId": "C", "expr": "db_pool_waiting", "legendFormat": "waiting" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "min": 0 }, "overrides": [] }
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Кэш отчётов",
+      "description": "Попадания и промахи кэша отчётного API (TTL ≤ 30 с).",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "targets": [
+        { "refId": "A", "expr": "rate(report_cache_hit_total[5m])", "legendFormat": "hit" },
+        { "refId": "B", "expr": "rate(report_cache_miss_total[5m])", "legendFormat": "miss" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "reqps", "min": 0 }, "overrides": [] }
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "Время с последней синхронизации",
+      "description": "replica_last_sync_timestamp в unix-секундах: застой виден без вычислений на клиенте.",
+      "datasource": { "type": "prometheus", "uid": "nova-prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "time() - replica_last_sync_timestamp",
+          "legendFormat": "с назад"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s", "min": 0 }, "overrides": [] }
+    }
+  ],
+  "links": [
+    {
+      "title": "Runbook инцидента",
+      "type": "link",
+      "url": "docs/runbooks/incident.md",
+      "targetBlank": true
+    },
+    {
+      "title": "Восстановление и бэкап",
+      "type": "link",
+      "url": "docs/runbooks/backup-restore.md",
+      "targetBlank": true
+    }
+  ]
+}

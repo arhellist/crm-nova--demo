@@ -1,0 +1,100 @@
+# Правила Prometheus для NOVA CRM (D13).
+#
+# Инварианты:
+#  - каждая серия, упомянутая в expr, реально отдаётся `/metrics` отчётного backend (D11)
+#    или является служебной серией Prometheus `up`; правил без источника нет (DEC-028);
+#  - у каждого алерта есть `severity`, русский `summary` и `runbook` — алерт без владельца
+#    и регламента запрещён;
+#  - порог 5xx — 0.5% за 5 минут (NFR17); лаг репликации — 30 секунд (NFR7);
+#  - лаг и деградация отчётов — разные алерты: причина «реплика отстала» не смешивается
+#    с причиной «отчёты отвечают 5xx»;
+#  - секретов и адресов подключения в правилах нет (INV-006).
+
+groups:
+  - name: nova-availability
+    rules:
+      - alert: NovaApiDown
+        expr: up{job="nova-reporting"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          contour: reporting
+        annotations:
+          summary: "Отчётный API недоступен: /health не отвечает"
+          description: "Prometheus не может опросить /metrics дольше минуты. Проверьте контейнер и сеть, затем откройте runbook."
+          runbook: "docs/runbooks/incident.md#1-подтверждение-алерта"
+
+      - alert: NovaMetricsMissing
+        expr: absent(up{job="nova-reporting"})
+        for: 5m
+        labels:
+          severity: critical
+          contour: reporting
+        annotations:
+          summary: "Метрики отчётного API не поступают"
+          description: "Серия up пропала целиком: сломана цель scraping или сеть. Отчёты при этом могут работать."
+          runbook: "docs/runbooks/incident.md#1-подтверждение-алерта"
+
+  - name: nova-errors
+    rules:
+      - alert: NovaHigh5xxRatio
+        expr: |
+          sum(rate(http_requests_total{status=~"5.."}[5m]))
+            / clamp_min(sum(rate(http_requests_total[5m])), 0.001) > 0.005
+        for: 5m
+        labels:
+          severity: critical
+          contour: reporting
+        annotations:
+          summary: "Доля 5xx выше 0.5% за 5 минут (NFR17)"
+          description: "Найдите request_id в логах и проверьте состояние реплики; записи в primary это не касается."
+          runbook: "docs/runbooks/incident.md#2-определить-контур"
+
+      - alert: NovaReport5xx
+        expr: |
+          sum(rate(http_requests_total{route=~"/api/reports/.*",status=~"5.."}[5m])) > 0
+        for: 5m
+        labels:
+          severity: warning
+          contour: reporting
+        annotations:
+          summary: "Отчёты отвечают 5xx дольше 5 минут"
+          description: "Отчёты деградировали; вход и задачи должны продолжать работать. Проверьте /health/replication."
+          runbook: "docs/runbooks/incident.md#3-временные-меры"
+
+  - name: nova-replication
+    rules:
+      - alert: NovaReplicaLagHigh
+        expr: replica_lag_seconds > 30
+        for: 2m
+        labels:
+          severity: warning
+          contour: replication
+        annotations:
+          summary: "Лаг репликации выше 30 секунд (NFR7)"
+          description: "Подписка nova_sub отстаёт. Отчёты помечаются устаревшими, запись в primary не затронута."
+          runbook: "docs/runbooks/incident.md#3-временные-меры"
+
+      - alert: NovaReplicaNotStreaming
+        expr: replica_streaming == 0
+        for: 5m
+        labels:
+          severity: critical
+          contour: replication
+        annotations:
+          summary: "Подписка nova_sub не в состоянии streaming"
+          description: "Реплика не получает изменения дольше 5 минут. Отчёты отвечают 503, продукт продолжает писать в primary."
+          runbook: "docs/runbooks/incident.md#3-временные-меры"
+
+  - name: nova-resources
+    rules:
+      - alert: NovaReportPoolSaturation
+        expr: db_pool_waiting > 5
+        for: 2m
+        labels:
+          severity: warning
+          contour: reporting
+        annotations:
+          summary: "Очередь пула соединений реплики больше 5 (NFR12)"
+          description: "Запросы отчётов ждут соединение. Проверьте медленные запросы и лимит пула, не увеличивайте его вслепую."
+          runbook: "docs/runbooks/incident.md#3-временные-меры"

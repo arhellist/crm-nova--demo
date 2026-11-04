@@ -87,7 +87,7 @@ GATE: none
 | module | none |
 | conflicts_ref | none |
 | conflicts_applied | none |
-| app_contracts | `GET /metrics`, `GET /health/replication` |
+| app_contracts | GET /metrics, GET /health/replication |
 | runtime_trace_required | no |
 | invariants_skip | пусто |
 | depends_done | D01, D11 |

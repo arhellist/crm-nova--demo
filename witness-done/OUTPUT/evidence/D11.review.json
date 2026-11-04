@@ -2,7 +2,7 @@
   "d": "D11",
   "verdict": "supports",
   "reviewer": "peer-reviewer",
-  "notes": "Проверено: config.ts — только контур чтения (API_TOKEN ≥32, DATABASE_URL_REPLICA, TTL≤300), ключей primary нет; db.ts — пул max 10/таймауты 3с, только SELECT из вьюх, подписка nova_sub → streaming/lagging/broken; reports.ts — токен и Origin до БД, конверт source=replica+lag_seconds+generated_at, кэш ≤30с, деградация 503 без SQL; health.ts — /health без БД 200, /health/replication 503 при lagging/broken c retry-after, метрики без секретов; server.ts — 401/403/405, rate limit 60/мин, ошибки без строки подключения. Тесты: 14/14 (config 4, reports 5, health 3, aggregates 2), acceptance A11.1–A11.7 связаны. DEC-024: формат app_contracts исправлен, код не менялся.",
+  "notes": "Переснято после D13: /metrics дополнен http_requests_total, гистограммой http_request_duration_seconds, replica_last_sync_timestamp и гейджами db_pool_total/acquired/waiting; onResponse учитывает маршрут и статус, пул передаётся из start(). Остальные контракты D11 не менялись; тесты reporting 15/15, полный прогон 95/95.",
   "acceptance_ids": [
     "A11.1",
     "A11.2",
@@ -13,7 +13,7 @@
     "A11.7"
   ],
   "code_hash": {
-    "git_head": "9faa485d32d3c117edfee629612e62101e566861",
+    "git_head": "43c07276265806a8ee6fdda9b823b07af1781215",
     "git_dirty": true,
     "produces": [
       "src/reporting/aggregates.test.ts",
@@ -26,10 +26,10 @@
       "src/reporting/routes/reports.ts",
       "src/reporting/server.ts"
     ],
-    "git_tree": "d75b18be310c97c932b0f64e828cc8ec86c73c37",
-    "produces_digest": "58e15b38d4a942ad8518d236f5d8c9a57a04a1efef53a48a93ebbe31d18498ce"
+    "git_tree": "cb27798f9d341c0ac787076b978e8f9309a23a0c",
+    "produces_digest": "029937fccb666db5e09fc158308c14802f9d32f42a7948843d22237e61843f96"
   },
   "evidence_ref": "evidence/D11.json",
-  "evidence_hash": "191039df50779b7a68444211b508473f29035dd008d91e80b255f25b439f491e",
-  "timestamp": "2026-11-04T18:03:00.741Z"
+  "evidence_hash": "832c21087a9e3f924355426cf9d348449fca02bf7d2a14618f05274b6550ea38",
+  "timestamp": "2026-11-04T18:12:43.313Z"
 }

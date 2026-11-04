@@ -416,6 +416,26 @@
       "acceptance": "A12.6",
       "cmd": "npx vitest run src/features/reports/bundle.test.ts -t A12.6",
       "expect_exit": 0
+    },
+    {
+      "acceptance": "A13.1",
+      "cmd": "npx vitest run observability/rules.test.mjs -t A13.1",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A13.2",
+      "cmd": "npx vitest run observability/rules.test.mjs -t A13.2",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A13.3",
+      "cmd": "sh scripts/ops/backup-check.test.sh",
+      "expect_exit": 0
+    },
+    {
+      "acceptance": "A13.4",
+      "cmd": "npx vitest run observability/rules.test.mjs -t A13.4",
+      "expect_exit": 0
     }
   ]
 }

@@ -24,7 +24,7 @@ import {
   type QueryRows,
   type ReplicationState,
 } from './db.js';
-import { registerHealthRoutes } from './routes/health.js';
+import { observeHttpRequest, registerHealthRoutes, type PoolStats } from './routes/health.js';
 import { registerReportRoutes } from './routes/reports.js';
 
 /** Пути, закрытые токеном: отчёты и метрики. `/health*` — открыты для мониторинга. */
@@ -77,6 +77,8 @@ export interface ReportingServerOptions {
   now?: () => Date;
   startedAtMs?: number;
   logger?: boolean;
+  /** Снимок пула для `/metrics`; в тестах можно не передавать (нули). */
+  getPoolStats?: () => PoolStats;
 }
 
 /** Собирает Fastify-приложение отдельно от запуска: тесты используют inject без сети. */
@@ -144,6 +146,12 @@ export async function buildReportingServer(options: ReportingServerOptions): Pro
     applyCors(reply, request.headers.origin, options.allowedOrigins);
   });
 
+  // Длительность и статус считаются по факту ответа: `onResponse` не влияет на обработку.
+  app.addHook('onResponse', async (request, reply) => {
+    const route = request.routeOptions.url ?? request.url;
+    observeHttpRequest(route, reply.statusCode, reply.elapsedTime);
+  });
+
   const getReplicationState =
     options.getReplicationState ?? (() => readReplicationState(options.query));
 
@@ -151,6 +159,7 @@ export async function buildReportingServer(options: ReportingServerOptions): Pro
     query: options.query,
     ...(options.now ? { now: options.now } : {}),
     ...(options.startedAtMs ? { startedAtMs: options.startedAtMs } : {}),
+    ...(options.getPoolStats ? { getPoolStats: options.getPoolStats } : {}),
   });
   registerReportRoutes(app, {
     query: options.query,
@@ -211,6 +220,11 @@ async function start(): Promise<void> {
     query: createQueryRows(pool),
     cacheTtlMs: config.REPORT_CACHE_TTL_S * 1000,
     logger: true,
+    getPoolStats: () => ({
+      total: pool.totalCount,
+      idle: pool.idleCount,
+      waiting: pool.waitingCount,
+    }),
   });
 
   const shutdown = async (signal: string): Promise<void> => {

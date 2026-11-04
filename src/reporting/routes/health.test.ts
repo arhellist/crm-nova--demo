@@ -9,6 +9,7 @@ import type { FastifyInstance } from 'fastify';
 import type { QueryRows, ReplicationState } from '../db.js';
 import { buildReportingServer } from '../server.js';
 import { clearReportCache } from './reports.js';
+import { resetHttpMetrics } from './health.js';
 
 const TOKEN = 'reporting-token-0123456789abcdef';
 
@@ -65,6 +66,42 @@ describe('A11.3 лаг репликации', () => {
     expect(body.lag_seconds).toBeGreaterThanOrEqual(40);
     expect(body.last_error).toBeNull();
     expect(response.headers['retry-after']).toBe('30');
+  });
+});
+
+describe('метрики контура для D13', () => {
+  it('метрики содержат запросы, гистограмму, пул и время синхронизации', async () => {
+    resetHttpMetrics();
+    const query = vi.fn(async () => [LAGGING_SUBSCRIPTION]) as unknown as QueryRows &
+      ReturnType<typeof vi.fn>;
+    const app = await buildReportingServer({
+      apiToken: TOKEN,
+      allowedOrigins: ['https://crm.example.test'],
+      query,
+      getReplicationState: async () => ({ status: 'streaming', lag_seconds: 2, last_error: null }),
+      getPoolStats: () => ({ total: 10, idle: 8, waiting: 2 }),
+      now: () => new Date('2026-11-04T12:00:00.000Z'),
+    });
+    try {
+      await app.inject({ method: 'GET', url: '/health', remoteAddress: '10.3.1.1' });
+      const response = await app.inject({
+        method: 'GET',
+        url: '/metrics',
+        headers: { authorization: `Bearer ${TOKEN}` },
+        remoteAddress: '10.3.1.2',
+      });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toContain('http_requests_total{route="/health",status="200"}');
+      expect(response.body).toContain('http_request_duration_seconds_bucket');
+      expect(response.body).toContain('http_request_duration_seconds_count');
+      expect(response.body).toContain('replica_lag_seconds 40');
+      expect(response.body).toContain('replica_last_sync_timestamp');
+      expect(response.body).toContain('db_pool_total 10');
+      expect(response.body).toContain('db_pool_acquired 2');
+      expect(response.body).toContain('db_pool_waiting 2');
+    } finally {
+      await app.close();
+    }
   });
 });
 
