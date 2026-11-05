@@ -22,12 +22,31 @@
     },
     {
       "id": "api",
-      "cmd": "PORT=8080 LOG_LEVEL=silent NODE_ENV=test SUPABASE_URL=http://127.0.0.1:54321 API_TOKEN=local-dev-token DATABASE_URL=postgresql://nova_ro:local@127.0.0.1:5433/nova_replica ALLOWED_ORIGINS=http://127.0.0.1:5173 npm run dev &",
+      "cmd": "PORT=8090 LOG_LEVEL=silent NODE_ENV=test SUPABASE_URL=http://127.0.0.1:54321 API_TOKEN=local-runtime-token-0123456789abcdef DATABASE_URL=postgresql://nova_ro:local@127.0.0.1:5433/nova_replica DATABASE_URL_REPLICA=postgresql://nova_ro:local@127.0.0.1:5433/nova_replica ALLOWED_ORIGINS=http://127.0.0.1:4173 nohup npm run dev >/tmp/nova-runtime-api.log 2>&1 &",
       "ready": {
         "type": "http",
-        "url": "http://127.0.0.1:8080/health",
+        "url": "http://127.0.0.1:8090/health",
         "expect": 200,
         "timeout_s": 90
+      }
+    },
+    {
+      "id": "web-build",
+      "cmd": "VITE_SUPABASE_URL=http://127.0.0.1:54321 VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0 VITE_REPORT_API_URL=http://127.0.0.1:8090 VITE_REPORT_API_TOKEN=local-runtime-token-0123456789abcdef VITE_APP_ENV=staging npm run build:web",
+      "ready": {
+        "type": "cmd",
+        "cmd": "test -s dist/web/index.html",
+        "timeout_s": 120
+      }
+    },
+    {
+      "id": "web-preview",
+      "cmd": "nohup env STAGING_CONNECT_SRC='http://127.0.0.1:54321 http://127.0.0.1:8090' PORT=4173 node scripts/release/serve-preview.mjs >/tmp/nova-runtime-web.log 2>&1 &",
+      "ready": {
+        "type": "http",
+        "url": "http://127.0.0.1:4173/login",
+        "expect": 200,
+        "timeout_s": 60
       }
     }
   ],
@@ -36,11 +55,24 @@
       "id": "db-reset",
       "cmd": "npx --yes supabase@latest db reset",
       "idempotent": true
+    },
+    {
+      "id": "replica-reinit",
+      "cmd": "REPLICA_DB=nova_replica REPLICA_USER=nova_ro REPLICA_PASSWORD=local NOVA_RO_PASSWORD=local API_TOKEN=local-dev-token SUPABASE_URL=http://127.0.0.1:54321 REPLICATOR_CONNINFO=postgresql://postgres:postgres@172.17.0.1:54322/postgres docker compose -f infra/replica/docker-compose.yml down -v && REPLICA_DB=nova_replica REPLICA_USER=nova_ro REPLICA_PASSWORD=local NOVA_RO_PASSWORD=local API_TOKEN=local-dev-token SUPABASE_URL=http://127.0.0.1:54321 REPLICATOR_CONNINFO=postgresql://postgres:postgres@172.17.0.1:54322/postgres docker compose -f infra/replica/docker-compose.yml up -d replica replica-init",
+      "idempotent": true
+    },
+    {
+      "id": "replica-ready",
+      "cmd": "for i in $(seq 1 90); do docker exec nova-replica-replica-1 psql -U nova_ro -d nova_replica -tAc \"select 1 from pg_stat_subscription where subname = 'nova_sub' and pid is not null\" | grep -q 1 && exit 0; sleep 2; done; exit 1",
+      "idempotent": true
     }
   ],
   "down": [
     {
-      "cmd": "pkill -f 'tsx watch src/server/index.ts' || true"
+      "cmd": "pkill -f 'tsx watch .*src/server/index[.]ts' || true"
+    },
+    {
+      "cmd": "pkill -f 'scripts/release/serve-previe[w].mjs' || true"
     },
     {
       "cmd": "npx --yes supabase@latest stop --no-backup"
@@ -439,7 +471,7 @@
     },
     {
       "acceptance": "A14.1",
-      "cmd": "npm run e2e",
+      "cmd": "E2E_BASE_URL=http://127.0.0.1:4173 E2E_API_URL=http://127.0.0.1:8090 E2E_MANAGER_EMAIL=manager@nova.local E2E_MANAGER_PASSWORD=nova-local-password E2E_MANAGER_TOTP_SECRET=UNTMQM3SJ2OEHJJEMBXUH23VK44KBFWD E2E_EXECUTOR1_EMAIL=executor1@nova.local E2E_EXECUTOR1_PASSWORD=nova-local-password E2E_EXECUTOR1_NAME='Пётр Смирнов' E2E_EXECUTOR2_EMAIL=executor2@nova.local E2E_EXECUTOR2_PASSWORD=nova-local-password E2E_EXECUTOR2_NAME='Анна Ковалёва' npm run e2e",
       "expect_exit": 0
     },
     {

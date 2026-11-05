@@ -1,0 +1,35 @@
+{
+  "d": "D12",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/reports/FreshnessBadge.tsx",
+      "src/features/reports/ReportsPage.test.tsx",
+      "src/features/reports/ReportsPage.tsx",
+      "src/features/reports/api.ts",
+      "src/features/reports/bundle.test.ts",
+      "src/features/reports/degraded.test.tsx",
+      "src/features/reports/useReports.ts"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "59b447e72bb96ec64c31c593d1526d9874cdd1cc224c08d92e4d81e1732d60cd"
+  },
+  "captured_at": "2026-11-05T18:51:32.010Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A12.6"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A12.6.log",
+      "sha256": "368d80e00e9b94d7978796b375b34ec227a346b09a9b44f493f4e88e19ea28c6"
+    }
+  ]
+}

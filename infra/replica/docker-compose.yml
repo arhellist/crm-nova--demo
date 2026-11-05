@@ -52,6 +52,9 @@ services:
       PGPASSWORD: ${REPLICA_PASSWORD:?REPLICA_PASSWORD обязателен}
       # Строка подключения к primary для CREATE SUBSCRIPTION. Только env, не файл.
       REPLICATOR_CONNINFO: ${REPLICATOR_CONNINFO:?REPLICATOR_CONNINFO обязателен}
+    # Primary поднят на хосте: внутри контейнера его адрес — host.docker.internal.
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     volumes:
       - ../../supabase/migrations:/opt/nova/migrations:ro
       - ./init:/opt/nova/init:ro
@@ -67,7 +70,9 @@ services:
                     /opt/nova/migrations/0004_*.sql \
                     /opt/nova/migrations/0005_*.sql \
                     /opt/nova/migrations/0006_*.sql \
-                    /opt/nova/migrations/0007_*.sql; do
+                    /opt/nova/migrations/0007_*.sql \
+                    /opt/nova/migrations/0009_*.sql \
+                    /opt/nova/migrations/0010_*.sql; do
           psql -v ON_ERROR_STOP=1 -f "$$file"
         done
         psql -v ON_ERROR_STOP=1 -v replicator_conninfo="$$REPLICATOR_CONNINFO" \

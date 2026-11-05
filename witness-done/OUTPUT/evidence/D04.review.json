@@ -1,8 +1,8 @@
 {
   "d": "D04",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Повторная приёмка после изменения package.json/tsconfig: код D01/D04 не менялся, тесты и digest пересняты.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Автоматическая ревизия после стабилизации runtime (DEC-033, DEC-034, DEC-038): код соответствует PRODUCES и инвариантам.",
   "acceptance_ids": [
     "A04.1",
     "A04.2",
@@ -12,7 +12,7 @@
     "A04.6"
   ],
   "code_hash": {
-    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "index.html",
@@ -30,10 +30,10 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
-    "produces_digest": "847893385484b81579c6680a685346fac9ec46873059311ef1598fe2f23763df"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "98015a7c29bea86925907ff7941139a2b715e3abc75f80786bde24c02ef7044f"
   },
   "evidence_ref": "evidence/D04.json",
-  "evidence_hash": "fb0e7a037e85b69afa2ed8f0a925bfc60f9bda3f4cd3e3b1ecb959366081e395",
-  "timestamp": "2026-11-04T18:29:06.587Z"
+  "evidence_hash": "2b962df4ecfb3637346a80e7cd730a6fbf939c38c06ac179c96547d231f532fd",
+  "timestamp": "2026-11-05T19:06:07.654Z"
 }

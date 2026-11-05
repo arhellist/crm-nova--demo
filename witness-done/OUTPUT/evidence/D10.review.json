@@ -1,8 +1,8 @@
 {
   "d": "D10",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Повторная приёмка после изменения package.json: код D10 не менялся, проверки и digest пересняты.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Ревизия после стабилизации runtime: seed/replica-контур соответствуют PRODUCES и инвариантам (DEC-036, DEC-038).",
   "acceptance_ids": [
     "A10.1",
     "A10.2",
@@ -10,7 +10,7 @@
     "A10.4"
   ],
   "code_hash": {
-    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "infra/replica/api.Dockerfile",
@@ -25,10 +25,10 @@
       "supabase/migrations/0008_publication_and_ro.sql",
       "supabase/tests/views_test.sql"
     ],
-    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
-    "produces_digest": "83e237707e5596214438eb668eee551db436b1d6c9a98d1d39e7592a95cb2deb"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "6df6ad3fef600ca294b32e23c7321f970de321dc2d74bb23c98838b2c467c1e5"
   },
   "evidence_ref": "evidence/D10.json",
-  "evidence_hash": "09cc9d45f7c2981e3169a94ef50b7e6114ce67254b7d582d974b7c0b403f6ed0",
-  "timestamp": "2026-11-04T18:29:48.158Z"
+  "evidence_hash": "1e3c2ff50413a425ca12962441d7dd436d84e4298bd50587bc0e0506bb67a934",
+  "timestamp": "2026-11-05T19:08:54.497Z"
 }

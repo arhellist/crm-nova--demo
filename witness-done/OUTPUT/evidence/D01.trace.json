@@ -1,0 +1,37 @@
+{
+  "d": "D01",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": true,
+    "produces": [
+      "package.json",
+      "src/server/app.test.ts",
+      "src/server/app.ts",
+      "src/server/index.ts",
+      "src/server/lifecycle.test.ts",
+      "src/shared/config/env.test.ts",
+      "src/shared/config/env.ts",
+      "src/shared/logger.test.ts",
+      "src/shared/logger.ts",
+      "tsconfig.json"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "2acb4cead2caf5b6641bb111d274ce0aec3c63bbddb11b8375c49c50515a5676"
+  },
+  "captured_at": "2026-11-05T18:51:31.251Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A01.6"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A01.6.log",
+      "sha256": "ab6973a8d6685eed2fa9ea58bb3abf04fd30f3e97adade2c727b5697bf91f6ff"
+    }
+  ]
+}

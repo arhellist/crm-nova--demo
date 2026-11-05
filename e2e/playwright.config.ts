@@ -20,7 +20,9 @@ export default defineConfig({
   timeout: 60_000,
   expect: { timeout: 10_000 },
   retries: isCI ? 1 : 0,
-  workers: isCI ? 2 : undefined,
+  // Два воркера на любом стенде: больше — риск нехватки памяти у chromium и гонок
+  // на общих учётных записях, меньше — приёмка Desktop+Mobile идёт слишком долго.
+  workers: Number(process.env.E2E_WORKERS ?? 2),
   forbidOnly: isCI,
   reporter: isCI ? [['github'], ['html', { open: 'never' }]] : [['list'], ['html', { open: 'never' }]],
   use: {
@@ -38,6 +40,10 @@ export default defineConfig({
     },
     {
       name: 'mobile-360',
+      // Mobile идёт после desktop: приёмка входа с MFA использует единственную учётную
+      // запись менеджера, а Supabase принимает каждый TOTP-код только один раз за окно.
+      // Параллельные проекты соревновались за окно и делали вход недетерминированным.
+      dependencies: ['desktop-1440'],
       use: { ...devices['Pixel 5'], viewport: { width: 360, height: 800 } },
     },
   ],

@@ -10,8 +10,8 @@
  *  - данные уникальны (`stamp`), повторный прогон не конфликтует с прошлым;
  *  - запрет записи в backend и деградация отчётов проверяются на реальном API стенда.
  */
-import { expect, test, type Browser, type Page } from '@playwright/test';
-import { authStatePath, totp } from './global-setup.js';
+import { expect, test, type Browser, type Locator, type Page } from '@playwright/test';
+import { authStatePath, completeMfa } from './global-setup.js';
 
 const stamp = Date.now().toString(36);
 const EXECUTOR1 = process.env.E2E_EXECUTOR1_NAME ?? 'Исполнитель 1';
@@ -35,6 +35,39 @@ async function withRole<T>(
   }
 }
 
+/**
+ * Дождаться ссылки в списке объектов: список листается keyset-курсором по 20 строк,
+ * поэтому свежий объект может оказаться не на первой странице.
+ */
+/** Дождаться строки списка объектов, листая keyset-курсор до её появления. */
+async function paginateObjects(page: Page, locator: Locator): Promise<void> {
+  const deadline = Date.now() + 30_000;
+  while (Date.now() < deadline) {
+    if (await locator.first().isVisible().catch(() => false)) return;
+    const more = page.getByRole('button', { name: 'Показать ещё' });
+    if (await more.isVisible().catch(() => false)) {
+      const rows = page.getByRole('listitem');
+      const before = await rows.count();
+      await more.click();
+      // Дожидаемся именно новой страницы: повторный клик по кнопке до ответа сервера
+      // не приближает нужную строку и делает ожидание недетерминированным.
+      await expect.poll(() => rows.count(), { timeout: 15_000 }).toBeGreaterThan(before);
+      continue;
+    }
+    // Список может перезапрашиваться (например, после смены фильтра архивных):
+    // ждём, пока кнопка пагинации появится, вместо раннего выхода.
+    await page.waitForTimeout(200);
+  }
+  await expect(locator.first()).toBeVisible();
+}
+
+/** Ссылка объекта на первой подходящей странице списка. */
+async function objectLink(page: Page, title: string) {
+  const link = page.getByRole('link', { name: title });
+  await paginateObjects(page, link);
+  return link.first();
+}
+
 /** Создать объект через UI и вернуть его URL. */
 async function createObject(page: Page, title: string): Promise<string> {
   await page.goto('/objects');
@@ -43,8 +76,7 @@ async function createObject(page: Page, title: string): Promise<string> {
   await dialog.getByLabel('Название').fill(title);
   await dialog.getByLabel('Адрес').fill(`Адрес ${stamp}`);
   await dialog.getByRole('button', { name: 'Сохранить' }).click();
-  const link = page.getByRole('link', { name: title });
-  await expect(link).toBeVisible();
+  const link = await objectLink(page, title);
   const href = await link.getAttribute('href');
   expect(href).toContain('/objects/');
   return href ?? '/objects';
@@ -58,7 +90,7 @@ async function createTask(
   executorName: string,
 ): Promise<string> {
   await page.goto('/objects');
-  await page.getByRole('link', { name: objectTitle }).click();
+  await (await objectLink(page, objectTitle)).click();
   await page.getByRole('button', { name: 'Создать задачу' }).click();
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Название').fill(taskTitle);
@@ -66,8 +98,8 @@ async function createTask(
   await dialog.getByLabel('Исполнитель').selectOption({ label: executorName });
   await dialog.getByRole('button', { name: 'Сохранить' }).click();
   const link = page.getByRole('link', { name: taskTitle });
-  await expect(link).toBeVisible();
-  const href = await link.getAttribute('href');
+  await expect(link.first()).toBeVisible();
+  const href = await link.first().getAttribute('href');
   expect(href).toContain('/tasks/');
   return href ?? '/tasks';
 }
@@ -83,6 +115,9 @@ async function moveToReview(page: Page, taskUrl: string): Promise<void> {
 
 test.describe('A14.1 приёмка NOVA CRM', () => {
   test('A14.1 01 вход с MFA открывает «Мои задачи»', async ({ browser, baseURL }) => {
+    // Окно TOTP резервируется глобально (см. completeMfa): при двух воркерах вход может
+    // ждать до одного 30-секундного окна, поэтому штатных 60 с недостаточно.
+    test.setTimeout(120_000);
     const context = await browser.newContext({ baseURL });
     const page = await context.newPage();
     try {
@@ -94,8 +129,7 @@ test.describe('A14.1 приёмка NOVA CRM', () => {
       await expect(code).toBeVisible();
       const secret = process.env.E2E_MANAGER_TOTP_SECRET;
       expect(secret, 'для manager в staging включён TOTP').toBeTruthy();
-      await code.fill(totp(secret ?? ''));
-      await page.getByRole('button', { name: 'Подтвердить' }).click();
+      await completeMfa(page, secret ?? '');
       await expect(page).toHaveURL(/\/my/);
     } finally {
       await context.close();
@@ -105,7 +139,9 @@ test.describe('A14.1 приёмка NOVA CRM', () => {
   test('A14.1 02 менеджер создаёт объект', async ({ browser, baseURL }) => {
     await withRole(browser, baseURL, 'manager', async (page) => {
       const title = `Объект ${stamp}`;
-      await createObject(page, title);
+      // Список показывает название ссылкой; заголовок `h1` — только на карточке объекта.
+      const url = await createObject(page, title);
+      await page.goto(url);
       await expect(page.getByRole('heading', { name: title })).toBeVisible();
     });
   });
@@ -115,7 +151,8 @@ test.describe('A14.1 приёмка NOVA CRM', () => {
       const object = `Объект задачи ${stamp}`;
       await createObject(page, object);
       const task = `Задача ${stamp}`;
-      await createTask(page, object, task, EXECUTOR1);
+      const url = await createTask(page, object, task, EXECUTOR1);
+      await page.goto(url);
       await expect(page.getByRole('heading', { name: task })).toBeVisible();
       await expect(page.getByText(EXECUTOR1).first()).toBeVisible();
     });
@@ -244,10 +281,14 @@ test.describe('A14.1 приёмка NOVA CRM', () => {
     await withRole(browser, baseURL, 'manager', async (page) => {
       const title = `Объект архива ${stamp}`;
       await createObject(page, title);
-      await page.getByRole('button', { name: 'Архивировать объект' }).click();
+      // Кнопка строки подписана названием объекта: в списке их несколько.
+      await page.getByRole('button', { name: `Архивировать объект ${title}` }).click();
       await page.getByRole('button', { name: 'Архивировать', exact: true }).click();
-      await expect(page.getByText('Архив', { exact: true }).first()).toBeVisible();
-      await expect(page.getByRole('heading', { name: title })).toBeVisible();
+      // Архивные скрыты по умолчанию: включаем фильтр и проверяем бейдж «Архив» у строки.
+      await page.getByLabel('Показать архивные').check();
+      const row = page.getByRole('listitem').filter({ hasText: title });
+      await paginateObjects(page, row);
+      await expect(row.getByText('Архив', { exact: true })).toBeVisible();
     });
   });
 

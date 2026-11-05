@@ -1,0 +1,35 @@
+{
+  "d": "D13",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": false,
+    "produces": [
+      "docs/runbooks/backup-restore.md",
+      "docs/runbooks/incident.drill.md",
+      "docs/runbooks/incident.md",
+      "observability/grafana/dashboard.json",
+      "observability/prometheus/rules.yml",
+      "observability/rules.test.mjs",
+      "scripts/ops/backup-check.sh",
+      "scripts/ops/backup-check.test.sh"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "f32b54d8e702973727f432f900d3638f70c82369030d309643e92eb6e6adfb5b"
+  },
+  "captured_at": "2026-11-05T18:51:32.058Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A13.4"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A13.4.log",
+      "sha256": "efb9e6119d2dbf4e6ce19b9b807031229ee37f138441a26346d4c93de2e37fed"
+    }
+  ]
+}

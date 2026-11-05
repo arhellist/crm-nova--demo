@@ -86,6 +86,11 @@ function PublicOnly(): JSX.Element {
  */
 function RequireManager({ children }: { children: ReactElement }): JSX.Element {
   const session = useSession();
+  // Пока сессия восстанавливается, роль ещё неизвестна. Редирект на /login в этот момент
+  // выкидывает вошедшего менеджера на /my при прямом заходе на /reports, поэтому ждём.
+  if (session.status === 'loading') {
+    return <LoadingScreen />;
+  }
   if (session.status !== 'authenticated') {
     return <Navigate to="/login" replace />;
   }

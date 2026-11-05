@@ -1,0 +1,36 @@
+{
+  "d": "D07",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": false,
+    "produces": [
+      "src/features/tasks/api.test.ts",
+      "src/features/tasks/api.ts",
+      "src/features/tasks/mutations.test.ts",
+      "src/features/tasks/mutations.ts",
+      "src/features/tasks/schema.test.ts",
+      "src/features/tasks/schema.ts",
+      "src/features/tasks/transitions.ts",
+      "src/features/tasks/types.ts",
+      "src/shared/api/postgrest.ts"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "87d0b27f0dd1a3156bdc3d3c8d31ebd8bc13cf94ec08b8eefefa47ef9ee59ba9"
+  },
+  "captured_at": "2026-11-05T18:51:31.682Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A07.7"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A07.7.log",
+      "sha256": "119670959c0d47be7bacbaf4211a2a1e690ae9f0d454872288964d443784f6c3"
+    }
+  ]
+}

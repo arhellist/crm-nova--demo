@@ -1,0 +1,42 @@
+{
+  "d": "D14",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": true,
+    "produces": [
+      ".eslintrc.cjs",
+      "README.md",
+      "docs/decisions.md",
+      "docs/readme.test.md",
+      "e2e/global-setup.ts",
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "e2e/tsconfig.json",
+      "package-lock.json",
+      "package.json",
+      "scripts/release/check-no-secrets.sh",
+      "scripts/release/check-no-secrets.test.sh",
+      "scripts/release/deploy.sh",
+      "scripts/release/deploy.test.sh",
+      "tsconfig.json"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "efd28b4534f7bbca7d22d8d58db9d6d5337f268de93404cac26db54264cda0db"
+  },
+  "captured_at": "2026-11-05T18:51:32.107Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A14.4"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A14.4.log",
+      "sha256": "fd485258c1935628f336ba49e786852a5242ec854034c33380f4157e592e8ae5"
+    }
+  ]
+}

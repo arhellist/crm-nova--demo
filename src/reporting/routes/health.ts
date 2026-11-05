@@ -158,14 +158,17 @@ function metricsText(
   return `${lines.join('\n')}\n`;
 }
 
-export function registerHealthRoutes(app: FastifyInstance, deps: HealthDeps): void {
+/**
+ * Маршруты репликации и метрик без `/health`.
+ *
+ * Зачем отдельно: в production один процесс обслуживает и базовый контракт `/health`
+ * (D01: version/commit/uptime), и отчётный контур (D11). Дублировать `/health` нельзя —
+ * Fastify отклонит повторную регистрацию, поэтому базовый маршрут остаётся у D01, а
+ * отчётный контур монтируется этим набором (DEC-033).
+ */
+export function registerReplicationAndMetricsRoutes(app: FastifyInstance, deps: HealthDeps): void {
   const now = deps.now ?? (() => new Date());
   const startedAt = deps.startedAtMs ?? Date.now();
-
-  app.get('/health', async (_request, reply) => {
-    const uptimeSeconds = Math.max((now().getTime() - startedAt) / 1000, 0);
-    return reply.send({ status: 'ok', uptime_s: Number(uptimeSeconds.toFixed(3)) });
-  });
 
   app.get('/health/replication', async (_request, reply) => {
     const state = await safeReplicationState(deps);
@@ -192,4 +195,22 @@ export function registerHealthRoutes(app: FastifyInstance, deps: HealthDeps): vo
     void reply.type('text/plain; version=0.0.4; charset=utf-8');
     return reply.send(metricsText(state, uptimeSeconds, pool, syncedAtSeconds));
   });
+}
+
+/**
+ * Полный набор `/health*` и `/metrics` — для автономного процесса отчётного API.
+ *
+ * В едином production-процессе `/health` принадлежит D01 (version/commit/uptime), поэтому
+ * там используется только `registerReplicationAndMetricsRoutes` (DEC-033).
+ */
+export function registerHealthRoutes(app: FastifyInstance, deps: HealthDeps): void {
+  const now = deps.now ?? (() => new Date());
+  const startedAt = deps.startedAtMs ?? Date.now();
+
+  app.get('/health', async (_request, reply) => {
+    const uptimeSeconds = Math.max((now().getTime() - startedAt) / 1000, 0);
+    return reply.send({ status: 'ok', uptime_s: Number(uptimeSeconds.toFixed(3)) });
+  });
+
+  registerReplicationAndMetricsRoutes(app, deps);
 }

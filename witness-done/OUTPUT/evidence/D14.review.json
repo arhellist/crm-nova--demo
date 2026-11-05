@@ -1,8 +1,8 @@
 {
   "d": "D14",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Проверены 17 сценариев A14.1 в двух проектах, security-гейт с принятыми рисками, протокол README и deploy/rollback; proof_debt пуст, tax_pass true.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Релизная приёмка: runtime-гейт и product-smoke tax_pass=true, e2e 34/34, security-скрипты зелёные (DEC-038).",
   "acceptance_ids": [
     "A14.1",
     "A14.2",
@@ -10,10 +10,11 @@
     "A14.4"
   ],
   "code_hash": {
-    "git_head": "a27d8201d917772afc794ed6bb8811c8698ae749",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       ".eslintrc.cjs",
+      ".gitignore",
       "README.md",
       "docs/decisions.md",
       "docs/readme.test.md",
@@ -27,12 +28,16 @@
       "scripts/release/check-no-secrets.test.sh",
       "scripts/release/deploy.sh",
       "scripts/release/deploy.test.sh",
-      "tsconfig.json"
+      "scripts/release/serve-preview.mjs",
+      "scripts/smoke/product-smoke.sh",
+      "tsconfig.json",
+      "vercel.json",
+      "vite.config.ts"
     ],
-    "git_tree": "546d74c7201ea6913022049512f6e40f978ae74a",
-    "produces_digest": "54f3417ae7c8432c27d2deecfd90a786f414097ba53868594cb9f2a732413c92"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "8cfeeaddda47c04e6d008afa4f26646a6b615ab14fdea3e044edb2c2a8ef6f41"
   },
   "evidence_ref": "evidence/D14.json",
-  "evidence_hash": "259c8638fffab3a2dc0209144b13c9751af52a69154748c90ddbcba98da86df1",
-  "timestamp": "2026-11-04T18:27:35.441Z"
+  "evidence_hash": "a332840a959a9b4846253c5784601e58b11b4bde8851f035eadbe3a530bdd410",
+  "timestamp": "2026-11-05T19:07:00.163Z"
 }

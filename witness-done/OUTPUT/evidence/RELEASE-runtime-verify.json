@@ -1,0 +1,836 @@
+{
+  "gate": "runtime",
+  "plan": "runtime/runtime-plan.json",
+  "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+  "stack": [
+    "node20",
+    "typescript5.5",
+    "fastify4",
+    "pino9",
+    "zod3",
+    "postgresql16",
+    "supabase-cli",
+    "docker-compose"
+  ],
+  "up": [
+    {
+      "id": "db",
+      "exit": 0,
+      "ready": true,
+      "detail": "ready cmd exit 0",
+      "log": "evidence/trace/db.log"
+    },
+    {
+      "id": "api",
+      "exit": 0,
+      "ready": true,
+      "detail": "HTTP 200",
+      "log": "evidence/trace/api.log"
+    },
+    {
+      "id": "web-build",
+      "exit": 0,
+      "ready": true,
+      "detail": "ready cmd exit 0",
+      "log": "evidence/trace/web-build.log"
+    },
+    {
+      "id": "web-preview",
+      "exit": 0,
+      "ready": true,
+      "detail": "HTTP 200",
+      "log": "evidence/trace/web-preview.log"
+    }
+  ],
+  "seed": [
+    {
+      "id": "db-reset",
+      "exit": 0,
+      "log": "evidence/trace/db-reset.log"
+    },
+    {
+      "id": "replica-reinit",
+      "exit": 0,
+      "log": "evidence/trace/replica-reinit.log"
+    },
+    {
+      "id": "replica-ready",
+      "exit": 0,
+      "log": "evidence/trace/replica-ready.log"
+    }
+  ],
+  "verify": [
+    {
+      "acceptance": "A01.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A01.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A01.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A01.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A01.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A01.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A01.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A01.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A01.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A01.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A01.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A01.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A02.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A02.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A02.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A02.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A02.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A02.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A02.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A02.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A02.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A02.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A02.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A02.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.7",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.7.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A03.8",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A03.8.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A04.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A04.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A04.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A04.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A04.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A04.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A04.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A04.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A04.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A04.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A04.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A04.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A05.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A05.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A05.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A05.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A05.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A05.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A05.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A05.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A05.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A05.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A05.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A05.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A06.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A06.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A06.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A06.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A06.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A06.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A06.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A06.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A06.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A06.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A06.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A06.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A07.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A07.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A07.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A07.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A07.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A07.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A07.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A07.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A07.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A07.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A07.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A07.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A07.7",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A07.7.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A08.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A08.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A08.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A08.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A08.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A08.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A08.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A08.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A08.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A08.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A08.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A08.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A09.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A09.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A09.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A09.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A09.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A09.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A09.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A09.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A09.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A09.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A09.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A09.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A10.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A10.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A10.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A10.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A10.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A10.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A10.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A10.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A11.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A11.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A11.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A11.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A11.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A11.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A11.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A11.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A11.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A11.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A11.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A11.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A11.7",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A11.7.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A12.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A12.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A12.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A12.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A12.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A12.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A12.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A12.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A12.5",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A12.5.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A12.6",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A12.6.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A13.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A13.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A13.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A13.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A13.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A13.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A13.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A13.4.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A14.1",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A14.1.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A14.2",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A14.2.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A14.3",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A14.3.log",
+      "artifacts": []
+    },
+    {
+      "acceptance": "A14.4",
+      "exit": 0,
+      "expect_exit": 0,
+      "ok": true,
+      "log": "evidence/trace/A14.4.log",
+      "artifacts": []
+    }
+  ],
+  "na": [],
+  "uncovered": [],
+  "down": [
+    {
+      "cmd": "pkill -f 'tsx watch .*src/server/index[.]ts' || true",
+      "exit": 0,
+      "log": "evidence/trace/down-1.log"
+    },
+    {
+      "cmd": "pkill -f 'scripts/release/serve-previe[w].mjs' || true",
+      "exit": 0,
+      "log": "evidence/trace/down-2.log"
+    },
+    {
+      "cmd": "npx --yes supabase@latest stop --no-backup",
+      "exit": 0,
+      "log": "evidence/trace/down-3.log"
+    }
+  ],
+  "traces": [
+    "evidence/D01.trace.json",
+    "evidence/D01.trace.json",
+    "evidence/D01.trace.json",
+    "evidence/D01.trace.json",
+    "evidence/D01.trace.json",
+    "evidence/D01.trace.json",
+    "evidence/D02.trace.json",
+    "evidence/D02.trace.json",
+    "evidence/D02.trace.json",
+    "evidence/D02.trace.json",
+    "evidence/D02.trace.json",
+    "evidence/D02.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D03.trace.json",
+    "evidence/D04.trace.json",
+    "evidence/D04.trace.json",
+    "evidence/D04.trace.json",
+    "evidence/D04.trace.json",
+    "evidence/D04.trace.json",
+    "evidence/D04.trace.json",
+    "evidence/D05.trace.json",
+    "evidence/D05.trace.json",
+    "evidence/D05.trace.json",
+    "evidence/D05.trace.json",
+    "evidence/D05.trace.json",
+    "evidence/D05.trace.json",
+    "evidence/D06.trace.json",
+    "evidence/D06.trace.json",
+    "evidence/D06.trace.json",
+    "evidence/D06.trace.json",
+    "evidence/D06.trace.json",
+    "evidence/D06.trace.json",
+    "evidence/D07.trace.json",
+    "evidence/D07.trace.json",
+    "evidence/D07.trace.json",
+    "evidence/D07.trace.json",
+    "evidence/D07.trace.json",
+    "evidence/D07.trace.json",
+    "evidence/D07.trace.json",
+    "evidence/D08.trace.json",
+    "evidence/D08.trace.json",
+    "evidence/D08.trace.json",
+    "evidence/D08.trace.json",
+    "evidence/D08.trace.json",
+    "evidence/D08.trace.json",
+    "evidence/D09.trace.json",
+    "evidence/D09.trace.json",
+    "evidence/D09.trace.json",
+    "evidence/D09.trace.json",
+    "evidence/D09.trace.json",
+    "evidence/D09.trace.json",
+    "evidence/D10.trace.json",
+    "evidence/D10.trace.json",
+    "evidence/D10.trace.json",
+    "evidence/D10.trace.json",
+    "evidence/D11.trace.json",
+    "evidence/D11.trace.json",
+    "evidence/D11.trace.json",
+    "evidence/D11.trace.json",
+    "evidence/D11.trace.json",
+    "evidence/D11.trace.json",
+    "evidence/D11.trace.json",
+    "evidence/D12.trace.json",
+    "evidence/D12.trace.json",
+    "evidence/D12.trace.json",
+    "evidence/D12.trace.json",
+    "evidence/D12.trace.json",
+    "evidence/D12.trace.json",
+    "evidence/D13.trace.json",
+    "evidence/D13.trace.json",
+    "evidence/D13.trace.json",
+    "evidence/D13.trace.json",
+    "evidence/D14.trace.json",
+    "evidence/D14.trace.json",
+    "evidence/D14.trace.json",
+    "evidence/D14.trace.json"
+  ],
+  "executed": true,
+  "duration_s": 210,
+  "issues": [],
+  "tax_pass": true,
+  "timestamp": "2026-11-05T18:51:32.107Z",
+  "evidence_name": "RELEASE-runtime-verify.json",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7"
+  },
+  "evidence_hash": "add356fea004194c54cbf8f442767c1c2ce9009920e1e9e40ca8c032e6b44ce6"
+}

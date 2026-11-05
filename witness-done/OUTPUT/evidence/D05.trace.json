@@ -1,0 +1,36 @@
+{
+  "d": "D05",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": false,
+    "produces": [
+      "src/features/auth/api.ts",
+      "src/features/objects/api.test.ts",
+      "src/features/objects/api.ts",
+      "src/features/objects/authz.test.ts",
+      "src/features/objects/mutations.ts",
+      "src/features/objects/schema.test.ts",
+      "src/features/objects/schema.ts",
+      "src/features/objects/types.ts",
+      "src/shared/api/postgrest.ts"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "07fb6da7eb711b3697191ea48238e31c259d05d52d7c7ac1eec3bc2d1544a67f"
+  },
+  "captured_at": "2026-11-05T18:51:31.540Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A05.6"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A05.6.log",
+      "sha256": "d82e4e8d395ce01543e62dcc9b872f9c1ab7efb2c7a32bf5f3c47c8a37c92a10"
+    }
+  ]
+}

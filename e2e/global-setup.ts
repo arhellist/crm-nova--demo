@@ -13,7 +13,8 @@
  */
 import { chromium, type FullConfig, type Page } from '@playwright/test';
 import { createHmac } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, open, readFile, stat, unlink, writeFile } from 'node:fs/promises';
+import { setTimeout as delay } from 'node:timers/promises';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -92,22 +93,100 @@ export function totp(secret: string, atMs = Date.now()): string {
   return String(code).padStart(6, '0');
 }
 
+/**
+ * Зарезервировать 30-секундное окно TOTP, свободное от других входов.
+ *
+ * Supabase отклоняет повторное использование одного кода, а приёмка логинит менеджера
+ * трижды (setup + desktop + mobile) — иногда одновременно в двух воркерах. Поэтому
+ * окна раздаются через файловый семафор: каждый вход получает окно строго больше
+ * предыдущего, даже если процессы стартовали в одну секунду. Иначе второй вход
+ * падал бы на «код уже использован» и setup сохранял пустую сессию.
+ */
+async function reserveTotpWindow(): Promise<number> {
+  const lockPath = path.join(os.tmpdir(), 'nova-e2e-totp.lock');
+  const statePath = path.join(os.tmpdir(), 'nova-e2e-totp.window');
+  const deadline = Date.now() + 120_000;
+  while (Date.now() < deadline) {
+    let handle;
+    try {
+      handle = await open(lockPath, 'wx');
+    } catch {
+      // Процесс мог умереть с захваченным семафором: замок старше 15 секунд не живой.
+      const age = await stat(lockPath).then((info) => Date.now() - info.mtimeMs).catch(() => 0);
+      if (age > 15_000) await unlink(lockPath).catch(() => undefined);
+      await delay(250);
+      continue;
+    }
+    try {
+      const lastRaw = await readFile(statePath, 'utf8').catch(() => '0');
+      const last = Number.parseInt(lastRaw, 10);
+      const current = Math.floor(Date.now() / 30_000);
+      const reserved = Math.max(current, Number.isFinite(last) ? last + 1 : current);
+      await writeFile(statePath, String(reserved), 'utf8');
+      return reserved;
+    } finally {
+      await handle.close();
+      await unlink(lockPath).catch(() => undefined);
+    }
+  }
+  throw new Error('Не удалось зарезервировать окно TOTP за 120 секунд');
+}
+
+/**
+ * Подтвердить TOTP в зарезервированном окне.
+ *
+ * Если сервер отклонил код (например, часы стенда ушли вперёд), резервируется следующее
+ * окно и попытка повторяется: код никогда не переиспользуется.
+ */
+export async function completeMfa(page: Page, secret: string): Promise<void> {
+  const codeField = page.getByLabel('Код из приложения');
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const window = await reserveTotpWindow();
+    const startsAt = window * 30_000;
+    const waitMs = startsAt + 500 - Date.now();
+    if (waitMs > 0) await page.waitForTimeout(waitMs);
+    await codeField.fill(totp(secret, startsAt + 1_000));
+    await page.getByRole('button', { name: 'Подтвердить' }).click();
+    const accepted = await page
+      .waitForURL((url) => !url.pathname.startsWith('/login'), { timeout: 10_000 })
+      .then(() => true)
+      .catch(() => false);
+    if (accepted) {
+      return;
+    }
+  }
+  throw new Error('TOTP не принят после повтора на следующем окне');
+}
+
 async function login(page: Page, baseURL: string, account: Account): Promise<void> {
   await page.goto(`${baseURL}/login`);
   await page.getByLabel('Email').fill(account.email);
   await page.getByLabel('Пароль').fill(account.password);
   await page.getByRole('button', { name: 'Войти' }).click();
 
+  // Гонка «MFA или уже вошли»: после пароля приложение может показать второй фактор
+  // с задержкой (сеть + рендер), а может сразу перейти на рабочий экран. Оба ожидания
+  // завершаются ошибкой по таймауту — раньше она молча превращалась в «уже вошли»,
+  // и setup сохранял пустой storageState, а падал уже сценарий (DEC-037).
   const codeField = page.getByLabel('Код из приложения');
-  if (await codeField.isVisible().catch(() => false)) {
+  const step = await Promise.race([
+    page
+      .waitForURL((url) => !url.pathname.startsWith('/login'), { timeout: 30_000 })
+      .then(() => 'app' as const),
+    codeField.waitFor({ state: 'visible', timeout: 30_000 }).then(() => 'mfa' as const),
+  ]).catch(async () => {
+    const alert = await page.getByRole('alert').first().textContent().catch(() => null);
+    throw new Error(
+      `Вход ${account.name} не завершился: ${alert?.trim() || 'ни MFA, ни переход в приложение'}`,
+    );
+  });
+
+  if (step === 'mfa') {
     if (!account.totpSecret) {
       throw new Error(`Учётной записи ${account.name} требуется TOTP, но секрет не задан`);
     }
-    await codeField.fill(totp(account.totpSecret));
-    await page.getByRole('button', { name: 'Подтвердить' }).click();
+    await completeMfa(page, account.totpSecret);
   }
-
-  await page.waitForURL((url) => !url.pathname.startsWith('/login'), { timeout: 30_000 });
 }
 
 /**

@@ -1,8 +1,8 @@
 {
   "d": "D09",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Переснято после D12: изменён только src/app/router.tsx (маршрут /reports → ReportsPage, 404 для не-manager); модули D09 не менялись. Полный прогон 94/94, D12 tax_pass.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Ревизия после изменения router.tsx в D04: поведение слайса не изменилось, приёмка зелёная (DEC-038).",
   "acceptance_ids": [
     "A09.1",
     "A09.2",
@@ -12,7 +12,7 @@
     "A09.6"
   ],
   "code_hash": {
-    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -24,10 +24,10 @@
       "src/features/tasks/filters.ts",
       "src/features/tasks/useMyTasks.ts"
     ],
-    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
-    "produces_digest": "14aed61e5890b1a55577f95e8c9b17463abcc7d50ad9e87ae3864dcb677329b3"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "350e8818478f9952b9f891173124e9c8e1d75b7df907a276473f71cc644c85e7"
   },
   "evidence_ref": "evidence/D09.json",
-  "evidence_hash": "754224f02490a8d79a2d8bee1e2d7a009a632c7ad1e289e6a57b73b5a11a4a66",
-  "timestamp": "2026-11-04T18:10:16.299Z"
+  "evidence_hash": "b0ce573dbe8e43e381d0198fa0b5966e4c92ae9172ddaa5c79c0e659dddaac61",
+  "timestamp": "2026-11-05T19:08:14.134Z"
 }

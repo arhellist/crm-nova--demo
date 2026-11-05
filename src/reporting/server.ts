@@ -24,7 +24,12 @@ import {
   type QueryRows,
   type ReplicationState,
 } from './db.js';
-import { observeHttpRequest, registerHealthRoutes, type PoolStats } from './routes/health.js';
+import {
+  observeHttpRequest,
+  registerHealthRoutes,
+  registerReplicationAndMetricsRoutes,
+  type PoolStats,
+} from './routes/health.js';
 import { registerReportRoutes } from './routes/reports.js';
 
 /** Пути, закрытые токеном: отчёты и метрики. `/health*` — открыты для мониторинга. */
@@ -100,6 +105,66 @@ export async function buildReportingServer(options: ReportingServerOptions): Pro
     }),
   });
 
+  mountReportingGuards(app, options);
+
+  registerHealthRoutes(app, {
+    query: options.query,
+    ...(options.now ? { now: options.now } : {}),
+    ...(options.startedAtMs ? { startedAtMs: options.startedAtMs } : {}),
+    ...(options.getPoolStats ? { getPoolStats: options.getPoolStats } : {}),
+  });
+  mountReportingRoutes(app, options);
+
+  app.setNotFoundHandler((_request, reply) =>
+    reply.code(404).send({
+      error: { code: 'E_NOT_FOUND', message: 'Маршрут не найден', request_id: String(_request.id) },
+    }),
+  );
+
+  mountReportingErrorHandler(app);
+
+  return app;
+}
+
+/**
+ * Единый production-процесс: базовый backend (D01) получает отчётный контур (D11).
+ *
+ * Зачем: до DEC-033 `npm start` поднимал только `src/server/index.ts`, где не было ни
+ * отчётов, ни `/health/replication`, ни `/metrics` — образ отдавал 404 на весь продукт.
+ * Здесь отчётный контур монтируется в тот же экземпляр Fastify: `/health` остаётся
+ * контрактом D01, наружу добавляются отчёты, репликация и метрики.
+ */
+export async function mountReportingSurface(
+  app: FastifyInstance,
+  options: ReportingServerOptions,
+): Promise<void> {
+  await app.register(rateLimit, {
+    max: 60,
+    timeWindow: '1 minute',
+    keyGenerator: (request) => {
+      const auth = request.headers.authorization;
+      return typeof auth === 'string' && auth.length > 0 ? auth : request.ip;
+    },
+    errorResponseBuilder: () => ({
+      error: {
+        code: 'E_RATE_LIMITED',
+        message: 'Слишком много запросов, повторите позже',
+      },
+    }),
+  });
+  mountReportingGuards(app, options);
+  registerReplicationAndMetricsRoutes(app, {
+    query: options.query,
+    ...(options.now ? { now: options.now } : {}),
+    ...(options.startedAtMs ? { startedAtMs: options.startedAtMs } : {}),
+    ...(options.getPoolStats ? { getPoolStats: options.getPoolStats } : {}),
+  });
+  mountReportingRoutes(app, options);
+  mountReportingErrorHandler(app);
+}
+
+/** Хуки доступа: только чтение, allowlist Origin, Bearer для `/api/*` и `/metrics`. */
+function mountReportingGuards(app: FastifyInstance, options: ReportingServerOptions): void {
   app.addHook('onRequest', async (request, reply) => {
     const method = request.method.toUpperCase();
     if (method === 'OPTIONS') {
@@ -151,29 +216,23 @@ export async function buildReportingServer(options: ReportingServerOptions): Pro
     const route = request.routeOptions.url ?? request.url;
     observeHttpRequest(route, reply.statusCode, reply.elapsedTime);
   });
+}
 
+/** Отчёты и состояние репликации: только чтение, кэш и деградация без падения процесса. */
+function mountReportingRoutes(app: FastifyInstance, options: ReportingServerOptions): void {
   const getReplicationState =
     options.getReplicationState ?? (() => readReplicationState(options.query));
 
-  registerHealthRoutes(app, {
-    query: options.query,
-    ...(options.now ? { now: options.now } : {}),
-    ...(options.startedAtMs ? { startedAtMs: options.startedAtMs } : {}),
-    ...(options.getPoolStats ? { getPoolStats: options.getPoolStats } : {}),
-  });
   registerReportRoutes(app, {
     query: options.query,
     getReplicationState,
     cacheTtlMs: options.cacheTtlMs ?? 30_000,
     ...(options.now ? { now: options.now } : {}),
   });
+}
 
-  app.setNotFoundHandler((_request, reply) =>
-    reply.code(404).send({
-      error: { code: 'E_NOT_FOUND', message: 'Маршрут не найден', request_id: String(_request.id) },
-    }),
-  );
-
+/** Ошибки отчётного контура: 503 на недоступную реплику, никаких SQL и стека наружу. */
+function mountReportingErrorHandler(app: FastifyInstance): void {
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof ReportingError) {
       if (error.retryAfterSeconds !== null) {
@@ -206,8 +265,6 @@ export async function buildReportingServer(options: ReportingServerOptions): Pro
       },
     });
   });
-
-  return app;
 }
 
 /** Запуск процесса: конфигурация читается до создания пула, при ошибке — код 1. */

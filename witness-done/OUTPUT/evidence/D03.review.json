@@ -1,8 +1,8 @@
 {
   "d": "D03",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Проверено: change_task_status — security definer, search_path, FOR UPDATE, P0400/P0403/P0422 по specs; матрица 5×5 литеральная, комментарий возврата обязателен; guard_task_status блокирует прямой UPDATE (проверено и клиентом 42501, и владельцем P0403); история append-only через гранты и guard_history_immutable; changed_by = auth.uid(); archive_task/archive_object только manager и идемпотентны; validate_task_actors и touch_updated_at на месте; execute только authenticated. pgTAP: schema 5/5, rls 9/9, transitions 6/6 (включая полную матрицу 25 пар), history 5/5, archive 6/6 на PostgreSQL 16. A03.1–A03.8 покрыты.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Автоматическая ревизия после стабилизации runtime (DEC-033, DEC-034, DEC-038): код соответствует PRODUCES и инвариантам.",
   "acceptance_ids": [
     "A03.1",
     "A03.2",
@@ -14,21 +14,22 @@
     "A03.8"
   ],
   "code_hash": {
-    "git_head": "01e55b55db8038c832334e256d44490238b220af",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "supabase/migrations/0004_status_machine.sql",
       "supabase/migrations/0005_history_triggers.sql",
       "supabase/migrations/0006_archive_rpc.sql",
       "supabase/migrations/0007_grants.sql",
+      "supabase/migrations/0009_history_trigger_definer.sql",
       "supabase/tests/archive_test.sql",
       "supabase/tests/history_test.sql",
       "supabase/tests/transitions_test.sql"
     ],
-    "git_tree": "68c845c678972d25e9fe655c2852dedab057859d",
-    "produces_digest": "8ddb4a8e4e77c9f5583aba1aff8735c8b609bf7bf1ead936082c888c1f149438"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "b1b5926865dd92d4459ae3e4a99536d8567511b0ee3363861595b8466f03feaa"
   },
   "evidence_ref": "evidence/D03.json",
-  "evidence_hash": "4b3776363eef91966c2162504dc59cec519637e484da13555b13e5dc4ee0255d",
-  "timestamp": "2026-11-04T17:20:03.136Z"
+  "evidence_hash": "c3542e6d250496e59145387f96b984e3280a6e0d11362a0dc020dd50ce3c8cab",
+  "timestamp": "2026-11-05T19:05:55.481Z"
 }

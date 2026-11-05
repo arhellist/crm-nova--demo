@@ -110,6 +110,9 @@ append-only история и архивирование — так, чтобы 
 - `supabase/migrations/0005_history_triggers.sql` — создать
 - `supabase/migrations/0006_archive_rpc.sql` — создать
 - `supabase/migrations/0007_grants.sql` — создать
+- `supabase/migrations/0009_history_trigger_definer.sql` — создать (DEC-038): триггеры
+  `log_task_created` и `log_task_status` объявлены `security definer`, иначе INSERT в
+  append-only `task_status_history` отклоняется `42501` и задача не создаётся (INV-004)
 
 Тесты:
 

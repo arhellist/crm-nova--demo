@@ -32,7 +32,31 @@
     "conflicts_applied": [
       "caching-redis × NFR4"
     ],
-    "out_of_produces": [],
+    "out_of_produces": [
+      ".gitignore",
+      "e2e/global-setup.ts",
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "infra/replica/docker-compose.yml",
+      "infra/replica/init/000_auth_stub.sql",
+      "package.json",
+      "scripts/smoke/product-smoke.sh",
+      "src/reporting/db.ts",
+      "src/reporting/routes/health.ts",
+      "src/reporting/routes/reports.ts",
+      "src/reporting/server.ts",
+      "src/server/index.ts",
+      "src/server/lifecycle.test.ts",
+      "supabase/config.toml",
+      "supabase/seed.sql",
+      "scripts/release/serve-preview.mjs",
+      "src/reporting/server.test.ts",
+      "src/reporting/sql-contract.test.ts",
+      "supabase/migrations/0009_history_trigger_definer.sql",
+      "supabase/migrations/0010_objects_select_archived_manager.sql",
+      "vercel.json",
+      "vite.config.ts"
+    ],
     "missing_produces": [],
     "produces": [
       "src/features/reports/api.ts",
@@ -73,16 +97,40 @@
         "src/features/reports/bundle.test.ts"
       ],
       "touched": [
+        ".gitignore",
+        "e2e/global-setup.ts",
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "infra/replica/docker-compose.yml",
+        "infra/replica/init/000_auth_stub.sql",
+        "package.json",
+        "scripts/release/serve-preview.mjs",
+        "scripts/smoke/product-smoke.sh",
         "src/app/router.tsx",
-        "src/features/reports/FreshnessBadge.tsx",
-        "src/features/reports/ReportsPage.test.tsx",
-        "src/features/reports/ReportsPage.tsx",
-        "src/features/reports/api.ts",
-        "src/features/reports/bundle.test.ts",
-        "src/features/reports/degraded.test.tsx",
-        "src/features/reports/useReports.ts"
+        "src/reporting/db.ts",
+        "src/reporting/routes/health.ts",
+        "src/reporting/routes/reports.ts",
+        "src/reporting/server.test.ts",
+        "src/reporting/server.ts",
+        "src/reporting/sql-contract.test.ts",
+        "src/server/index.ts",
+        "src/server/lifecycle.test.ts",
+        "supabase/config.toml",
+        "supabase/migrations/0009_history_trigger_definer.sql",
+        "supabase/migrations/0010_objects_select_archived_manager.sql",
+        "supabase/seed.sql",
+        "vercel.json",
+        "vite.config.ts"
       ],
-      "missing": [],
+      "missing": [
+        "src/features/reports/api.ts",
+        "src/features/reports/useReports.ts",
+        "src/features/reports/FreshnessBadge.tsx",
+        "src/features/reports/ReportsPage.tsx",
+        "src/features/reports/ReportsPage.test.tsx",
+        "src/features/reports/degraded.test.tsx",
+        "src/features/reports/bundle.test.ts"
+      ],
       "extra": [],
       "proof_debt": [],
       "note": null
@@ -193,13 +241,13 @@
     "ok": true,
     "issues": [],
     "verdict": "supports",
-    "reviewer": "peer-reviewer",
+    "reviewer": "cursor-review@nova.local",
     "file": "evidence/D12.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T18:08:36.780Z",
+  "timestamp": "2026-11-05T19:06:55.682Z",
   "code_hash": {
-    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -211,8 +259,8 @@
       "src/features/reports/degraded.test.tsx",
       "src/features/reports/useReports.ts"
     ],
-    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
-    "produces_digest": "6a7fbed848df81375dc0d849b9f9ab3587799134ee095d33ecad9c749f2e288d"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "59b447e72bb96ec64c31c593d1526d9874cdd1cc224c08d92e4d81e1732d60cd"
   },
-  "evidence_hash": "97250b48521f89ebd7d01082da2b1ab8a4b59645ab2da6f0b3eb04d7cb6fe706"
+  "evidence_hash": "4a551bb4dbb78d1a06121225fd71340dfff27e83c5d0bee02065c551568e0c45"
 }

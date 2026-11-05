@@ -121,3 +121,6 @@ docker-compose.override.yml
 
 # --- Supabase CLI ---
 supabase/.temp/
+
+# supabase CLI: служебная ветка локального стека (не часть поставки)
+supabase/.branches/

@@ -8,7 +8,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "tsx --env-file=.env.local watch src/server/index.ts",
+    "dev": "tsx watch --env-file=.env.local src/server/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server/index.js",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
@@ -17,7 +17,9 @@
     "test": "vitest run --exclude \"e2e/**\"",
     "test:watch": "vitest --exclude \"e2e/**\"",
     "e2e": "playwright test --config e2e/playwright.config.ts",
-    "e2e:install": "playwright install --with-deps chromium"
+    "e2e:install": "playwright install --with-deps chromium",
+    "build:web": "vite build",
+    "preview:staging": "node scripts/release/serve-preview.mjs"
   },
   "dependencies": {
     "@fastify/rate-limit": "^8.1.1",

@@ -35,7 +35,26 @@
     "conflicts_applied": [
       "caching-redis × NFR4` (кэш в процессе)"
     ],
-    "out_of_produces": [],
+    "out_of_produces": [
+      ".gitignore",
+      "e2e/global-setup.ts",
+      "e2e/playwright.config.ts",
+      "e2e/smoke.spec.ts",
+      "infra/replica/docker-compose.yml",
+      "infra/replica/init/000_auth_stub.sql",
+      "package.json",
+      "scripts/smoke/product-smoke.sh",
+      "src/app/router.tsx",
+      "src/server/index.ts",
+      "src/server/lifecycle.test.ts",
+      "supabase/config.toml",
+      "supabase/seed.sql",
+      "scripts/release/serve-preview.mjs",
+      "supabase/migrations/0009_history_trigger_definer.sql",
+      "supabase/migrations/0010_objects_select_archived_manager.sql",
+      "vercel.json",
+      "vite.config.ts"
+    ],
     "missing_produces": [],
     "produces": [
       "src/reporting/config.ts",
@@ -46,7 +65,9 @@
       "src/reporting/config.test.ts",
       "src/reporting/routes/reports.test.ts",
       "src/reporting/routes/health.test.ts",
-      "src/reporting/aggregates.test.ts"
+      "src/reporting/aggregates.test.ts",
+      "src/reporting/server.test.ts",
+      "src/reporting/sql-contract.test.ts"
     ],
     "conflicts_ref": "`OUTPUT/docs/07_conflicts.md#2-конфликты-с-архитектурными-решениями`",
     "acceptance_min": 6,
@@ -79,19 +100,41 @@
         "src/reporting/config.test.ts",
         "src/reporting/routes/reports.test.ts",
         "src/reporting/routes/health.test.ts",
-        "src/reporting/aggregates.test.ts"
+        "src/reporting/aggregates.test.ts",
+        "src/reporting/server.test.ts",
+        "src/reporting/sql-contract.test.ts"
       ],
       "touched": [
-        "src/reporting/routes/health.test.ts",
+        ".gitignore",
+        "e2e/global-setup.ts",
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "infra/replica/docker-compose.yml",
+        "infra/replica/init/000_auth_stub.sql",
+        "package.json",
+        "scripts/release/serve-preview.mjs",
+        "scripts/smoke/product-smoke.sh",
+        "src/app/router.tsx",
+        "src/reporting/db.ts",
         "src/reporting/routes/health.ts",
-        "src/reporting/server.ts"
+        "src/reporting/routes/reports.ts",
+        "src/reporting/server.test.ts",
+        "src/reporting/server.ts",
+        "src/reporting/sql-contract.test.ts",
+        "src/server/index.ts",
+        "src/server/lifecycle.test.ts",
+        "supabase/config.toml",
+        "supabase/migrations/0009_history_trigger_definer.sql",
+        "supabase/migrations/0010_objects_select_archived_manager.sql",
+        "supabase/seed.sql",
+        "vercel.json",
+        "vite.config.ts"
       ],
       "missing": [
         "src/reporting/config.ts",
-        "src/reporting/db.ts",
-        "src/reporting/routes/reports.ts",
         "src/reporting/config.test.ts",
         "src/reporting/routes/reports.test.ts",
+        "src/reporting/routes/health.test.ts",
         "src/reporting/aggregates.test.ts"
       ],
       "extra": [],
@@ -120,9 +163,11 @@
         "src/reporting/aggregates.test.ts",
         "src/reporting/config.test.ts",
         "src/reporting/routes/health.test.ts",
-        "src/reporting/routes/reports.test.ts"
+        "src/reporting/routes/reports.test.ts",
+        "src/reporting/server.test.ts",
+        "src/reporting/sql-contract.test.ts"
       ],
-      "binding_hash": "81ad72d70f8205a32ae47a4f3417839cdeb72ec7ae4b44f38645a6c90c38c034"
+      "binding_hash": "2bbc870959170c311362b99234072d105060042f40633cb03b342266e6272d5e"
     }
   },
   "commands": [
@@ -208,13 +253,13 @@
     "ok": true,
     "issues": [],
     "verdict": "supports",
-    "reviewer": "peer-reviewer",
+    "reviewer": "cursor-review@nova.local",
     "file": "evidence/D11.review.json"
   },
   "tax_pass": true,
-  "timestamp": "2026-11-04T18:12:55.047Z",
+  "timestamp": "2026-11-05T19:06:43.601Z",
   "code_hash": {
-    "git_head": "43c07276265806a8ee6fdda9b823b07af1781215",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "src/reporting/aggregates.test.ts",
@@ -225,10 +270,12 @@
       "src/reporting/routes/health.ts",
       "src/reporting/routes/reports.test.ts",
       "src/reporting/routes/reports.ts",
-      "src/reporting/server.ts"
+      "src/reporting/server.test.ts",
+      "src/reporting/server.ts",
+      "src/reporting/sql-contract.test.ts"
     ],
-    "git_tree": "cb27798f9d341c0ac787076b978e8f9309a23a0c",
-    "produces_digest": "029937fccb666db5e09fc158308c14802f9d32f42a7948843d22237e61843f96"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "8583a63a20e5172b1b3212c3ef1237b8af0431d84503f1190598e65c61615eb2"
   },
-  "evidence_hash": "326da283c224c8fe5bda22d4861415f5fd1e72343020434efca4b49f6503d557"
+  "evidence_hash": "c537ca80313a8e33ff19e5244f2abe920c67e3a7ee0cb535f37dd004e61b0930"
 }

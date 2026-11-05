@@ -1,0 +1,34 @@
+{
+  "d": "D03",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": false,
+    "produces": [
+      "supabase/migrations/0004_status_machine.sql",
+      "supabase/migrations/0005_history_triggers.sql",
+      "supabase/migrations/0006_archive_rpc.sql",
+      "supabase/migrations/0007_grants.sql",
+      "supabase/tests/archive_test.sql",
+      "supabase/tests/history_test.sql",
+      "supabase/tests/transitions_test.sql"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "8ddb4a8e4e77c9f5583aba1aff8735c8b609bf7bf1ead936082c888c1f149438"
+  },
+  "captured_at": "2026-11-05T18:51:31.406Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A03.8"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A03.8.log",
+      "sha256": "09ec16800f537b35173b4b9ccbdcd3120aea0d2e58caa133319abbf686628d68"
+    }
+  ]
+}

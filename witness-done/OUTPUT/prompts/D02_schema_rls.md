@@ -118,6 +118,9 @@ GATE: none
 - `supabase/migrations/0001_enums_and_tables.sql` — создать
 - `supabase/migrations/0002_helpers.sql` — создать
 - `supabase/migrations/0003_rls_policies.sql` — создать
+- `supabase/migrations/0010_objects_select_archived_manager.sql` — создать (DEC-035, DEC-038):
+  политика `objects_select` отдаёт менеджеру и активные, и архивные объекты; без этого
+  архивный объект не открывается по ID и не воспроизводится приёмка A06.5
 - `supabase/seed.sql` — создать
 - `supabase/config.toml` — изменить (схемы и порт локального стека)
 

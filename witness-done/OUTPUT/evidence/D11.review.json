@@ -1,8 +1,8 @@
 {
   "d": "D11",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Переснято после D13: /metrics дополнен http_requests_total, гистограммой http_request_duration_seconds, replica_last_sync_timestamp и гейджами db_pool_total/acquired/waiting; onResponse учитывает маршрут и статус, пул передаётся из start(). Остальные контракты D11 не менялись; тесты reporting 15/15, полный прогон 95/95.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Автоматическая ревизия после стабилизации runtime (DEC-033, DEC-034, DEC-038): код соответствует PRODUCES и инвариантам.",
   "acceptance_ids": [
     "A11.1",
     "A11.2",
@@ -13,7 +13,7 @@
     "A11.7"
   ],
   "code_hash": {
-    "git_head": "43c07276265806a8ee6fdda9b823b07af1781215",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "src/reporting/aggregates.test.ts",
@@ -24,12 +24,14 @@
       "src/reporting/routes/health.ts",
       "src/reporting/routes/reports.test.ts",
       "src/reporting/routes/reports.ts",
-      "src/reporting/server.ts"
+      "src/reporting/server.test.ts",
+      "src/reporting/server.ts",
+      "src/reporting/sql-contract.test.ts"
     ],
-    "git_tree": "cb27798f9d341c0ac787076b978e8f9309a23a0c",
-    "produces_digest": "029937fccb666db5e09fc158308c14802f9d32f42a7948843d22237e61843f96"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "8583a63a20e5172b1b3212c3ef1237b8af0431d84503f1190598e65c61615eb2"
   },
   "evidence_ref": "evidence/D11.json",
-  "evidence_hash": "832c21087a9e3f924355426cf9d348449fca02bf7d2a14618f05274b6550ea38",
-  "timestamp": "2026-11-04T18:12:43.313Z"
+  "evidence_hash": "2a5f634b3678b2b32899acfaea639c7179607331982b497e127a892bb76dd5d2",
+  "timestamp": "2026-11-05T19:06:31.299Z"
 }

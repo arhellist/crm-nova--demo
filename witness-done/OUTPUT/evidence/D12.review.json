@@ -1,8 +1,8 @@
 {
   "d": "D12",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Проверено: api.ts — только GET к /api/reports/*, Bearer из VITE_REPORT_API_TOKEN, таймаут AbortSignal 5с, Zod-схемы openapi отбрасывают поля вне контракта, 503 → ReplicaUnavailable; useReports.ts — три useQuery staleTime 30с/retry 1, degraded без throw, независимые отчёты, без localStorage; FreshnessBadge — источник+лаг, amber >30с, degraded-подпись; ReportsPage — три вкладки с клавиатурой, таблицы без ПДн, скелетоны, локальная панель «Повторить», адаптивная прокрутка; router.tsx — /reports для manager, исполнителю 404-состояние и без пункта меню. Тесты 8/8 (ReportsPage 3, degraded 2, bundle 3), A12.1–A12.6 связаны. DEC-025/026: публичный read-only токен и формулировка запрета хранения; код не менялся.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Автоматическая ревизия после стабилизации runtime (DEC-033, DEC-034, DEC-038): код соответствует PRODUCES и инвариантам.",
   "acceptance_ids": [
     "A12.1",
     "A12.2",
@@ -12,7 +12,7 @@
     "A12.6"
   ],
   "code_hash": {
-    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -24,10 +24,10 @@
       "src/features/reports/degraded.test.tsx",
       "src/features/reports/useReports.ts"
     ],
-    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
-    "produces_digest": "6a7fbed848df81375dc0d849b9f9ab3587799134ee095d33ecad9c749f2e288d"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "59b447e72bb96ec64c31c593d1526d9874cdd1cc224c08d92e4d81e1732d60cd"
   },
   "evidence_ref": "evidence/D12.json",
-  "evidence_hash": "64d9143fab1c856a32cd81750ca4f36c8ac733bfcee8ca4b5a2be7ca8d08f272",
-  "timestamp": "2026-11-04T18:08:25.531Z"
+  "evidence_hash": "132f9c6209dbafe26bfcc0b88cecd32b785570a321a5a2b4b0a0f86f4690f510",
+  "timestamp": "2026-11-05T19:06:43.646Z"
 }

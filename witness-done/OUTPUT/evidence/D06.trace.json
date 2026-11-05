@@ -1,0 +1,36 @@
+{
+  "d": "D06",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": true,
+    "produces": [
+      "src/app/router.tsx",
+      "src/features/objects/ObjectArchiveDialog.test.tsx",
+      "src/features/objects/ObjectArchiveDialog.tsx",
+      "src/features/objects/ObjectForm.test.tsx",
+      "src/features/objects/ObjectForm.tsx",
+      "src/features/objects/ObjectsPage.test.tsx",
+      "src/features/objects/ObjectsPage.tsx",
+      "src/features/objects/objectKeys.ts",
+      "src/features/objects/useObjects.ts"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "30ef2bc248ee07365d458ded63490277a04e322005adae2d5ef6aa4c9c41862d"
+  },
+  "captured_at": "2026-11-05T18:51:31.603Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A06.6"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A06.6.log",
+      "sha256": "650ad2e8670fbb44d94a08138113148fb73da953e8d9cb81d6d85d528355540e"
+    }
+  ]
+}

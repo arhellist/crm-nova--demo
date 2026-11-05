@@ -19,12 +19,16 @@ create table if not exists auth.users (
   email text
 );
 
+-- Возвращаемый тип обязан быть uuid: миграции 0001 сравнивают его с uuid-колонками,
+-- а `->> 'sub'` даёт text. Пустая настройка (нет JWT) превращается в null, а не в ошибку.
 create or replace function auth.uid()
 returns uuid
 language sql
 stable
 as $$
-  select nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'sub'
+  select (
+    nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'sub'
+  )::uuid
 $$;
 
 -- Роли Supabase, на которые ссылаются гранты миграций. NOLOGIN: подключиться ими нельзя.

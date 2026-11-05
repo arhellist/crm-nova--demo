@@ -74,7 +74,9 @@ export const REPORT_SQL = {
        tasks_rework::int as tasks_rework,
        tasks_accepted::int as tasks_accepted,
        accepted_share::float8 as accepted_share,
-       last_activity_at
+       -- Клиент pg отдаёт timestamptz как Date, а контракт openapi — строка ISO-8601.
+       -- Без приведения Zod-валидация ряда падала в 500 на живых данных (DEC-034).
+       to_char(last_activity_at at time zone 'utc', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') as last_activity_at
   from public.report_objects
  where ($1::date is null or (last_activity_at at time zone 'Europe/Moscow')::date >= $1::date)
    and ($2::date is null or (last_activity_at at time zone 'Europe/Moscow')::date <= $2::date)
@@ -87,7 +89,7 @@ export const REPORT_SQL = {
        tasks_on_review::int as tasks_on_review,
        tasks_rework::int as tasks_rework,
        tasks_accepted::int as tasks_accepted,
-       oldest_open_at
+       to_char(oldest_open_at at time zone 'utc', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') as oldest_open_at
   from public.report_workload
  where ($1::date is null or (oldest_open_at at time zone 'Europe/Moscow')::date >= $1::date)
    and ($2::date is null or (oldest_open_at at time zone 'Europe/Moscow')::date <= $2::date)

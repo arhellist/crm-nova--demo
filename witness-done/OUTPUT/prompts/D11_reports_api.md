@@ -128,6 +128,8 @@ GATE: none
 - `src/reporting/routes/reports.test.ts` — A11.1, A11.2, A11.5
 - `src/reporting/routes/health.test.ts` — A11.3, A11.6
 - `src/reporting/aggregates.test.ts` — A11.4
+- `src/reporting/server.test.ts` — A11.6 (отчётный контур смонтирован в едином процессе, DEC-033)
+- `src/reporting/sql-contract.test.ts` — A11.3, A11.5 (SQL совпадает с каталогом PG16, DEC-034)
 
 ## НЕ ТРОГАТЬ
 

@@ -1,0 +1,36 @@
+{
+  "d": "D11",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": true,
+    "produces": [
+      "src/reporting/aggregates.test.ts",
+      "src/reporting/config.test.ts",
+      "src/reporting/config.ts",
+      "src/reporting/db.ts",
+      "src/reporting/routes/health.test.ts",
+      "src/reporting/routes/health.ts",
+      "src/reporting/routes/reports.test.ts",
+      "src/reporting/routes/reports.ts",
+      "src/reporting/server.ts"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "324dc2210c2cbbc24b1357925671285446923244e6623c093371546e3bbeaebb"
+  },
+  "captured_at": "2026-11-05T18:51:31.938Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A11.7"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A11.7.log",
+      "sha256": "c87a12e1358933fcced376207b1871d553d1d447ffb988663056f4fce4dd1165"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "d": "D04",
+  "commit": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+  "code_hash": {
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_dirty": true,
+    "produces": [
+      "index.html",
+      "package-lock.json",
+      "src/app/AppShell.test.tsx",
+      "src/app/AppShell.tsx",
+      "src/app/router.tsx",
+      "src/features/auth/LoginPage.test.tsx",
+      "src/features/auth/LoginPage.tsx",
+      "src/features/auth/MfaChallenge.tsx",
+      "src/features/auth/api.ts",
+      "src/features/auth/useSession.test.tsx",
+      "src/features/auth/useSession.ts",
+      "src/main.tsx",
+      "src/styles/tokens.css",
+      "tailwind.config.cjs"
+    ],
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "98015a7c29bea86925907ff7941139a2b715e3abc75f80786bde24c02ef7044f"
+  },
+  "captured_at": "2026-11-05T18:51:31.472Z",
+  "source": "sp-verify --gate runtime (план исполнен фабрикой)",
+  "produced_by": {
+    "tool": "sp-verify",
+    "gate": "runtime",
+    "plan_hash": "c2934f9ea5af35d0e681c4800e3b81ac89185b176ee3f471d8b137ea89142ac5",
+    "acceptance": "A04.6"
+  },
+  "entries": [
+    {
+      "type": "console_log",
+      "ref": "evidence/trace/A04.6.log",
+      "sha256": "8a614e09080f0a18b14bd0b8c38f57c40d9bc725eb8b45224e53b37901160069"
+    }
+  ]
+}

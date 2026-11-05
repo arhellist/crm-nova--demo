@@ -22,9 +22,16 @@ export interface ReplicationState {
   last_error: string | null;
 }
 
-/** SQL состояния подписки: lag считается по времени получения последнего сообщения. */
+/**
+ * SQL состояния подписки: lag считается по времени получения последнего сообщения.
+ *
+ * `pg_stat_subscription` в PostgreSQL 16 не содержит текста ошибки — она живёт в
+ * `pg_stat_subscription_stats` счётчиками. Поэтому `last_error` здесь `null`, а признак
+ * «worker не работает» определяется по `pid` (см. `toReplicationState`); попытка читать
+ * несуществующую колонку давала 503 на всех отчётах (DEC-034).
+ */
 export const REPLICATION_STATE_SQL = `select pid,
-       last_error,
+       null::text as last_error,
        extract(epoch from (now() - last_msg_receipt_time)) as lag_seconds
   from pg_stat_subscription
  where subname = 'nova_sub'`;

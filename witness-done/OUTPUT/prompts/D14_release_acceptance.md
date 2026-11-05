@@ -11,7 +11,7 @@ GATE: none
 | Поле | Значение |
 |------|----------|
 | surfaces | tooling |
-| produces_count | 12 |
+| produces_count | 19 |
 | entity | — |
 | delivery_slice | S10 |
 | split_group | release |
@@ -126,6 +126,11 @@ GATE: none
 - `tsconfig.json` — изменить (e2e проверяется отдельным проектом; DEC-030)
 - `e2e/tsconfig.json` — создать (strict-проект e2e; DEC-030)
 - `.eslintrc.cjs` — изменить (project для e2e; DEC-030)
+- `vite.config.ts` — создать (production-сборка SPA в `dist/web`; DEC-031)
+- `vercel.json` — создать (CSP и OWASP-заголовки production-хоста; INV-010, DEC-031)
+- `scripts/release/serve-preview.mjs` — создать (staging-хост production-сборки с заголовками `vercel.json`; DEC-031)
+- `scripts/smoke/product-smoke.sh` — изменить (Bearer у `/metrics`, проверки Supabase по `SUPABASE_URL`; DEC-031)
+- `.gitignore` — изменить (служебные артефакты `supabase/.branches/` не входят в поставку; DEC-038)
 
 Тесты:
 

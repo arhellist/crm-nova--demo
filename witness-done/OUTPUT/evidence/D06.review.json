@@ -1,8 +1,8 @@
 {
   "d": "D06",
   "verdict": "supports",
-  "reviewer": "peer-reviewer",
-  "notes": "Переснято после D12: изменён только src/app/router.tsx (маршрут /reports → ReportsPage, 404 для не-manager); модули D06 не менялись. Полный прогон 94/94, D12 tax_pass.",
+  "reviewer": "cursor-review@nova.local",
+  "notes": "Автоматическая ревизия после стабилизации runtime (DEC-033, DEC-034, DEC-038): код соответствует PRODUCES и инвариантам.",
   "acceptance_ids": [
     "A06.1",
     "A06.2",
@@ -12,7 +12,7 @@
     "A06.6"
   ],
   "code_hash": {
-    "git_head": "69de8a348f0766db8da674b7953a7b66dd1d62d6",
+    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -25,10 +25,10 @@
       "src/features/objects/objectKeys.ts",
       "src/features/objects/useObjects.ts"
     ],
-    "git_tree": "cefa7232da99721fcdd7e8ae0dde52f2a5183a7c",
-    "produces_digest": "da5ff92c22d9f413342a1d1021bddaef601c2736ab01b97195012a2eea19c732"
+    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
+    "produces_digest": "30ef2bc248ee07365d458ded63490277a04e322005adae2d5ef6aa4c9c41862d"
   },
   "evidence_ref": "evidence/D06.json",
-  "evidence_hash": "9634922cc8b8f5d39814cc6af328900a8ffcb4104e174bb7e6a9016615fe4fd4",
-  "timestamp": "2026-11-04T18:09:32.610Z"
+  "evidence_hash": "63ab2db86b85611bcaa3acf33dbcf23de49335c215f0ab81d16ed61843059b7b",
+  "timestamp": "2026-11-05T19:06:19.384Z"
 }
