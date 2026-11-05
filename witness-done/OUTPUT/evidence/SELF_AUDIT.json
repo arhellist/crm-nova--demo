@@ -3,13 +3,13 @@
   "mode": "full",
   "issues": [],
   "tax_pass": true,
-  "timestamp": "2026-11-05T19:09:22.419Z",
+  "timestamp": "2026-11-05T19:16:04.234Z",
   "evidence_name": "SELF_AUDIT.json",
   "code_hash": {
-    "git_head": "f411317a90c843d4db8826eb46fc5a4b4cfb02b2",
+    "git_head": "8aaf4123da0c5b4a02250e7046f3837180122cc6",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "ba18c085c42cf9bb809b40dc41174900b7c8d88b"
+    "git_tree": "79fdf8dd0f3e5ce997caf99c9b3cd7afd6f69fbe"
   },
-  "evidence_hash": "cf8df8ab9ebddee6b9b8a32af5990631a769f510ef0111d29792527431ba3f20"
+  "evidence_hash": "0838d8b506cf17f903d36cbee5468d52e8b6e889d0432252c80eed1d4838ff16"
 }

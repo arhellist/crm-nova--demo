@@ -93,18 +93,20 @@
       "A12.6",
       "A13.2",
       "A13.3",
-      "A13.4"
+      "A13.4",
+      "A14.3",
+      "A14.4"
     ]
   },
   "issues": [],
   "tax_pass": true,
-  "timestamp": "2026-11-05T18:54:01.867Z",
+  "timestamp": "2026-11-05T19:16:28.728Z",
   "evidence_name": "RELEASE-product-smoke.json",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_head": "8aaf4123da0c5b4a02250e7046f3837180122cc6",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7"
+    "git_tree": "79fdf8dd0f3e5ce997caf99c9b3cd7afd6f69fbe"
   },
-  "evidence_hash": "bf4b3d5b204a8388ce7ba1cad005fe376eaae19b609804254e4b7d9bc4357e17"
+  "evidence_hash": "d3ebcb2120dc557c260040246e17ca04c9f5f554c95d28230b54a5da9a0f00d9"
 }
