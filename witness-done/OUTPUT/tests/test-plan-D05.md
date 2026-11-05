@@ -13,5 +13,5 @@
 
 | ID | Проверка внешним контуром |
 |----|---------------------------|
-| A05.1 | `scripts/smoke/wave-api-smoke.sh objects` |
-| A05.3 | `scripts/smoke/wave-api-smoke.sh objects` |
+| A05.1 | `scripts/smoke/wave-api-smoke.sh objects` | `src/features/objects/api.test.ts` |
+| A05.3 | `scripts/smoke/wave-api-smoke.sh objects` | `src/features/objects/authz.test.ts` |

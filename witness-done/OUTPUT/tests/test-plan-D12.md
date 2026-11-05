@@ -13,5 +13,5 @@
 
 | ID | Проверка внешним контуром |
 |----|---------------------------|
-| A12.1 | `scripts/smoke/wave-api-smoke.sh reports` |
-| A12.4 | `scripts/smoke/wave-api-smoke.sh reports` |
+| A12.1 | `scripts/smoke/wave-api-smoke.sh reports` | `src/features/reports/ReportsPage.test.tsx` |
+| A12.4 | `scripts/smoke/wave-api-smoke.sh reports` | `src/features/reports/degraded.test.tsx` |

@@ -15,5 +15,5 @@
 
 | ID | Проверка внешним контуром |
 |----|---------------------------|
-| A01.2 | `scripts/smoke/wave-api-smoke.sh platform` |
-| A01.4 | `scripts/smoke/wave-api-smoke.sh platform` |
+| A01.2 | `scripts/smoke/wave-api-smoke.sh platform` | `GET /health` → 200 по схеме, версия из `package.json` |
+| A01.4 | `scripts/smoke/wave-api-smoke.sh platform` | `src/server/app.test.ts` |

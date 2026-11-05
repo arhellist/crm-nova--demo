@@ -13,5 +13,5 @@
 
 | ID | Проверка внешним контуром |
 |----|---------------------------|
-| A02.2 | `scripts/smoke/wave-api-smoke.sh schema` |
-| A02.4 | `scripts/smoke/wave-api-smoke.sh schema` |
+| A02.2 | `scripts/smoke/wave-api-smoke.sh schema` | `supabase/tests/rls_test.sql` |
+| A02.4 | `scripts/smoke/wave-api-smoke.sh schema` | `supabase/tests/schema_test.sql` |

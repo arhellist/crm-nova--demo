@@ -1,8 +1,6 @@
 {
   "gate": "acceptance",
-  "scope": "deferred",
-  "reason": "ни одно задание не отмечено done — связь «фраза ↔ тест» проверяется после выполнения D01…Dn; для релизной проверки используйте --require-all",
-  "deferred": [
+  "checked": [
     "D01",
     "D02",
     "D03",
@@ -18,16 +16,1032 @@
     "D13",
     "D14"
   ],
-  "checked": [],
-  "results": [],
+  "results": [
+    {
+      "d": "D01",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A01.1",
+          "digest": "dc0c52c73992",
+          "tests": [
+            "src/shared/config/env.test.ts::A01.1 падает с кодом 1 и печатает ключ SUPABASE_URL без значений",
+            "src/shared/config/env.test.ts::A01.1 не печатает значение невалидной переменной",
+            "src/shared/config/env.test.ts::A01.1 валидное окружение загружается и замораживается"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A01.2",
+          "digest": "583cec8a2a18",
+          "tests": [
+            "src/server/app.test.ts::A01.2 GET /health отвечает по схеме и версией из package.json",
+            "src/server/app.test.ts::A01.2 ошибки наружу — только код и сообщение без SQL"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A01.3",
+          "digest": "d5762fc01e12",
+          "tests": [
+            "src/shared/logger.test.ts::A01.3 не выводит authorization, access_token, cookie и password",
+            "src/shared/logger.test.ts::A01.3 редактирует вложенный заголовок запроса",
+            "src/shared/logger.test.ts::A01.3 request_id берётся из заголовка и валидируется"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A01.4",
+          "digest": "e45f0ae2211a",
+          "tests": [
+            "src/server/app.test.ts::A01.4 61-й запрос за минуту с одного IP получает 429 и retry-after"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A01.5",
+          "digest": "3ae264080e51",
+          "tests": [
+            "src/server/lifecycle.test.ts::A01.5 SIGTERM завершает процесс с кодом 0 не дольше 5 секунд"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A01.6",
+          "digest": "f98127385384",
+          "tests": [
+            "src/server/app.test.ts::A01.6 x-request-id попадает в обе записи журнала запроса",
+            "src/server/app.test.ts::A01.6 заголовок authorization не попадает в журнал"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "043643ccccdac93b690227f13cc29d8c7dd6f792d0ce2a43e9bdc6297506326a",
+      "test_plan": "tests/test-plan-D01.md",
+      "files": [
+        "src/server/app.test.ts",
+        "src/server/lifecycle.test.ts",
+        "src/shared/config/env.test.ts",
+        "src/shared/logger.test.ts",
+        "src/shared/logger.ts"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D02",
+      "level": "L1",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A02.1",
+          "digest": "81f2e72dd160",
+          "tests": [
+            "supabase/tests/schema_test.sql::schema_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A02.2",
+          "digest": "9b342bba48e3",
+          "tests": [
+            "supabase/tests/rls_test.sql::rls_test.sql"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A02.3",
+          "digest": "46662700c766",
+          "tests": [
+            "supabase/tests/rls_test.sql::rls_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A02.4",
+          "digest": "d5e79740938f",
+          "tests": [
+            "supabase/tests/schema_test.sql::schema_test.sql"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A02.5",
+          "digest": "eb5f860e8c7a",
+          "tests": [
+            "supabase/tests/rls_test.sql::rls_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A02.6",
+          "digest": "edca87b35a2f",
+          "tests": [
+            "supabase/tests/rls_test.sql::rls_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "c9284e842d46ba6a06157be4b572072c32eaad0d1e7417909d7bbe7fda28f755",
+      "test_plan": "tests/test-plan-D02.md",
+      "files": [
+        "supabase/tests/rls_test.sql",
+        "supabase/tests/schema_test.sql"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D03",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A03.1",
+          "digest": "1e2f2e31bc9e",
+          "tests": [
+            "supabase/tests/transitions_test.sql::transitions_test.sql"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A03.2",
+          "digest": "6369bc25b815",
+          "tests": [
+            "supabase/tests/transitions_test.sql::transitions_test.sql"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A03.3",
+          "digest": "b2ac764cbd8b",
+          "tests": [
+            "supabase/tests/transitions_test.sql::transitions_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A03.4",
+          "digest": "e2f43b8f7c42",
+          "tests": [
+            "supabase/tests/transitions_test.sql::transitions_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A03.5",
+          "digest": "9988e7cea8f2",
+          "tests": [
+            "supabase/tests/transitions_test.sql::transitions_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A03.6",
+          "digest": "cf4830633c2c",
+          "tests": [
+            "supabase/tests/history_test.sql::history_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A03.7",
+          "digest": "4df9d0e7583c",
+          "tests": [
+            "supabase/tests/history_test.sql::history_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A03.8",
+          "digest": "c1e81d316e63",
+          "tests": [
+            "supabase/tests/archive_test.sql::archive_test.sql"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "373a3e6d3ad7d74f0b7ce59d57cf7dfb20e3ff4ad1709b7a9c39f8799c4aee2a",
+      "test_plan": "tests/test-plan-D03.md",
+      "files": [
+        "supabase/tests/archive_test.sql",
+        "supabase/tests/history_test.sql",
+        "supabase/tests/transitions_test.sql"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D04",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A04.1",
+          "digest": "437b9bb1967e",
+          "tests": [
+            "src/features/auth/LoginPage.test.tsx::A04.1 manager с TOTP: после пароля показывается запрос кода"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A04.2",
+          "digest": "d68346ac787f",
+          "tests": [
+            "src/features/auth/useSession.test.tsx::A04.2 аноним остаётся anonymous и не запрашивает профиль",
+            "src/features/auth/useSession.test.tsx::A04.2 аноним на /objects видит форму входа, объекты не запрашиваются"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A04.3",
+          "digest": "c1f00a2e222d",
+          "tests": [
+            "src/app/AppShell.test.tsx::A04.3 исполнитель: нет пункта «Отчёты», роль из profiles",
+            "src/app/AppShell.test.tsx::A04.3 manager видит «Отчёты»"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A04.4",
+          "digest": "0e96513c276b",
+          "tests": [
+            "src/features/auth/useSession.test.tsx::A04.4 истёкший токен: один refresh и повтор запроса профиля"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A04.5",
+          "digest": "29c75435de96",
+          "tests": [
+            "src/features/auth/LoginPage.test.tsx::A04.5 открытая регистрация отсутствует: нет формы и вызова signUp"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A04.6",
+          "digest": "cdad2ace198e",
+          "tests": [
+            "src/app/AppShell.test.tsx::A04.6 F5 на /my: сессия и экран восстановлены, токенов в URL нет"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "705bebe6512e9c42875563debed306de140fc49618fcff4663b346eb161700a3",
+      "test_plan": "tests/test-plan-D04.md",
+      "files": [
+        "src/app/AppShell.test.tsx",
+        "src/features/auth/LoginPage.test.tsx",
+        "src/features/auth/MfaChallenge.tsx",
+        "src/features/auth/useSession.test.tsx"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D05",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A05.1",
+          "digest": "e9599e3aa5c2",
+          "tests": [
+            "src/features/objects/api.test.ts::A05.1 создаёт объект и возвращает только поля ObjectRow"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A05.2",
+          "digest": "eaa771960edc",
+          "tests": [
+            "src/features/objects/schema.test.ts::A05.2 название из пробелов не проходит валидацию",
+            "src/features/objects/schema.test.ts::A05.2 пустой адрес и превышение лимитов отклоняются",
+            "src/features/objects/schema.test.ts::A05.2 служебные поля отбрасываются, значения тримятся"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A05.3",
+          "digest": "b057d289fa5f",
+          "tests": [
+            "src/features/objects/authz.test.ts::A05.3 исполнитель: создание отклонено 42501, ни одной записи"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A05.4",
+          "digest": "a9c5a36bac62",
+          "tests": [
+            "src/features/objects/api.test.ts::A05.4 keyset: первая страница 20, вторая продолжает без повторов и пропусков"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A05.5",
+          "digest": "cbba9fdfad2f",
+          "tests": [
+            "src/features/objects/api.test.ts::A05.5 SQL-подобная строка сохраняется как текст и не исполняется"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A05.6",
+          "digest": "eb7e91525d69",
+          "tests": [
+            "src/features/objects/authz.test.ts::A05.6 исполнитель: правка чужого объекта даёт 0 строк и понятную ошибку"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "00eb1649cb39ac5d87d680b9571bf35a083433c03c386f05f44d583abc19201c",
+      "test_plan": "tests/test-plan-D05.md",
+      "files": [
+        "src/features/objects/api.test.ts",
+        "src/features/objects/authz.test.ts",
+        "src/features/objects/schema.test.ts"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D06",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A06.1",
+          "digest": "6abac8b7199c",
+          "tests": [
+            "src/features/objects/ObjectsPage.test.tsx::A06.1 25 объектов: первые 20 строк, «Показать ещё» добавляет остальные без дублей"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A06.2",
+          "digest": "ae19ab1342ed",
+          "tests": [
+            "src/features/objects/ObjectsPage.test.tsx::A06.2 исполнитель: нет кнопок управления, доступные объекты видны"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A06.3",
+          "digest": "9e558d1a9b94",
+          "tests": [
+            "src/features/objects/ObjectForm.test.tsx::A06.3 пустое название: ошибка поля, отправки на сервер нет"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A06.4",
+          "digest": "99eacf4209bb",
+          "tests": [
+            "src/features/objects/ObjectArchiveDialog.test.tsx::A06.4 двойной клик по «Архивировать» вызывает RPC один раз"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A06.5",
+          "digest": "150a278554d7",
+          "tests": [
+            "src/features/objects/ObjectsPage.test.tsx::A06.5 архивный объект: данные и задачи видны, управления нет"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A06.6",
+          "digest": "41bb24a4ffd5",
+          "tests": [
+            "src/features/objects/ObjectsPage.test.tsx::A06.6 пустой список: текст и действие вместо пустой таблицы"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "835453ce1313f197c3bf2a3d42b5e10f3700bc9d15227b2fff3ede9858226b8a",
+      "test_plan": "tests/test-plan-D06.md",
+      "files": [
+        "src/features/objects/ObjectArchiveDialog.test.tsx",
+        "src/features/objects/ObjectForm.test.tsx",
+        "src/features/objects/ObjectsPage.test.tsx"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D07",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A07.1",
+          "digest": "daae3328d82e",
+          "tests": [
+            "src/features/tasks/api.test.ts::A07.1 менеджер создаёт задачу без статуса, сервер возвращает new"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A07.2",
+          "digest": "663a41ff2cab",
+          "tests": [
+            "src/features/tasks/api.test.ts::A07.2 исполнителю запись запрещена: 42501 без создания строки"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A07.3",
+          "digest": "c84cd722cfd9",
+          "tests": [
+            "src/features/tasks/mutations.test.ts::A07.3 исполнитель переводит new → in_progress через RPC и получает новый статус"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A07.4",
+          "digest": "ff63f2e0fac3",
+          "tests": [
+            "src/features/tasks/mutations.test.ts::A07.4 переход из accepted отклонён P0422: текст доменный, статус не меняется",
+            "src/features/tasks/mutations.test.ts::A07.4 возврат без комментария: P0422 comment_required даёт текст про доработку"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A07.5",
+          "digest": "55ca8e3f123f",
+          "tests": [
+            "src/features/tasks/mutations.test.ts::A07.5 смена исполнителя в in_progress отклонена триггером, PATCH не содержит статуса",
+            "src/features/tasks/mutations.test.ts::A07.5 успешная правка возвращает строку задачи",
+            "src/features/tasks/schema.test.ts::A07.5 статус и автор не входят во вход даже если пришли из формы"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A07.6",
+          "digest": "588a08349330",
+          "tests": [
+            "src/features/tasks/api.test.ts::A07.6 30 задач: две страницы по курсору, порядок created_at desc, без offset и COUNT"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A07.7",
+          "digest": "e63f80de0d00",
+          "tests": [
+            "src/features/tasks/api.test.ts::A07.7 чужая задача: пустой ответ RLS превращается в «Задача не найдена» без деталей"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "35180eb639227657d0ce5446ac2f026aa6277b3cae47f23a79cb24d5cce46e5d",
+      "test_plan": "tests/test-plan-D07.md",
+      "files": [
+        "src/features/tasks/api.test.ts",
+        "src/features/tasks/mutations.test.ts",
+        "src/features/tasks/schema.test.ts"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D08",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A08.1",
+          "digest": "5ca9afea2f4e",
+          "tests": [
+            "src/features/tasks/TaskPage.test.tsx::A08.1 исполнитель на задаче new видит только «Взять в работу»"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A08.2",
+          "digest": "2ddfbb4f34e8",
+          "tests": [
+            "src/features/tasks/TaskPage.test.tsx::A08.2 менеджер на задаче on_review видит «Принять» и «На доработку» без кнопок исполнителя"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A08.3",
+          "digest": "b8946aa479b7",
+          "tests": [
+            "src/features/tasks/StatusPanel.test.tsx::A08.3 возврат с пустым комментарием не отправляется, поле подсвечено"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A08.4",
+          "digest": "64fff1a8f62a",
+          "tests": [
+            "src/features/tasks/StatusPanel.test.tsx::A08.4 успешный возврат с комментарием: статус rework и комментарий первой строкой истории"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A08.5",
+          "digest": "ba84438df061",
+          "tests": [
+            "src/features/tasks/StatusPanel.test.tsx::A08.5 прямой вызов запрещённого перехода возвращает ошибку и не меняет статус"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A08.6",
+          "digest": "8466b4cec750",
+          "tests": [
+            "src/features/tasks/TaskPage.test.tsx::A08.6 история из создания и четырёх переходов: 5 строк от новых к старым с именами"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "6e6e54841b3af86b96713f436d3a1484a8c6a3981d1872e64eaa8f6bb56f7229",
+      "test_plan": "tests/test-plan-D08.md",
+      "files": [
+        "src/features/tasks/StatusPanel.test.tsx",
+        "src/features/tasks/TaskPage.test.tsx"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D09",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A09.1",
+          "digest": "f7e80fabbae9",
+          "tests": [
+            "src/features/tasks/MyTasksPage.test.tsx::A09.1: исполнитель видит 6 задач, сгруппированных по статусам, счётчики совпадают"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A09.2",
+          "digest": "68d93fbee03e",
+          "tests": [
+            "src/features/tasks/MyTasksPage.test.tsx::A09.2: задачи другого исполнителя не видны, фильтр assignee_id не передаётся"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A09.3",
+          "digest": "fc290eb8c38a",
+          "tests": [
+            "src/features/tasks/TaskRow.test.tsx::A09.3: «Взять в работу» из строки переводит задачу и переносит её во вкладку «В работе»"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A09.4",
+          "digest": "286a0d757a88",
+          "tests": [
+            "src/features/tasks/MyTasksPage.test.tsx::A09.4: менеджер видит приёмку и возврат, счётчик «На проверке» учитывает задачу"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A09.5",
+          "digest": "7e091babd64e",
+          "tests": [
+            "src/features/tasks/TaskRow.test.tsx::A09.5: 25 задач — вкладка «Все» показывает «20+», подгрузка добавляет остальные без дублей"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A09.6",
+          "digest": "46b4295c4ce2",
+          "tests": [
+            "src/features/tasks/MyTasksPage.test.tsx::A09.6: пустой список показывает подсказку и нулевые счётчики"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "9e986bb79b89442e27a0ffed5382460a3a70e2c2d560e6ae8db3d9d0e634b237",
+      "test_plan": "tests/test-plan-D09.md",
+      "files": [
+        "src/features/tasks/MyTasksPage.test.tsx",
+        "src/features/tasks/TaskRow.test.tsx"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D10",
+      "level": "L1",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A10.1",
+          "digest": "b90c541d9a3b",
+          "tests": [
+            "infra/replica/compose.test.mjs::A10.1 поднимает PostgreSQL 16 с healthcheck и хранит данные в volume"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A10.2",
+          "digest": "81a2a659dad0",
+          "tests": [
+            "infra/replica/check.test.mjs::A10.2 streaming и лаг в пределах порога — проблем нет",
+            "infra/replica/check.test.mjs::A10.2 большой лаг или остановленная подписка — проблемы",
+            "supabase/tests/views_test.sql::views_test.sql"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A10.3",
+          "digest": "cbc4b4fbcd0c",
+          "tests": [
+            "infra/replica/check.test.mjs::A10.3 совпадающие снимки четырёх таблиц не дают расхождений",
+            "infra/replica/check.test.mjs::A10.3 расхождение строк и меток времени перечисляется по таблицам",
+            "supabase/tests/views_test.sql::views_test.sql"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A10.4",
+          "digest": "c77979eb2cbc",
+          "tests": [
+            "infra/replica/check.test.mjs::A10.4 конфигурация читается только из env и не печатает значения",
+            "infra/replica/check.test.mjs::A10.4 insert от nova_ro отклонён read-only транзакцией 25006 — проверка зелёная",
+            "infra/replica/check.test.mjs::A10.4 отказ с другим кодом или успешный insert — проверка красная"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "ced5df839e17f3e103e762a43b6123cce8fb79666811718255e953e43022b64a",
+      "test_plan": "tests/test-plan-D10.md",
+      "files": [
+        "infra/replica/check.test.mjs",
+        "infra/replica/compose.test.mjs",
+        "supabase/tests/views_test.sql"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D11",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A11.1",
+          "digest": "bc8ebbf40ae0",
+          "tests": [
+            "src/reporting/routes/reports.test.ts::A11.1 GET /api/reports/objects отдаёт конверт replica с лагом ≤ 5 с",
+            "src/reporting/routes/reports.test.ts::A11.1 валидирует период: неверная дата — 400 до запроса к БД"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A11.2",
+          "digest": "03c14a1b1f7a",
+          "tests": [
+            "src/reporting/routes/reports.test.ts::A11.2 без токена — 401, чужой Origin — 403, POST — 405; БД не затронута"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A11.3",
+          "digest": "9409d1074d86",
+          "tests": [
+            "src/reporting/routes/health.test.ts::A11.3 при лаге 40 с /health/replication отдаёт lagging и честный лаг",
+            "src/reporting/sql-contract.test.ts::A11.3 не ссылается на несуществующие колонки pg_stat_subscription"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A11.4",
+          "digest": "de2461b7ea86",
+          "tests": [
+            "src/reporting/aggregates.test.ts::A11.4 отчёт совпадает с пересчётом 10 задач в трёх статусах",
+            "src/reporting/aggregates.test.ts::A11.4 вьюха считает те же статусы и не выносит ПДн исполнителя"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A11.5",
+          "digest": "46a5f898874a",
+          "tests": [
+            "src/reporting/routes/reports.test.ts::A11.5 в ответах всех отчётов нет email, description и comment",
+            "src/reporting/routes/reports.test.ts::A11.5 SQL отчётов читает только вьюхи, без select * и базовых таблиц",
+            "src/reporting/sql-contract.test.ts::A11.5 объекты и нагрузка приводят timestamptz к тексту",
+            "src/reporting/sql-contract.test.ts::A11.5 отчёты читают только вьюхи и не выгружают email/description"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A11.6",
+          "digest": "4c710cd8f305",
+          "tests": [
+            "src/reporting/routes/health.test.ts::A11.6 при остановленной реплике отчёт — 503, /health — 200",
+            "src/reporting/routes/health.test.ts::A11.6 недоступная БД в /health/replication не роняет процесс",
+            "src/reporting/server.test.ts::A11.6 монтирует отчёты поверх базового /health без дублирования маршрута",
+            "src/reporting/server.test.ts::A11.6 отдаёт 503 и retry-after, когда реплика недоступна"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A11.7",
+          "digest": "57a918b6d384",
+          "tests": [
+            "src/reporting/config.test.ts::A11.7 DATABASE_URL_PRIMARY* отсутствует в схеме и в исходнике db.ts",
+            "src/reporting/config.test.ts::A11.7 пул создаётся только на реплику с лимитом NFR12",
+            "src/reporting/config.test.ts::A11.7 TTL кэша по умолчанию 30 с и не превышает порог лага",
+            "src/reporting/config.test.ts::A11.7 ошибка конфигурации перечисляет ключи, но не значения"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "2bbc870959170c311362b99234072d105060042f40633cb03b342266e6272d5e",
+      "test_plan": "tests/test-plan-D11.md",
+      "files": [
+        "src/reporting/aggregates.test.ts",
+        "src/reporting/config.test.ts",
+        "src/reporting/routes/health.test.ts",
+        "src/reporting/routes/reports.test.ts",
+        "src/reporting/server.test.ts",
+        "src/reporting/sql-contract.test.ts"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D12",
+      "level": "L2",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A12.1",
+          "digest": "00f653a4a3ca",
+          "tests": [
+            "src/features/reports/ReportsPage.test.tsx::A12.1 показывает три вкладки, данные и бейдж актуальности с лагом"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A12.2",
+          "digest": "a244c8d01697",
+          "tests": [
+            "src/features/reports/ReportsPage.test.tsx::A12.2 исполнитель видит 404 и не видит пункт «Отчёты»"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A12.3",
+          "digest": "24c12c07080d",
+          "tests": [
+            "src/features/reports/ReportsPage.test.tsx::A12.3 при лаге 40 с показывает предупреждение и не скрывает данные"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A12.4",
+          "digest": "29ef0c33b5d6",
+          "tests": [
+            "src/features/reports/degraded.test.tsx::A12.4 при 503 показывает панель и повторяет запрос, навигация работает"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A12.5",
+          "digest": "8a92fd5a779d",
+          "tests": [
+            "src/features/reports/degraded.test.tsx::A12.5 email, description и comment не отображаются и не дают ошибок"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A12.6",
+          "digest": "b411ce7a87a3",
+          "tests": [
+            "src/features/reports/bundle.test.ts::A12.6 в клиентских модулях нет service_role, primary и строк подключения",
+            "src/features/reports/bundle.test.ts::A12.6 адрес отчётов задаётся только публичной VITE-переменной",
+            "src/features/reports/bundle.test.ts::A12.6 в клиентских модулях нет записи отчётов в хранилище браузера"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "aa81dc08050789cbd2a19dc915a2bea17e69ad9e35c866aac42e622dfea8d767",
+      "test_plan": "tests/test-plan-D12.md",
+      "files": [
+        "src/features/reports/ReportsPage.test.tsx",
+        "src/features/reports/bundle.test.ts",
+        "src/features/reports/degraded.test.tsx"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D13",
+      "level": "L1",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A13.1",
+          "digest": "7cc6da94adf5",
+          "tests": [
+            "observability/rules.test.mjs::A13.1 /metrics отдаёт длительность запросов, лаг и очередь пула",
+            "observability/rules.test.mjs::A13.1 каждая серия правил входит в набор /metrics или up"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A13.2",
+          "digest": "ee8059364b38",
+          "tests": [
+            "observability/rules.test.mjs::A13.2 при up=0 алерт firing не позже 2 минут и ссылается на runbook",
+            "observability/rules.test.mjs::A13.2 у каждого алерта есть severity, summary и runbook",
+            "observability/rules.test.mjs::A13.2 лаг репликации и 5xx отчётов — отдельные правила"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A13.3",
+          "digest": "b3c0f2f853f1",
+          "tests": [
+            "scripts/ops/backup-check.test.sh::backup-check.test.sh"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A13.4",
+          "digest": "ed423c2a68ed",
+          "tests": [
+            "observability/rules.test.mjs::A13.4 протокол учения содержит шаги, деградацию отчётов и таймстампы"
+          ],
+          "exempt": false,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "eab5c8e03bb5243bdf5d927c76dc37ad5f5e9fa1032ed5c8887b7be661b34426",
+      "test_plan": "tests/test-plan-D13.md",
+      "files": [
+        "observability/rules.test.mjs",
+        "scripts/ops/backup-check.test.sh"
+      ],
+      "issues": []
+    },
+    {
+      "d": "D14",
+      "level": "L1",
+      "na": false,
+      "ok": true,
+      "phrases": [
+        {
+          "id": "A14.1",
+          "digest": "c0df252f4213",
+          "tests": [
+            "e2e/smoke.spec.ts::A14.1 01 вход с MFA открывает «Мои задачи»",
+            "e2e/smoke.spec.ts::A14.1 02 менеджер создаёт объект",
+            "e2e/smoke.spec.ts::A14.1 03 менеджер создаёт задачу и назначает исполнителя",
+            "e2e/smoke.spec.ts::A14.1 04 исполнитель берёт задачу в работу",
+            "e2e/smoke.spec.ts::A14.1 05 исполнитель отправляет задачу на проверку",
+            "e2e/smoke.spec.ts::A14.1 06 менеджер принимает задачу",
+            "e2e/smoke.spec.ts::A14.1 07 менеджер возвращает задачу на доработку с комментарием",
+            "e2e/smoke.spec.ts::A14.1 08 исполнитель повторно берёт задачу из доработки",
+            "e2e/smoke.spec.ts::A14.1 09 исполнитель не видит чужие задачи",
+            "e2e/smoke.spec.ts::A14.1 10 исполнителю недоступен запрещённый переход",
+            "e2e/smoke.spec.ts::A14.1 11 менеджер архивирует объект",
+            "e2e/smoke.spec.ts::A14.1 12 «Мои задачи» показывает назначенные задачи исполнителю",
+            "e2e/smoke.spec.ts::A14.1 13 менеджер открывает отчёты: три вкладки",
+            "e2e/smoke.spec.ts::A14.1 14 отчёт показывает источник и лаг реплики",
+            "e2e/smoke.spec.ts::A14.1 15 backend не принимает запись",
+            "e2e/smoke.spec.ts::A14.1 16 деградация отчётов не ломает навигацию",
+            "e2e/smoke.spec.ts::A14.1 17 сессия восстанавливается после перезагрузки"
+          ],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A14.2",
+          "digest": "43753c2f2c94",
+          "tests": [],
+          "exempt": true,
+          "satisfied": true
+        },
+        {
+          "id": "A14.3",
+          "digest": "6e44848efc5d",
+          "tests": [
+            "docs/readme.test.md::readme.test.md"
+          ],
+          "exempt": false,
+          "satisfied": true
+        },
+        {
+          "id": "A14.4",
+          "digest": "f5b67affe316",
+          "tests": [],
+          "exempt": true,
+          "satisfied": true
+        }
+      ],
+      "binding_hash": "2b0ba660b019517abd1c7aa40546543efc85adc22f8dcdbbb9275e4030dfde65",
+      "test_plan": "tests/test-plan-D14.md",
+      "files": [
+        "docs/readme.test.md",
+        "e2e/global-setup.ts",
+        "e2e/playwright.config.ts",
+        "e2e/smoke.spec.ts",
+        "e2e/tsconfig.json",
+        "scripts/release/check-no-secrets.test.sh",
+        "scripts/release/deploy.test.sh"
+      ],
+      "issues": []
+    }
+  ],
   "tax_pass": true,
-  "timestamp": "2026-11-04T16:53:02.571Z",
+  "timestamp": "2026-11-05T19:10:12.638Z",
   "evidence_name": "ACCEPTANCE.json",
   "code_hash": {
-    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_head": "f411317a90c843d4db8826eb46fc5a4b4cfb02b2",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+    "git_tree": "ba18c085c42cf9bb809b40dc41174900b7c8d88b"
   },
-  "evidence_hash": "9ccdea6dd4166d6fe8f68867b92d072f0b07073a769dd1ac22771faf125d1b64"
+  "evidence_hash": "8a29c73dee63f3f7223da9a563eca605731dd5f93d494fbb9f9e0c2c2a7f230b"
 }

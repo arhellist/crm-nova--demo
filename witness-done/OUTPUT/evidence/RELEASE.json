@@ -2,30 +2,13 @@
   "d": null,
   "gate": "pre_release",
   "mode": "full",
-  "tax_pass": false,
-  "issues": [
-    "done D01: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D01.json) — верни коммит или пересоздай акт",
-    "done D02: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D02.json) — верни коммит или пересоздай акт",
-    "done D03: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D03.json) — верни коммит или пересоздай акт",
-    "done D04: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D04.json) — верни коммит или пересоздай акт",
-    "done D05: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D05.json) — верни коммит или пересоздай акт",
-    "done D06: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D06.json) — верни коммит или пересоздай акт",
-    "done D08: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
-    "done D09: code_hash.produces_digest не совпадает: PRODUCES изменены после приёмки",
-    "done D10: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D10.json) — верни коммит или пересоздай акт",
-    "done D11: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D11.json) — верни коммит или пересоздай акт",
-    "done D12: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D12.json) — верни коммит или пересоздай акт",
-    "done D13: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D13.json) — верни коммит или пересоздай акт",
-    "done D14: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D14.json) — верни коммит или пересоздай акт",
-    "smoke: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/RELEASE-product-smoke.json) — верни коммит или пересоздай акт"
-  ],
+  "tax_pass": true,
+  "issues": [],
   "smoke": {
     "required": true,
-    "ok": false,
+    "ok": true,
     "file": "evidence/RELEASE-product-smoke.json",
-    "issues": [
-      "акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/RELEASE-product-smoke.json) — верни коммит или пересоздай акт"
-    ],
+    "issues": [],
     "runtime": {
       "labels": [
         "A14.1",
@@ -248,12 +231,12 @@
     },
     "note": "статистическая оценка, а не замена tax_pass: веса перераспределены по компонентам с непустым знаменателем"
   },
-  "timestamp": "2026-11-05T19:07:21.728Z",
+  "timestamp": "2026-11-05T19:09:16.128Z",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_head": "f411317a90c843d4db8826eb46fc5a4b4cfb02b2",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7"
+    "git_tree": "ba18c085c42cf9bb809b40dc41174900b7c8d88b"
   },
-  "evidence_hash": "8962490fa0897f27f6210b11a1fce2fb61158a8f9cc49ef4854e902b8bb23ceb"
+  "evidence_hash": "77b7fab709e925bbec29710fd2586cb3a515518a8ad6a379996f5211bbd2d4c8"
 }

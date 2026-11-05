@@ -13,5 +13,5 @@
 
 | ID | Проверка внешним контуром |
 |----|---------------------------|
-| A04.1 | `scripts/smoke/wave-api-smoke.sh auth` |
-| A04.2 | `scripts/smoke/wave-api-smoke.sh auth` |
+| A04.1 | `scripts/smoke/wave-api-smoke.sh auth` | `src/features/auth/LoginPage.test.tsx` |
+| A04.2 | `scripts/smoke/wave-api-smoke.sh auth` | `src/features/auth/useSession.test.tsx` |

@@ -1,17 +1,15 @@
 {
   "gate": "self-audit",
   "mode": "full",
-  "open_criteria": 28,
-  "prompts_checked": 14,
   "issues": [],
   "tax_pass": true,
-  "timestamp": "2026-11-04T16:55:33.766Z",
+  "timestamp": "2026-11-05T19:09:22.419Z",
   "evidence_name": "SELF_AUDIT.json",
   "code_hash": {
-    "git_head": "780c1652401c2c0d615559c6a8eddfd43a509cfa",
+    "git_head": "f411317a90c843d4db8826eb46fc5a4b4cfb02b2",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "b3b975a712c52dec5612f9e6e3d3830f0fde205e"
+    "git_tree": "ba18c085c42cf9bb809b40dc41174900b7c8d88b"
   },
-  "evidence_hash": "850a586445a488c87cdc16e15545789c169513c0f80d6ef462e06192d4dc634e"
+  "evidence_hash": "cf8df8ab9ebddee6b9b8a32af5990631a769f510ef0111d29792527431ba3f20"
 }

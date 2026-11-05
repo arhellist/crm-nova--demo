@@ -11,6 +11,6 @@
 
 | ID | Проверка внешним контуром |
 |----|---------------------------|
-| A14.1 | `scripts/smoke/product-smoke.sh` на staging (17 сценариев §4) |
-| A14.2 | `scripts/release/check-no-secrets.sh` с `FE_URL` production-сборки |
-| A14.4 | `scripts/release/deploy.sh` на staging и `--rollback` на предыдущий тег |
+| A14.1 | `scripts/smoke/product-smoke.sh` на staging (17 сценариев §4) | `e2e/smoke.spec.ts` |
+| A14.2 | `scripts/release/check-no-secrets.sh` с `FE_URL` production-сборки | `scripts/release/check-no-secrets.test.sh` |
+| A14.4 | `scripts/release/deploy.sh` на staging и `--rollback` на предыдущий тег | `scripts/release/deploy.test.sh` |

@@ -16,5 +16,5 @@
 
 | ID | Проверка внешним контуром |
 |----|---------------------------|
-| A03.1 | `scripts/smoke/wave-api-smoke.sh schema` |
-| A03.2 | `scripts/smoke/wave-api-smoke.sh schema` |
+| A03.1 | `scripts/smoke/wave-api-smoke.sh schema` | `supabase/tests/transitions_test.sql` |
+| A03.2 | `scripts/smoke/wave-api-smoke.sh schema` | `supabase/tests/transitions_test.sql` |

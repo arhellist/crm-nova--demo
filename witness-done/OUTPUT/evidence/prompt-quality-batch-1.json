@@ -72,7 +72,9 @@
         "A04.5",
         "A04.6"
       ],
-      "issues": []
+      "issues": [
+        "PRODUCES has 11 non-test files > 6 — split required"
+      ]
     },
     {
       "d": "D05",
@@ -90,14 +92,14 @@
       "issues": []
     }
   ],
-  "tax_pass": true,
-  "timestamp": "2026-11-04T16:52:57.766Z",
+  "tax_pass": false,
+  "timestamp": "2026-11-05T19:09:29.122Z",
   "evidence_name": "prompt-quality-batch-1.json",
   "code_hash": {
-    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_head": "f411317a90c843d4db8826eb46fc5a4b4cfb02b2",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+    "git_tree": "ba18c085c42cf9bb809b40dc41174900b7c8d88b"
   },
-  "evidence_hash": "822582f83358a10c2c005dffdbd3f25ec86090773a278528db2d42760c039bfc"
+  "evidence_hash": "eb4fdb498bdcf8c1d85ddd1fc1619fee2a4c85ced6718588025b832d180fe16e"
 }
