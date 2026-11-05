@@ -2,7 +2,7 @@
   "d": "D08",
   "verdict": "supports",
   "reviewer": "cursor-review@nova.local",
-  "notes": "Ревизия после изменения router.tsx в D04: поведение слайса не изменилось, приёмка зелёная (DEC-038).",
+  "notes": "",
   "acceptance_ids": [
     "A08.1",
     "A08.2",
@@ -12,11 +12,9 @@
     "A08.6"
   ],
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
-    "git_dirty": true,
+    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
+    "git_dirty": false,
     "produces": [
-      "src/app/router.tsx",
-      "src/features/objects/ObjectsPage.tsx",
       "src/features/tasks/HistoryList.tsx",
       "src/features/tasks/StatusPanel.test.tsx",
       "src/features/tasks/StatusPanel.tsx",
@@ -25,10 +23,10 @@
       "src/features/tasks/TaskPage.tsx",
       "src/features/tasks/useTask.ts"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "fe1504c7ff4e8db5e0b238af7a551b6bd0d8f40ae3ed6e5ed661b0fe7d77daf6"
+    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
+    "produces_digest": "26e939f0fe5ea3f9ee82e3334114c6af8f41cb6d3c0814f1b22345f12a728cca"
   },
   "evidence_ref": "evidence/D08.json",
-  "evidence_hash": "31058491ecb55b155775d501d7c9bf090d0b63b8ddac5f0866d00a2665e3cc15",
-  "timestamp": "2026-11-05T19:08:02.164Z"
+  "evidence_hash": "a40485b5f98a7bbd4b137adda9c1739a4c46456030b11519aaba35a6886843c0",
+  "timestamp": "2026-11-05T19:14:35.231Z"
 }

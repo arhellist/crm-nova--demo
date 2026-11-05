@@ -2,7 +2,7 @@
   "d": "D14",
   "verdict": "supports",
   "reviewer": "cursor-review@nova.local",
-  "notes": "Релизная приёмка: runtime-гейт и product-smoke tax_pass=true, e2e 34/34, security-скрипты зелёные (DEC-038).",
+  "notes": "",
   "acceptance_ids": [
     "A14.1",
     "A14.2",
@@ -10,9 +10,14 @@
     "A14.4"
   ],
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
-    "git_dirty": true,
+    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
+    "git_dirty": false,
     "produces": [
+      ".aider.conf.yml",
+      ".cursorrules",
+      ".env.example",
+      ".env.local",
+      ".env.supabase",
       ".eslintrc.cjs",
       ".gitignore",
       "README.md",
@@ -22,22 +27,18 @@
       "e2e/playwright.config.ts",
       "e2e/smoke.spec.ts",
       "e2e/tsconfig.json",
-      "package-lock.json",
-      "package.json",
       "scripts/release/check-no-secrets.sh",
       "scripts/release/check-no-secrets.test.sh",
       "scripts/release/deploy.sh",
       "scripts/release/deploy.test.sh",
       "scripts/release/serve-preview.mjs",
       "scripts/smoke/product-smoke.sh",
-      "tsconfig.json",
-      "vercel.json",
-      "vite.config.ts"
+      "scripts/smoke/wave-api-smoke.sh"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "8cfeeaddda47c04e6d008afa4f26646a6b615ab14fdea3e044edb2c2a8ef6f41"
+    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
+    "produces_digest": "66487faa998d534a3bb40a8f880d41ea71c5505745247cb486dbb8dcf24ec529"
   },
   "evidence_ref": "evidence/D14.json",
-  "evidence_hash": "a332840a959a9b4846253c5784601e58b11b4bde8851f035eadbe3a530bdd410",
-  "timestamp": "2026-11-05T19:07:00.163Z"
+  "evidence_hash": "1a46e7f2882b40444674d6bb8e8f8bad30ec4eed736e93af1573eadb1c9d3334",
+  "timestamp": "2026-11-05T19:15:43.249Z"
 }

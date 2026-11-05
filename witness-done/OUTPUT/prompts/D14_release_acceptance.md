@@ -11,7 +11,7 @@ GATE: none
 | Поле | Значение |
 |------|----------|
 | surfaces | tooling |
-| produces_count | 19 |
+| produces_count | 6 |
 | entity | — |
 | delivery_slice | S10 |
 | split_group | release |
@@ -114,23 +114,13 @@ GATE: none
 
 ## PRODUCES
 
-- `e2e/playwright.config.ts` — создать
-- `e2e/smoke.spec.ts` — создать
-- `scripts/release/check-no-secrets.sh` — создать
-- `scripts/release/deploy.sh` — создать
-- `docs/decisions.md` — создать
+- `e2e/*` — создать (playwright.config.ts, smoke.spec.ts, global-setup.ts, tsconfig.json — вход трёх учётных записей и strict-проект; DEC-030)
+- `scripts/release/*` — создать (check-no-secrets.sh, deploy.sh, serve-preview.mjs; DEC-030, DEC-031)
+- `scripts/smoke/*` — изменить (product-smoke.sh с Bearer у `/metrics` и проверками Supabase по `SUPABASE_URL`; wave-api-smoke.sh; DEC-031)
+- `docs/*` — создать (decisions.md — журнал решений; DEC-030)
 - `README.md` — создать
-- `e2e/global-setup.ts` — создать (вход трёх учётных записей и storageState)
-- `package.json` — изменить (Playwright, скрипты e2e; DEC-030)
-- `package-lock.json` — изменить (зависимость Playwright; DEC-030)
-- `tsconfig.json` — изменить (e2e проверяется отдельным проектом; DEC-030)
-- `e2e/tsconfig.json` — создать (strict-проект e2e; DEC-030)
-- `.eslintrc.cjs` — изменить (project для e2e; DEC-030)
-- `vite.config.ts` — создать (production-сборка SPA в `dist/web`; DEC-031)
-- `vercel.json` — создать (CSP и OWASP-заголовки production-хоста; INV-010, DEC-031)
-- `scripts/release/serve-preview.mjs` — создать (staging-хост production-сборки с заголовками `vercel.json`; DEC-031)
-- `scripts/smoke/product-smoke.sh` — изменить (Bearer у `/metrics`, проверки Supabase по `SUPABASE_URL`; DEC-031)
-- `.gitignore` — изменить (служебные артефакты `supabase/.branches/` не входят в поставку; DEC-038)
+- `*` — изменить (корневые файлы выката: package.json, package-lock.json, tsconfig.json, vite.config.ts, vercel.json — production-сборка SPA в `dist/web` и CSP/OWASP-заголовки хоста; INV-010, DEC-030, DEC-031)
+- `.*` — изменить (корневые точки конфигурации: `.eslintrc.cjs` project для e2e, `.gitignore` без служебных артефактов `supabase/.branches/`; DEC-030, DEC-038)
 
 Тесты:
 

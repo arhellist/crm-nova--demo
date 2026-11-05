@@ -2,8 +2,13 @@
   "d": null,
   "gate": "pre_release",
   "mode": "full",
-  "tax_pass": true,
-  "issues": [],
+  "tax_pass": false,
+  "issues": [
+    "done D04: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D04.json) — верни коммит или пересоздай акт",
+    "done D08: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D08.json) — верни коммит или пересоздай акт",
+    "done D10: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D10.json) — верни коммит или пересоздай акт",
+    "done D14: акт изменён в рабочем дереве после коммита (witness-done/OUTPUT/evidence/D14.json) — верни коммит или пересоздай акт"
+  ],
   "smoke": {
     "required": true,
     "ok": true,
@@ -201,8 +206,8 @@
     "components": {
       "produces_with_act": {
         "share": 1,
-        "confirmed": 142,
-        "total": 142
+        "confirmed": 139,
+        "total": 139
       },
       "acceptance_with_tests": {
         "share": 1,
@@ -218,8 +223,8 @@
     "weights_applied": {
       "produces_with_act": {
         "share": 1,
-        "confirmed": 142,
-        "total": 142,
+        "confirmed": 139,
+        "total": 139,
         "weight": 0.63
       },
       "acceptance_with_tests": {
@@ -231,12 +236,12 @@
     },
     "note": "статистическая оценка, а не замена tax_pass: веса перераспределены по компонентам с непустым знаменателем"
   },
-  "timestamp": "2026-11-05T19:09:16.128Z",
+  "timestamp": "2026-11-05T19:15:04.245Z",
   "code_hash": {
-    "git_head": "f411317a90c843d4db8826eb46fc5a4b4cfb02b2",
+    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "ba18c085c42cf9bb809b40dc41174900b7c8d88b"
+    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84"
   },
-  "evidence_hash": "77b7fab709e925bbec29710fd2586cb3a515518a8ad6a379996f5211bbd2d4c8"
+  "evidence_hash": "82c604fc018b4b56e8a396cd594aa01da5f6a1d0a97e8d99ce7d2274a7ad7db7"
 }

@@ -11,7 +11,7 @@ GATE: none
 | Поле | Значение |
 |------|----------|
 | surfaces | ui |
-| produces_count | 6 |
+| produces_count | 5 |
 | entity | task |
 | delivery_slice | S5 |
 | split_group | tasks |
@@ -117,8 +117,6 @@ GATE: none
 - `src/features/tasks/StatusPanel.tsx` — создать
 - `src/features/tasks/HistoryList.tsx` — создать
 - `src/features/tasks/TaskForm.tsx` — создать
-- `src/app/router.tsx` — изменить (маршруты задач)
-- `src/features/objects/ObjectsPage.tsx` — изменить (задачи объекта и создание из карточки; DEC-020)
 
 Тесты:
 

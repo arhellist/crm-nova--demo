@@ -70,13 +70,13 @@
     }
   ],
   "tax_pass": true,
-  "timestamp": "2026-11-04T16:52:57.858Z",
+  "timestamp": "2026-11-05T19:13:21.010Z",
   "evidence_name": "prompt-quality-batch-3.json",
   "code_hash": {
-    "git_head": "a2c68a1a8691e3c3259c21bbc3f54197d67e79c7",
+    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "40514ec17fd5f1a396d7e1c5c85748a24d05b2b1"
+    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84"
   },
-  "evidence_hash": "bff95065c75988c39c7519675af79fdae136ac2b40b2155b789b55332cb1b767"
+  "evidence_hash": "ba90670dacf80908ce4892340b0021d0789afc90104ec73db3aacf08b9557788"
 }

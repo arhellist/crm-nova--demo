@@ -116,18 +116,12 @@ GATE: none
 
 ## PRODUCES
 
-- `src/features/auth/api.ts` — создать
-- `src/features/auth/useSession.ts` — создать
-- `src/features/auth/LoginPage.tsx` — создать
-- `src/features/auth/MfaChallenge.tsx` — создать
-- `src/app/router.tsx` — создать
-- `src/app/AppShell.tsx` — создать
+- `src/features/auth/*` — создать (api.ts, useSession.ts, LoginPage.tsx, MfaChallenge.tsx)
+- `src/app/*` — создать (router.tsx, AppShell.tsx)
 - `index.html` — создать (точка входа Vite; см. DEC-011)
 - `src/main.tsx` — создать (BrowserRouter + QueryClientProvider)
 - `src/styles/tokens.css` — создать (токены `design-notes.md` + директивы Tailwind; DEC-011)
 - `tailwind.config.cjs` — создать (content и токены; DEC-011)
-- `package-lock.json` — изменить (следствие установки зависимостей, DEC-011)
-
 Тесты:
 
 - `src/features/auth/useSession.test.tsx` — A04.2, A04.4

@@ -2,7 +2,7 @@
   "d": "D10",
   "verdict": "supports",
   "reviewer": "cursor-review@nova.local",
-  "notes": "Ревизия после стабилизации runtime: seed/replica-контур соответствуют PRODUCES и инвариантам (DEC-036, DEC-038).",
+  "notes": "",
   "acceptance_ids": [
     "A10.1",
     "A10.2",
@@ -10,8 +10,8 @@
     "A10.4"
   ],
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
-    "git_dirty": true,
+    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
+    "git_dirty": false,
     "produces": [
       "infra/replica/api.Dockerfile",
       "infra/replica/check.mjs",
@@ -21,14 +21,13 @@
       "infra/replica/init/000_auth_stub.sql",
       "infra/replica/init/010_subscription.sql",
       "infra/replica/init/020_views.sql",
-      "package.json",
       "supabase/migrations/0008_publication_and_ro.sql",
       "supabase/tests/views_test.sql"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "6df6ad3fef600ca294b32e23c7321f970de321dc2d74bb23c98838b2c467c1e5"
+    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
+    "produces_digest": "dafcbb7cb67682f45c5258578950eb727e5f24afc64ab0fde510177a4f600b6d"
   },
   "evidence_ref": "evidence/D10.json",
-  "evidence_hash": "1e3c2ff50413a425ca12962441d7dd436d84e4298bd50587bc0e0506bb67a934",
-  "timestamp": "2026-11-05T19:08:54.497Z"
+  "evidence_hash": "f8b5cda80a970cbf03c0ea69a13887ca486a53180869beb27d85a162f88e9cf4",
+  "timestamp": "2026-11-05T19:15:32.231Z"
 }

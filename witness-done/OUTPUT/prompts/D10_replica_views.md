@@ -11,7 +11,7 @@ GATE: none
 | Поле | Значение |
 |------|----------|
 | surfaces | db |
-| produces_count | 8 |
+| produces_count | 3 |
 | entity | — |
 | delivery_slice | S7 |
 | split_group | reports |
@@ -113,13 +113,8 @@ GATE: none
 ## PRODUCES
 
 - `supabase/migrations/0008_publication_and_ro.sql` — создать
-- `infra/replica/docker-compose.yml` — создать
-- `infra/replica/init/010_subscription.sql` — создать
-- `infra/replica/init/020_views.sql` — создать
-- `infra/replica/check.mjs` — создать
-- `infra/replica/api.Dockerfile` — создать (образ backend для compose; DEC-023)
-- `infra/replica/init/000_auth_stub.sql` — создать (совместимость Supabase-миграций; DEC-023)
-- `package.json` — изменить (зависимости `pg`, `@types/pg`; DEC-023)
+- `infra/replica/*` — создать (docker-compose.yml, check.mjs, api.Dockerfile — образ backend для compose; DEC-023)
+- `infra/replica/init/*` — создать (000_auth_stub.sql, 010_subscription.sql, 020_views.sql; DEC-023)
 
 Тесты:
 

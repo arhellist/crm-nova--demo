@@ -2,7 +2,7 @@
   "d": "D04",
   "verdict": "supports",
   "reviewer": "cursor-review@nova.local",
-  "notes": "Автоматическая ревизия после стабилизации runtime (DEC-033, DEC-034, DEC-038): код соответствует PRODUCES и инвариантам.",
+  "notes": "",
   "acceptance_ids": [
     "A04.1",
     "A04.2",
@@ -12,11 +12,10 @@
     "A04.6"
   ],
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
-    "git_dirty": true,
+    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
+    "git_dirty": false,
     "produces": [
       "index.html",
-      "package-lock.json",
       "src/app/AppShell.test.tsx",
       "src/app/AppShell.tsx",
       "src/app/router.tsx",
@@ -30,10 +29,10 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "98015a7c29bea86925907ff7941139a2b715e3abc75f80786bde24c02ef7044f"
+    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
+    "produces_digest": "2753fa6ee10a35332805b39927fe35fda8fef0ed8560c704de16eed1244b3ef6"
   },
   "evidence_ref": "evidence/D04.json",
-  "evidence_hash": "2b962df4ecfb3637346a80e7cd730a6fbf939c38c06ac179c96547d231f532fd",
-  "timestamp": "2026-11-05T19:06:07.654Z"
+  "evidence_hash": "b2402f600954503bffec94844398d23e703c2bf034fdf532546282b2b04100e6",
+  "timestamp": "2026-11-05T19:14:35.193Z"
 }
