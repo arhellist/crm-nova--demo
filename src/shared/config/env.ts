@@ -33,7 +33,16 @@ const envSchema = z.object({
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
   // Supabase Auth/PostgREST: обязателен, без него приложение не стартует (A01.1).
   SUPABASE_URL: z.string().url(),
-  SUPABASE_ANON_KEY: z.string().min(1).optional(),
+  // Anon-ключ для GoTrue/PostgREST на BFF (DEC-053).
+  SUPABASE_ANON_KEY: z.string().min(1),
+  // Узко DEC-060: только POST /api/auth/managers. Пусто → провижининг недоступен (503).
+  SUPABASE_SERVICE_ROLE_KEY: z
+    .string()
+    .optional()
+    .transform((value) => {
+      const trimmed = value?.trim() ?? '';
+      return trimmed.length > 0 ? trimmed : undefined;
+    }),
   // Токен периметра API: короткий токен не принимаем, чтобы не завести «dev-заглушку» в prod.
   API_TOKEN: z.string().min(16),
   // Реплика только для чтения; primary в конфигурации backend отсутствует намеренно (INV-001).

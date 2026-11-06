@@ -15,15 +15,13 @@ import * as api from '../features/auth/api.js';
 
 vi.mock('../features/auth/api', () => ({
   getSession: vi.fn(),
-  getAssurance: vi.fn(),
-  getProfile: vi.fn(),
+    getProfile: vi.fn(),
   refreshSession: vi.fn(),
   onAuthChange: vi.fn(() => () => undefined),
   isUnauthorized: (error: unknown) =>
     typeof error === 'object' && error !== null && (error as { status?: number }).status === 401,
   signIn: vi.fn(),
-  verifyTotp: vi.fn(),
-  signOut: vi.fn(),
+    signOut: vi.fn(),
 }));
 
 const executor: Profile = {
@@ -53,7 +51,6 @@ function renderAt(path: string): void {
 
 beforeEach(() => {
   vi.mocked(api.getSession).mockResolvedValue(session);
-  vi.mocked(api.getAssurance).mockResolvedValue({ currentLevel: 'aal2', nextLevel: 'aal2' });
   vi.mocked(api.getProfile).mockResolvedValue(executor);
   vi.mocked(api.refreshSession).mockResolvedValue(undefined);
   vi.mocked(api.onAuthChange).mockReturnValue(() => undefined);
@@ -65,7 +62,7 @@ afterEach(() => {
 });
 
 describe('AppShell', () => {
-  it('A04.3 исполнитель: нет пункта «Отчёты», роль из profiles', async () => {
+  it('A04.3 исполнитель: нет пунктов «Отчёты» и «Команда», роль из profiles', async () => {
     renderAt('/my');
 
     await waitFor(() =>
@@ -74,6 +71,7 @@ describe('AppShell', () => {
     expect(screen.getByRole('link', { name: 'Объекты' })).toBeTruthy();
     expect(screen.getByRole('link', { name: 'Мои задачи' })).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'Отчёты' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Команда' })).toBeNull();
     expect(screen.getByText('Пётр Смирнов')).toBeTruthy();
     expect(screen.getByText('Исполнитель')).toBeTruthy();
   });
@@ -92,11 +90,12 @@ describe('AppShell', () => {
     expect(window.location.href).not.toContain('refresh_token');
   });
 
-  it('A04.3 manager видит «Отчёты»', async () => {
+  it('A04.3 / DEC-060 manager видит «Отчёты» и «Команда»', async () => {
     vi.mocked(api.getProfile).mockResolvedValue(manager);
     renderAt('/my');
 
     await waitFor(() => expect(screen.getByRole('link', { name: 'Отчёты' })).toBeTruthy());
-    expect(screen.getByText('Постановщик')).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Команда' })).toBeTruthy();
+    expect(screen.getByText('Менеджер')).toBeTruthy();
   });
 });

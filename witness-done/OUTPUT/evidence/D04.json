@@ -209,8 +209,8 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:14:48.941Z",
   "code_hash": {
-    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
-    "git_dirty": false,
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
+    "git_dirty": true,
     "produces": [
       "index.html",
       "src/app/AppShell.test.tsx",
@@ -226,8 +226,8 @@
       "src/styles/tokens.css",
       "tailwind.config.cjs"
     ],
-    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
-    "produces_digest": "2753fa6ee10a35332805b39927fe35fda8fef0ed8560c704de16eed1244b3ef6"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "2f9c43c318efc6afa2e4a3638bf505f868a457d9ea9961caab6759a7daa9dafd"
   },
-  "evidence_hash": "c13de61196f04db74935353700f2e1263d6ba51fc7aa5ff19767400067bcf34f"
+  "evidence_hash": "6da951c6c0b1dbeb79b475c3b54e7ded5f116d373fdaf1662dd884d091c56184"
 }

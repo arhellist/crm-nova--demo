@@ -11,7 +11,7 @@
 | ADR-0002 | Supabase Cloud: PostgreSQL 15, Auth, PostgREST, RPC, RLS, триггеры | права решает БД; отсутствие политики = отказ |
 | ADR-0003 | Вторичная PostgreSQL 16, логическая репликация `pgoutput`, роль `nova_ro` | отчёты читаются с реплики; лаг — штатное состояние, а не ошибка |
 | ADR-0004 | React 18 + Vite 5 + TanStack Query 5 + Tailwind 3.4 | SPA на Vercel, тяжёлые UI-киты запрещены |
-| ADR-0005 | Supabase Auth, email + пароль + TOTP, JWT в `Authorization` | cookie нет, CSRF-модель строится на отказе от cookie |
+| ADR-0005 | Same-origin Auth BFF + Data Gateway: email/пароль **без MFA**, access/refresh в httpOnly cookies, CSRF; склад — Supabase с user JWT (DEC-053) | браузер не ходит в PostgREST напрямую; `service_role` в data-path запрещён |
 | ADR-0006 | Vercel + Supabase + Docker Compose + Cloudflare + Prometheus/Grafana | один регион, без мультирегионального failover |
 | ADR-0007 | Спецификация как код: `spec-state/`, forward-only миграции | ручная правка схемы запрещена |
 

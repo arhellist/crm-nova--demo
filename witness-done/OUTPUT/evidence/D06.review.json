@@ -26,7 +26,7 @@
       "src/features/objects/useObjects.ts"
     ],
     "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "30ef2bc248ee07365d458ded63490277a04e322005adae2d5ef6aa4c9c41862d"
+    "produces_digest": "9006877eb76ddbe69298912f9314b432251aeaa6eff2dc46d335e8b06538f5d3"
   },
   "evidence_ref": "evidence/D06.json",
   "evidence_hash": "63ab2db86b85611bcaa3acf33dbcf23de49335c215f0ab81d16ed61843059b7b",

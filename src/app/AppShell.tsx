@@ -2,8 +2,8 @@
  * Оболочка приложения: шапка, навигация по роли и выход.
  *
  * Инварианты:
- *  - пункт «Отчёты» рендерится только manager; у executor его нет в DOM, а не скрыт CSS
- *    (INV-005, A04.3);
+ *  - пункты «Отчёты» и «Команда» рендерятся только manager; у executor их нет в DOM
+ *    (INV-005, A04.3, DEC-060);
  *  - имя и роль берутся из профиля (`profiles`), email в оболочке не показываем;
  *  - выход отзывает сессию и чистит кэш профиля через session.refresh().
  */
@@ -12,7 +12,7 @@ import type { UseSessionResult } from '../features/auth/useSession.js';
 import { signOut } from '../features/auth/api.js';
 
 const roleLabel: Record<'manager' | 'executor', string> = {
-  manager: 'Постановщик',
+  manager: 'Менеджер',
   executor: 'Исполнитель',
 };
 
@@ -49,7 +49,7 @@ export function AppShell({ session }: AppShellProps): JSX.Element | null {
             NOVA CRM
           </span>
 
-          <nav aria-label="Основная навигация" className="flex items-center gap-1">
+          <nav aria-label="Основная навигация" className="flex items-center gap-2">
             <NavLink to="/objects" className={navLinkClass}>
               Объекты
             </NavLink>
@@ -57,21 +57,26 @@ export function AppShell({ session }: AppShellProps): JSX.Element | null {
               Мои задачи
             </NavLink>
             {profile.role === 'manager' ? (
-              <NavLink to="/reports" className={navLinkClass}>
-                Отчёты
-              </NavLink>
+              <>
+                <NavLink to="/reports" className={navLinkClass}>
+                  Отчёты
+                </NavLink>
+                <NavLink to="/team" className={navLinkClass}>
+                  Команда
+                </NavLink>
+              </>
             ) : null}
           </nav>
 
-          <div className="ml-auto flex items-center gap-3">
+          <div className="ml-auto flex items-center gap-4">
             <div className="text-right">
               <p className="text-sm text-text">{profile.full_name}</p>
-              <p className="text-xs text-text-mute">{roleLabel[profile.role]}</p>
+              <p className="mt-0.5 text-xs text-text-mute">{roleLabel[profile.role]}</p>
             </div>
             <button
               type="button"
               onClick={() => void handleSignOut()}
-              className="rounded-sm border border-stroke px-3 py-1.5 text-sm text-text-dim transition hover:border-rose hover:text-rose"
+              className="rounded-sm border border-stroke px-3 py-2 text-sm text-text-dim transition hover:border-rose hover:text-rose"
             >
               Выйти
             </button>

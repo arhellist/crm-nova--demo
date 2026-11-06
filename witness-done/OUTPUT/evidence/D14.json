@@ -205,8 +205,8 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:15:53.848Z",
   "code_hash": {
-    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
-    "git_dirty": false,
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
+    "git_dirty": true,
     "produces": [
       ".aider.conf.yml",
       ".cursorrules",
@@ -224,14 +224,17 @@
       "e2e/tsconfig.json",
       "scripts/release/check-no-secrets.sh",
       "scripts/release/check-no-secrets.test.sh",
+      "scripts/release/deploy-arhellist-crm-nova-api.sh",
+      "scripts/release/deploy-arhellist-crm-nova.sh",
       "scripts/release/deploy.sh",
       "scripts/release/deploy.test.sh",
+      "scripts/release/nginx-crm-nova.snippet",
       "scripts/release/serve-preview.mjs",
       "scripts/smoke/product-smoke.sh",
       "scripts/smoke/wave-api-smoke.sh"
     ],
-    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
-    "produces_digest": "66487faa998d534a3bb40a8f880d41ea71c5505745247cb486dbb8dcf24ec529"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "87329bcaa557d67b16fabda29a4b35dd685ac055b31a5c2050982a777a9a028a"
   },
-  "evidence_hash": "da0932575f2e19f7cffd1a0585b10c4a913df4efb5adcb1c7ff0f1f942f61533"
+  "evidence_hash": "2839080c4bc18403bc2f4aa16c570a84285cd27c4cce14b3e9c3f26a589ee234"
 }

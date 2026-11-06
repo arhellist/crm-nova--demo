@@ -94,6 +94,9 @@ describe('A12.4 деградация реплики', () => {
   it('A12.4 при 503 показывает панель и повторяет запрос, навигация работает', async () => {
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);
+    if (url.includes('/api/auth/csrf')) {
+      return jsonResponse({ csrf_token: 'test-csrf' });
+    }
       if (url.includes('/api/reports/')) {
         return jsonResponse(
           { error: { code: 'E_REPLICA_DOWN', message: 'Реплика недоступна' } },

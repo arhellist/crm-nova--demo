@@ -9,7 +9,7 @@
  *    строк подключения и SQL в метрики не попадают (NFR16);
  *  - недоступность БД не роняет процесс: состояние подписки показывается как `broken`.
  */
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import type { QueryRows, ReplicationState } from '../db.js';
 import { readReplicationState } from '../db.js';
 import { reportCacheStats } from './reports.js';
@@ -20,6 +20,8 @@ export interface HealthDeps {
   startedAtMs?: number;
   /** Счётчики пула из `pg`: метрики насыщения NFR12. */
   getPoolStats?: () => PoolStats;
+  /** DEMO_STAND / тесты: подмена состояния подписки без pg_stat_subscription (DEC-072). */
+  getReplicationState?: () => Promise<ReplicationState>;
 }
 
 /** Снимок пула: `pg` отдаёт числа без ожидания. */
@@ -83,6 +85,9 @@ const BROKEN_STATE: ReplicationState = {
 
 async function safeReplicationState(deps: HealthDeps): Promise<ReplicationState> {
   try {
+    if (deps.getReplicationState) {
+      return await deps.getReplicationState();
+    }
     return await readReplicationState(deps.query);
   } catch {
     return BROKEN_STATE;
@@ -170,23 +175,28 @@ export function registerReplicationAndMetricsRoutes(app: FastifyInstance, deps: 
   const now = deps.now ?? (() => new Date());
   const startedAt = deps.startedAtMs ?? Date.now();
 
-  app.get('/health/replication', async (_request, reply) => {
+  async function replicationHandler(
+    _request: FastifyRequest,
+    reply: FastifyReply,
+  ): Promise<unknown> {
     const state = await safeReplicationState(deps);
     const statusCode = state.status === 'streaming' ? 200 : 503;
     if (statusCode === 503) {
       void reply.header('retry-after', '30');
     }
     return reply.code(statusCode).send(state);
-  });
+  }
 
-  app.get('/metrics', async (_request, reply) => {
+  // Канон D11 + alias под nginx `/crm-nova/api/` (DEC-072).
+  app.get('/health/replication', replicationHandler);
+  app.get('/api/health/replication', replicationHandler);
+
+  async function metricsHandler(
+    _request: FastifyRequest,
+    reply: FastifyReply,
+  ): Promise<unknown> {
     // Метрики не должны падать из-за БД: при недоступной реплике отдаём streaming=0.
-    let state: ReplicationState;
-    try {
-      state = await readReplicationState(deps.query);
-    } catch {
-      state = BROKEN_STATE;
-    }
+    const state = await safeReplicationState(deps);
     const current = now();
     const uptimeSeconds = Math.max((current.getTime() - startedAt) / 1000, 0);
     const pool = deps.getPoolStats?.() ?? { total: 0, idle: 0, waiting: 0 };
@@ -194,7 +204,11 @@ export function registerReplicationAndMetricsRoutes(app: FastifyInstance, deps: 
     const syncedAtSeconds = Math.max(Math.floor(current.getTime() / 1000 - state.lag_seconds), 0);
     void reply.type('text/plain; version=0.0.4; charset=utf-8');
     return reply.send(metricsText(state, uptimeSeconds, pool, syncedAtSeconds));
-  });
+  }
+
+  // Канон D11 + alias под nginx `/crm-nova/api/` (DEC-072/073).
+  app.get('/metrics', metricsHandler);
+  app.get('/api/metrics', metricsHandler);
 }
 
 /**

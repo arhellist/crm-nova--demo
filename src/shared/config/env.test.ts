@@ -14,6 +14,7 @@ const projectRoot = fileURLToPath(new URL('../../..', import.meta.url));
 const baseEnv = {
   NODE_ENV: 'test',
   SUPABASE_URL: 'https://example.supabase.co',
+  SUPABASE_ANON_KEY: 'test-anon-key-not-a-secret-for-unit',
   API_TOKEN: 'test-token-value-1234567890',
   DATABASE_URL: 'postgresql://nova_ro:secret-password@127.0.0.1:5433/nova_replica',
   ALLOWED_ORIGINS: 'http://127.0.0.1:5173',

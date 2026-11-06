@@ -246,7 +246,7 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:08:26.060Z",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -258,8 +258,8 @@
       "src/features/tasks/filters.ts",
       "src/features/tasks/useMyTasks.ts"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "350e8818478f9952b9f891173124e9c8e1d75b7df907a276473f71cc644c85e7"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "51f03a6ab0a7170e374b3855089c36c863f028099cb8f3d830c4a514b113c233"
   },
-  "evidence_hash": "224456af247acc3149799e3a90cf847046a69ed29d0e1591e64dd4520cf6e2e9"
+  "evidence_hash": "71f40a0f42c03dd9e1d031746a37f558771bd8ea228e18abf41029d72e419953"
 }

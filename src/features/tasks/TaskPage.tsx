@@ -14,6 +14,7 @@ import { useSession } from '../auth/useSession.js';
 import { HistoryList, StatusBadge, formatMoscowDateTime } from './HistoryList.js';
 import { StatusPanel } from './StatusPanel.js';
 import { TaskForm } from './TaskForm.js';
+import { useObjectTitles } from './useMyTasks.js';
 import { useTask, useTaskHistory, useTaskPeople } from './useTask.js';
 import type { TaskRow } from './types.js';
 
@@ -39,6 +40,7 @@ export function TaskPage(): JSX.Element {
   const { task, isLoading, isError } = useTask(taskId);
   const history = useTaskHistory(taskId);
   const [editing, setEditing] = useState(false);
+  const objectTitles = useObjectTitles(task ? [task.object_id] : []);
 
   const people = useTaskPeople([
     ...(task ? [task.assignee_id, task.author_id] : []),
@@ -104,25 +106,50 @@ export function TaskPage(): JSX.Element {
         ) : null}
       </div>
 
-      {task.description ? (
-        <p className="mt-4 max-w-[72ch] whitespace-pre-line text-sm text-text-dim">
-          {task.description}
-        </p>
-      ) : (
-        <p className="mt-4 text-sm text-text-mute">Описание не добавлено.</p>
-      )}
-
-      <dl className="mt-6 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+      <dl className="mt-6 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
+        <div className="sm:col-span-2 lg:col-span-3">
+          <dt className="text-xs uppercase tracking-wide text-text-mute">Название</dt>
+          <dd className="mt-1 text-text">{task.title}</dd>
+        </div>
+        <div className="sm:col-span-2 lg:col-span-3">
+          <dt className="text-xs uppercase tracking-wide text-text-mute">Описание</dt>
+          <dd
+            className={
+              task.description.trim()
+                ? 'mt-1 max-w-[72ch] whitespace-pre-line text-text-dim'
+                : 'mt-1 text-text-mute'
+            }
+          >
+            {task.description.trim() || 'Описание не добавлено'}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-xs uppercase tracking-wide text-text-mute">Объект</dt>
+          <dd className="mt-1">
+            <Link
+              to={`/objects/${task.object_id}`}
+              className="text-cyan transition hover:underline"
+            >
+              {objectTitles[task.object_id] ?? 'Объект недоступен'}
+            </Link>
+          </dd>
+        </div>
         <div>
           <dt className="text-xs uppercase tracking-wide text-text-mute">Исполнитель</dt>
           <dd className="mt-1 text-text">{people[task.assignee_id] ?? 'Участник'}</dd>
+        </div>
+        <div>
+          <dt className="text-xs uppercase tracking-wide text-text-mute">Статус</dt>
+          <dd className="mt-1">
+            <StatusBadge status={task.status} />
+          </dd>
         </div>
         <div>
           <dt className="text-xs uppercase tracking-wide text-text-mute">Автор</dt>
           <dd className="mt-1 text-text">{people[task.author_id] ?? 'Участник'}</dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-wide text-text-mute">Создана</dt>
+          <dt className="text-xs uppercase tracking-wide text-text-mute">Дата создания</dt>
           <dd className="mt-1 font-mono text-xs text-text-dim">
             {formatMoscowDateTime(task.created_at)}
           </dd>

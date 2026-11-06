@@ -21,6 +21,7 @@ function serverEnv(port: number): NodeJS.ProcessEnv {
     PORT: String(port),
     LOG_LEVEL: 'silent',
     SUPABASE_URL: 'https://example.supabase.co',
+    SUPABASE_ANON_KEY: 'test-anon-key-not-a-secret-for-unit',
     // Токен ≥32 символов: конфигурация отчётного контура (DEC-033) не принимает заглушку.
     API_TOKEN: 'test-token-value-1234567890-abcdefgh',
     DATABASE_URL: 'postgresql://nova_ro:secret@127.0.0.1:5433/nova_replica',

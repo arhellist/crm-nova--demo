@@ -1,24 +1,23 @@
 /**
- * Точка входа read-only backend.
+ * Точка входа backend: health, Auth BFF, Data Gateway, отчёты (DEC-053).
  *
- * Порядок намеренно жёсткий: сначала конфигурация (импорт `env` падает с кодом 1, если она
- * невалидна), затем логгер, затем сборка приложения. Штатное завершение по `SIGTERM`/`SIGINT`
- * закрывает HTTP-сервер и завершает процесс с кодом 0 не дольше 5 с (A01.5); ошибка старта —
- * лог `fatal` и код 1. Секреты в лог не попадают: их редактирует pino (см. `shared/logger.ts`).
- *
- * Один процесс обслуживает весь backend: базовый контракт `/health` (D01) и отчётный контур
- * D11 (отчёты, `/health/replication`, `/metrics`). До DEC-033 отчётные маршруты жили в
- * отдельном файле и не попадали в запускаемый процесс — образ отвечал 404 на весь продукт.
+ * Порядок: конфигурация → приложение → cookie plugin → auth/data → reporting.
+ * Запись CRM идёт только через Supabase PostgREST/RPC с user JWT из cookie (не service_role).
  */
 import { setTimeout as delay } from 'node:timers/promises';
+import cookie from '@fastify/cookie';
 import { readReportingConfig } from '../reporting/config.js';
 import { createQueryRows, createReplicaPool } from '../reporting/db.js';
 import { mountReportingSurface } from '../reporting/server.js';
 import { env } from '../shared/config/env.js';
 import { createLogger } from '../shared/logger.js';
 import { buildApp } from './app.js';
+import { readCookiePolicy } from './auth/cookies.js';
+import { createAdminClient } from './auth/admin.js';
+import { createGoTrueClient } from './auth/gotrue.js';
+import { registerAuthRoutes } from './auth/routes.js';
+import { registerDataGateway } from './gateway/data.js';
 
-/** Верхняя граница на штатное завершение: не дольше 5 секунд по контракту. */
 const SHUTDOWN_TIMEOUT_MS = 4_500;
 
 const logger = createLogger({
@@ -26,15 +25,12 @@ const logger = createLogger({
   pretty: env.NODE_ENV === 'development',
 });
 
-/** Закрывает сервер и пул реплики, но не ждёт вечно: зависший сокет не должен держать процесс. */
 async function shutdown(
   app: Awaited<ReturnType<typeof buildApp>>,
   pool: { end: () => Promise<void> } | null,
   signal: string,
 ): Promise<void> {
   logger.info({ signal }, 'получен сигнал завершения');
-  // `node:timers/promises` вместо глобального setTimeout: таймер не держит event loop
-  // и не требует ручного clearTimeout.
   const timeout = delay(SHUTDOWN_TIMEOUT_MS, 'timeout' as const);
   const closed = await Promise.race([app.close().then(() => 'closed' as const), timeout]);
   if (closed === 'timeout') {
@@ -45,16 +41,40 @@ async function shutdown(
 }
 
 async function main(): Promise<void> {
-  const app = await buildApp({ logger });
+  const app = await buildApp({ logger, fastifyOptions: { trustProxy: true } });
 
-  // Отчётный контур читает только контур чтения: `DATABASE_URL_REPLICA`, без primary (INV-001).
-  // Ошибка конфигурации — отказ старта: backend без отчётов не является поставкой.
+  await app.register(cookie);
+
+  const cookiePolicy = readCookiePolicy(process.env);
+  const gotrue = createGoTrueClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
+  const admin = env.SUPABASE_SERVICE_ROLE_KEY
+    ? createAdminClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY)
+    : null;
+
+  registerAuthRoutes(app, {
+    gotrue,
+    cookiePolicy,
+    allowedOrigins: env.ALLOWED_ORIGINS,
+    supabaseUrl: env.SUPABASE_URL,
+    anonKey: env.SUPABASE_ANON_KEY,
+    admin,
+  });
+
+  registerDataGateway(app, {
+    supabaseUrl: env.SUPABASE_URL,
+    anonKey: env.SUPABASE_ANON_KEY,
+    allowedOrigins: env.ALLOWED_ORIGINS,
+    cookiePolicy,
+  });
+
   const reporting = readReportingConfig(process.env);
   const pool = createReplicaPool(reporting.DATABASE_URL_REPLICA);
+  const query = createQueryRows(pool);
+  const demoStand = process.env.DEMO_STAND === 'true' || process.env.DEMO_STAND === '1';
   await mountReportingSurface(app, {
     apiToken: reporting.API_TOKEN,
     allowedOrigins: reporting.ALLOWED_ORIGINS,
-    query: createQueryRows(pool),
+    query,
     cacheTtlMs: reporting.REPORT_CACHE_TTL_S * 1000,
     startedAtMs: Date.now(),
     getPoolStats: () => ({
@@ -62,6 +82,16 @@ async function main(): Promise<void> {
       idle: pool.idleCount,
       waiting: pool.waitingCount,
     }),
+    ...(demoStand
+      ? {
+          getReplicationState: () =>
+            Promise.resolve({
+              status: 'streaming' as const,
+              lag_seconds: 0,
+              last_error: null,
+            }),
+        }
+      : {}),
   });
 
   for (const signal of ['SIGTERM', 'SIGINT'] as const) {

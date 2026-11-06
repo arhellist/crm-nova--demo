@@ -12,6 +12,7 @@ import type { FastifyInstance } from 'fastify';
 vi.hoisted(() => {
   process.env.NODE_ENV = 'test';
   process.env.SUPABASE_URL = 'https://example.supabase.co';
+  process.env.SUPABASE_ANON_KEY = 'test-anon-key-not-a-secret-for-unit';
   process.env.API_TOKEN = 'test-token-value-1234567890';
   process.env.DATABASE_URL = 'postgresql://nova_ro:secret@127.0.0.1:5433/nova_replica';
   process.env.ALLOWED_ORIGINS = 'http://127.0.0.1:5173';
@@ -66,6 +67,11 @@ describe('A01.2 / A01.4 / A01.6 HTTP-каркас', () => {
     expect(body.commit).toBe('testsha');
     expect(body.uptime_s).toBeGreaterThanOrEqual(0);
     expect(response.body).not.toContain('postgresql://');
+
+    // DEC-072: alias под nginx prefix `/crm-nova/api/`.
+    const alias = await app.inject({ method: 'GET', url: '/api/health', remoteAddress: '10.1.0.2' });
+    expect(alias.statusCode).toBe(200);
+    expect(alias.json()).toEqual(body);
   });
 
   it('A01.4 61-й запрос за минуту с одного IP получает 429 и retry-after', async () => {

@@ -41,7 +41,10 @@ fi
 # --- 2. Production-сборка без секретов --------------------------------------
 DIST="$ROOT/dist"
 if [ -d "$DIST" ]; then
-  if grep -RIlE 'service_role|SUPABASE_DB_PASSWORD|DATABASE_URL_PRIMARY|sb_secret_' "$DIST" >/dev/null 2>&1; then
+  # Ищем присвоение секретного значения (не имя поля Zod-схемы и не *.test.js) — DEC-072.
+  if grep -RInE \
+      '(SUPABASE_SERVICE_ROLE_KEY|SUPABASE_DB_PASSWORD|DATABASE_URL_PRIMARY|sb_secret_)[[:space:]]*=[[:space:]]*["'"'"'][^"'"'"']+["'"'"']|service_role["'"'"']?[[:space:]]*[:=][[:space:]]*["'"'"'][^"'"'"']+["'"'"']' \
+      "$DIST" --exclude='*.test.js' --exclude='*.map' 2>/dev/null >/dev/null; then
     fail "в dist/ найдены service_role/пароль БД/строка primary"
   else
     ok "dist/: service_role и строки primary отсутствуют"

@@ -1,0 +1,41 @@
+{
+  "change_id": "otkatyvay-svoy-totp-sdelay-vhod-po-login",
+  "gate": "change",
+  "schema_version": 1,
+  "delta_valid": true,
+  "tasks_completed": false,
+  "commands_skipped": false,
+  "commands": [
+    {
+      "cmd": "npm run lint",
+      "exit": 1
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run test",
+      "exit": 0
+    }
+  ],
+  "approval": {
+    "required": false,
+    "ok": true,
+    "issues": [],
+    "level": null
+  },
+  "issues": [
+    "tasks.md has uncompleted tasks (0/5)",
+    "Command failed: npm run lint (exit 1)"
+  ],
+  "tax_pass": false,
+  "timestamp": "2026-11-06T17:17:00.156Z",
+  "code_hash": {
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
+    "git_dirty": null,
+    "produces": [],
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c"
+  },
+  "evidence_hash": "f1339e86aa00837a9a99f8f4c375acea1870e599b97275f17e7b151fe0bbddb5"
+}

@@ -32,6 +32,7 @@ const WORKLOAD_ROW = {
   assignee_id: '22222222-2222-4222-8222-222222222222',
   full_name: 'Иван Петров',
   tasks_total: 3,
+  tasks_new: 0,
   tasks_in_progress: 2,
   tasks_on_review: 1,
   tasks_rework: 0,

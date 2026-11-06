@@ -197,8 +197,8 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:15:00.686Z",
   "code_hash": {
-    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
-    "git_dirty": false,
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
+    "git_dirty": true,
     "produces": [
       "src/features/tasks/HistoryList.tsx",
       "src/features/tasks/StatusPanel.test.tsx",
@@ -208,8 +208,8 @@
       "src/features/tasks/TaskPage.tsx",
       "src/features/tasks/useTask.ts"
     ],
-    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
-    "produces_digest": "26e939f0fe5ea3f9ee82e3334114c6af8f41cb6d3c0814f1b22345f12a728cca"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "0ccc42d44746d5b8b0b00725bd6642b0d9886b34c06df85e8ebc0d86365ed8af"
   },
-  "evidence_hash": "d827010dfeb7178581693030a5abdc116834a82bf8a36bd6e926ceb4b109156c"
+  "evidence_hash": "c437ecf54ca084e71b1c08646b1a0cd34495f0df9bb239312ed363c27f8ccb84"
 }

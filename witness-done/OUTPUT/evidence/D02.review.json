@@ -25,7 +25,7 @@
       "supabase/tests/schema_test.sql"
     ],
     "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "ab897ab9b46aac4d46e4f14098b289fde5a7f6dc5b51d36d47212bdcc934b080"
+    "produces_digest": "02a8b873ceca9388bd44d3525ab215087a69969acd235b7c200a3803d4e4558e"
   },
   "evidence_ref": "evidence/D02.json",
   "evidence_hash": "b7749f72f8d8846d514645e57a3b71f7bb7e508e93010f966603e40337e9357b",

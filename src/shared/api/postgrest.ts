@@ -1,31 +1,25 @@
 /**
- * Обёртка над PostgREST: единственная точка HTTP-записи объектов.
+ * Обёртка над Data Gateway: same-origin `/api/data/*` → PostgREST (DEC-053).
  *
- * Почему модуль:
- *  - базовый URL и anon-ключ берутся из проверенной клиентской конфигурации (INV-006);
- *  - `Authorization` — access-токен текущей сессии supabase-js, токен не логируется
- *    и не попадает в URL (INV-007);
- *  - ошибки PostgREST переводятся в доменные сообщения: SQL, имя таблицы и факт
- *    существования чужой строки наружу не отдаются;
- *  - JSON-ответ валидируется вызывающим кодом Zod; здесь только безопасный разбор.
+ * Инварианты:
+ *  - токены только в cookies (credentials include), не в заголовке из JS;
+ *  - 401 обрабатывает apiFetch (один refresh + retry);
+ *  - ошибки наружу без SQL и имён таблиц (INV-007).
  */
 import { z } from 'zod';
-import { supabase, supabaseAnonKey, supabaseUrl } from '../../features/auth/api.js';
+import { apiFetch } from './http.js';
 
-/**
- * Доменная ошибка границы; `status` повторяет HTTP, `code` — PostgREST/PostgreSQL.
- *
- * `serverMessage` — стабильный машинный текст PostgREST (`transition_not_allowed`,
- * `assignee_change_not_allowed` и т.п.). Он нужен вызывающему коду, чтобы различить
- * причины внутри одного SQLSTATE (P0422), но наружу показывается только доменный текст:
- * SQL и имена таблиц в `serverMessage` не попадают (INV-007).
- */
 export class PostgrestApiError extends Error {
   readonly status: number;
   readonly code: string | null;
   readonly serverMessage: string | null;
 
-  constructor(message: string, status: number, code: string | null = null, serverMessage: string | null = null) {
+  constructor(
+    message: string,
+    status: number,
+    code: string | null = null,
+    serverMessage: string | null = null,
+  ) {
     super(message);
     this.name = 'PostgrestApiError';
     this.status = status;
@@ -60,30 +54,29 @@ function mapError(status: number, payload: z.infer<typeof errorPayloadSchema>): 
   return new PostgrestApiError('Не удалось выполнить запрос', status, code, serverMessage);
 }
 
-async function buildHeaders(extra?: HeadersInit): Promise<Headers> {
-  const headers = new Headers(extra);
-  headers.set('apikey', supabaseAnonKey);
-  headers.set('Accept', 'application/json');
-
-  const { data } = await supabase.auth.getSession();
-  if (data.session?.access_token) {
-    headers.set('Authorization', `Bearer ${data.session.access_token}`);
-  }
-  return headers;
-}
-
 async function request(path: string, init: RequestInit): Promise<Response> {
-  const headers = await buildHeaders(init.headers);
-  const response = await fetch(`${supabaseUrl}/rest/v1/${path}`, { ...init, headers });
+  const headers = new Headers(init.headers);
+  headers.set('Accept', 'application/json');
+  const response = await apiFetch(`/api/data/${path.replace(/^\//, '')}`, {
+    ...init,
+    headers,
+  });
   if (!response.ok) {
     const text = await response.text();
-    const parsed = text ? errorPayloadSchema.safeParse(JSON.parse(text)) : null;
-    throw mapError(response.status, parsed?.success ? parsed.data : {});
+    let payload: z.infer<typeof errorPayloadSchema> = {};
+    if (text) {
+      try {
+        const parsed = errorPayloadSchema.safeParse(JSON.parse(text));
+        if (parsed.success) payload = parsed.data;
+      } catch {
+        payload = {};
+      }
+    }
+    throw mapError(response.status, payload);
   }
   return response;
 }
 
-/** Выполняет запрос и возвращает разобранный JSON (или null для пустого тела). */
 export async function postgrestJson(path: string, init: RequestInit): Promise<unknown> {
   const response = await request(path, init);
   if (response.status === 204) {
@@ -97,7 +90,6 @@ export async function postgrestJson(path: string, init: RequestInit): Promise<un
   return parsed.success ? parsed.data : null;
 }
 
-/** Запрос без тела ответа: RPC архивирования отвечает 204. */
 export async function postgrestVoid(path: string, init: RequestInit): Promise<void> {
   await request(path, init);
 }

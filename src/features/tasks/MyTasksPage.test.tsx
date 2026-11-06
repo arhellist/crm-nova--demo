@@ -78,9 +78,12 @@ function setupFetch(options: MockOptions): { rpcBodies: Array<Record<string, unk
 
   const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = String(input);
+    if (url.includes('/api/auth/csrf')) {
+      return jsonResponse({ csrf_token: 'test-csrf' });
+    }
     options.onRequest?.(url);
 
-    if (url.includes('/rest/v1/rpc/change_task_status')) {
+    if (url.includes('/api/data/rpc/change_task_status')) {
       const body = JSON.parse(String(init?.body ?? '{}')) as Record<string, unknown>;
       rpcBodies.push(body);
       const target = body.p_target as TaskStatus;
@@ -91,7 +94,7 @@ function setupFetch(options: MockOptions): { rpcBodies: Array<Record<string, unk
       return jsonResponse(options.rpcStatus ?? target);
     }
 
-    if (url.includes('/rest/v1/tasks')) {
+    if (url.includes('/api/data/tasks')) {
       const search = new URL(url).searchParams;
       const visible = tasks.filter(
         (row) =>
@@ -114,7 +117,7 @@ function setupFetch(options: MockOptions): { rpcBodies: Array<Record<string, unk
       return jsonResponse(rows.slice(0, limit));
     }
 
-    if (url.includes('/rest/v1/objects')) {
+    if (url.includes('/api/data/objects')) {
       return jsonResponse([{ id: objectId, title: 'ЖК Северный' }]);
     }
 

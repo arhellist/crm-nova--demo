@@ -72,14 +72,20 @@ function jsonResponse(body: unknown, status = 200): Response {
 function setupFetch(status: TaskStatus, history: TaskHistoryRow[]): void {
   const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
     const url = String(input);
-    if (url.includes('/rest/v1/task_status_history')) {
+    if (url.includes('/api/auth/csrf')) {
+      return jsonResponse({ csrf_token: 'test-csrf' });
+    }
+    if (url.includes('/api/data/task_status_history')) {
       return jsonResponse(history);
     }
-    if (url.includes('/rest/v1/tasks')) {
+    if (url.includes('/api/data/tasks')) {
       return jsonResponse([taskRow(status)]);
     }
-    if (url.includes('/rest/v1/profiles')) {
+    if (url.includes('/api/data/profiles')) {
       return jsonResponse(profiles);
+    }
+    if (url.includes('/api/data/objects')) {
+      return jsonResponse([{ id: objectId, title: 'ЖК Северный' }]);
     }
     return jsonResponse({ message: 'unexpected' }, 500);
   });
@@ -127,6 +133,28 @@ afterEach(() => {
 });
 
 describe('TaskPage', () => {
+  it('DEC-057: карточка задачи показывает все семь полей ТЗ с подписями', async () => {
+    setupFetch('new', [historyRow(1, null, 'new', managerId, '2026-11-01T09:00:00Z')]);
+    renderTask();
+
+    expect(await screen.findByRole('heading', { name: 'Монтаж окон' })).toBeTruthy();
+    for (const label of [
+      'Название',
+      'Описание',
+      'Объект',
+      'Исполнитель',
+      'Статус',
+      'Автор',
+      'Дата создания',
+    ]) {
+      expect(screen.getByText(label)).toBeTruthy();
+    }
+    expect(screen.getByText('Второй этаж, секция Б')).toBeTruthy();
+    expect(await screen.findByRole('link', { name: 'ЖК Северный' })).toBeTruthy();
+    expect(await screen.findByText('Пётр Смирнов')).toBeTruthy();
+    expect(screen.getAllByText('Ирина Волкова').length).toBeGreaterThan(0);
+  });
+
   it('A08.1 исполнитель на задаче new видит только «Взять в работу»', async () => {
     setupFetch('new', [historyRow(1, null, 'new', managerId, '2026-11-01T09:00:00Z')]);
     renderTask();

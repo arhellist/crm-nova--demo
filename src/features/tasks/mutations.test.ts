@@ -1,21 +1,15 @@
 // @vitest-environment node
 /**
- * Тесты мутаций задачи: RPC смены статуса, маппинг P0422 и запрет смены исполнителя.
+ * Тесты мутаций задачи через Data Gateway (DEC-053).
  *
  * @acceptance A07.3
  * @acceptance A07.4
  * @acceptance A07.5
  */
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { changeTaskStatus } from './mutations.js';
 import { updateTask } from './api.js';
-import * as authApi from '../auth/api.js';
-
-vi.mock('../auth/api.js', () => ({
-  supabase: { auth: { getSession: vi.fn() } },
-  supabaseUrl: 'https://db.nova.test',
-  supabaseAnonKey: 'anon-key',
-}));
+import { stubApiFetch } from '../../test/stub-api-fetch.js';
 
 const objectId = '33333333-3333-4333-8333-333333333333';
 const assigneeId = '22222222-2222-4222-8222-222222222222';
@@ -45,13 +39,6 @@ function taskRow(status: 'new' | 'in_progress' | 'on_review' | 'rework' | 'accep
   };
 }
 
-beforeEach(() => {
-  vi.mocked(authApi.supabase.auth.getSession).mockResolvedValue({
-    data: { session: { access_token: 'jwt-token' } },
-    error: null,
-  } as never);
-});
-
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.clearAllMocks();
@@ -59,29 +46,24 @@ afterEach(() => {
 
 describe('changeTaskStatus', () => {
   it('A07.3 исполнитель переводит new → in_progress через RPC и получает новый статус', async () => {
-    const fetchMock = vi.fn().mockResolvedValue(jsonResponse('in_progress'));
-    vi.stubGlobal('fetch', fetchMock);
+    const fetchMock = stubApiFetch((url, init) => {
+      expect(url).toContain('/api/data/rpc/change_task_status');
+      expect(init?.method).toBe('POST');
+      expect(JSON.parse(String(init?.body))).toEqual({
+        p_task_id: taskId,
+        p_target: 'in_progress',
+        p_comment: null,
+      });
+      return jsonResponse('in_progress');
+    });
 
     const status = await changeTaskStatus(taskId, 'in_progress');
-
     expect(status).toBe('in_progress');
-    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe('https://db.nova.test/rest/v1/rpc/change_task_status');
-    expect(init.method).toBe('POST');
-    expect(JSON.parse(String(init.body))).toEqual({
-      p_task_id: taskId,
-      p_target: 'in_progress',
-      p_comment: null,
-    });
+    expect(fetchMock).toHaveBeenCalled();
   });
 
   it('A07.4 переход из accepted отклонён P0422: текст доменный, статус не меняется', async () => {
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValue(
-        jsonResponse({ code: 'P0422', message: 'transition_not_allowed' }, 400),
-      );
-    vi.stubGlobal('fetch', fetchMock);
+    stubApiFetch(() => jsonResponse({ code: 'P0422', message: 'transition_not_allowed' }, 400));
 
     await expect(changeTaskStatus(taskId, 'rework', 'Вернуть в работу')).rejects.toMatchObject({
       message: 'Этот переход недоступен',
@@ -90,10 +72,7 @@ describe('changeTaskStatus', () => {
   });
 
   it('A07.4 возврат без комментария: P0422 comment_required даёт текст про доработку', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue(jsonResponse({ code: 'P0422', message: 'comment_required' }, 400)),
-    );
+    stubApiFetch(() => jsonResponse({ code: 'P0422', message: 'comment_required' }, 400));
 
     await expect(changeTaskStatus(taskId, 'rework', '   ')).rejects.toMatchObject({
       message: 'Опишите, что доработать',
@@ -103,12 +82,14 @@ describe('changeTaskStatus', () => {
 
 describe('updateTask', () => {
   it('A07.5 смена исполнителя в in_progress отклонена триггером, PATCH не содержит статуса', async () => {
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValue(
-        jsonResponse({ code: 'P0422', message: 'assignee_change_not_allowed' }, 400),
-      );
-    vi.stubGlobal('fetch', fetchMock);
+    const fetchMock = stubApiFetch((_url, init) => {
+      expect(init?.method).toBe('PATCH');
+      const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      expect(body.assignee_id).toBe(otherAssigneeId);
+      expect(body).not.toHaveProperty('status');
+      expect(body).not.toHaveProperty('author_id');
+      return jsonResponse({ code: 'P0422', message: 'assignee_change_not_allowed' }, 400);
+    });
 
     await expect(
       updateTask(taskId, {
@@ -120,17 +101,11 @@ describe('updateTask', () => {
       message: 'Исполнителя можно менять только в статусах «Новая» и «На доработке»',
       status: 422,
     });
-
-    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    const body = JSON.parse(String(init.body)) as Record<string, unknown>;
-    expect(body.assignee_id).toBe(otherAssigneeId);
-    expect(body).not.toHaveProperty('status');
-    expect(body).not.toHaveProperty('author_id');
-    expect(init.method).toBe('PATCH');
+    expect(fetchMock).toHaveBeenCalled();
   });
 
   it('A07.5 успешная правка возвращает строку задачи', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse([taskRow('new')])));
+    stubApiFetch(() => jsonResponse([taskRow('new')]));
 
     const updated = await updateTask(taskId, {
       object_id: objectId,

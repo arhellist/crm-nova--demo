@@ -51,9 +51,10 @@ replication="$(curl -sS "${API_URL}/health/replication" || true)"
   && ok A14.1 "4 репликация: status streaming" || bad A14.1 "4 репликация: ${replication:0:80}"
 
 # 3. Отчёты: без токена — 401, с токеном — 200 и источник replica.
-[[ "$(code "${API_URL}/api/reports/objects")" == "401" ]] \
+# API_URL — корень BFF как снаружи (демо: …/crm-nova/api → /health и /reports/*).
+[[ "$(code "${API_URL}/reports/objects")" == "401" ]] \
   && ok A14.1 "5 отчёты требуют Bearer" || bad A14.1 "5 отчёты: нет 401 без токена"
-report="$(curl -sS -H "Authorization: Bearer ${TOKEN}" "${API_URL}/api/reports/objects?limit=5" || true)"
+report="$(curl -sS -H "Authorization: Bearer ${TOKEN}" "${API_URL}/reports/objects?limit=5" || true)"
 case "$report" in
   *'"source":"replica"'*) ok A14.1 "6 отчёт объектов помечен source: replica" ;;
   *) bad A14.1 "6 отчёт объектов: ${report:0:80}" ;;
@@ -61,9 +62,9 @@ esac
 
 # 4. Backend только читает: запись отклоняется 405 на всех отчётных маршрутах.
 for route in objects workload status-ages; do
-  [[ "$(code -X POST "${API_URL}/api/reports/${route}")" == "405" ]] \
-    && ok A14.1 "7 backend не принимает POST /api/reports/${route}" \
-    || bad A14.1 "7 backend принял POST /api/reports/${route}"
+  [[ "$(code -X POST "${API_URL}/reports/${route}")" == "405" ]] \
+    && ok A14.1 "7 backend не принимает POST /reports/${route}" \
+    || bad A14.1 "7 backend принял POST /reports/${route}"
 done
 
 # 5. Метрики защищены токеном и содержат серии алертов (A13.1).

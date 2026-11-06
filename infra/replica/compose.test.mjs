@@ -82,15 +82,28 @@ describe('A10.1 отчётные вьюхи', () => {
   it('вьюхи не выгружают email, description и комментарии истории', () => {
     // SQL вьюх без комментариев-пояснений: в тексте `comment on view` слово email допустимо,
     // запрещён именно столбец в выборке.
+    // Отбрасываем SQL-комментарии и строковые литералы `comment on view '…'`
+    // (там допустимо слово «email» в пояснении; запрещены только колонки выборки).
     const sql = views
       .split('\n')
-      .filter(
-        (line) =>
-          !line.trimStart().startsWith('--') && !line.trimStart().startsWith('comment on'),
-      )
+      .filter((line) => {
+        const trimmed = line.trimStart();
+        return (
+          !trimmed.startsWith('--') &&
+          !trimmed.startsWith('comment on') &&
+          !trimmed.startsWith("'") &&
+          !trimmed.startsWith('"')
+        );
+      })
       .join('\n');
-    const selectBlocks = sql.slice(sql.indexOf('create or replace view'), sql.indexOf('revoke all'));
-    expect(selectBlocks).not.toContain('email');
+    const viewStarts = [
+      sql.indexOf('create or replace view'),
+      sql.indexOf('create view'),
+    ].filter((index) => index >= 0);
+    expect(viewStarts.length).toBeGreaterThan(0);
+    const grantAt = sql.search(/\bgrant\b/i);
+    const selectBlocks = sql.slice(Math.min(...viewStarts), grantAt === -1 ? undefined : grantAt);
+    expect(selectBlocks).not.toMatch(/\bemail\b/i);
     expect(selectBlocks).not.toContain('description');
     expect(selectBlocks).not.toContain('h.comment');
     expect(selectBlocks).toContain('p.full_name');

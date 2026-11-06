@@ -29,7 +29,7 @@
       "src/reporting/sql-contract.test.ts"
     ],
     "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "8583a63a20e5172b1b3212c3ef1237b8af0431d84503f1190598e65c61615eb2"
+    "produces_digest": "55be71a65f10a25980ad8673fc9a915822c14e8e053d3276641b568d66a91f62"
   },
   "evidence_ref": "evidence/D11.json",
   "evidence_hash": "2a5f634b3678b2b32899acfaea639c7179607331982b497e127a892bb76dd5d2",

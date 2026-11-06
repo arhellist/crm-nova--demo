@@ -1,0 +1,29 @@
+    # NOVA CRM demo SPA — https://arhellist.ru/crm-nova/
+    location = /crm-nova {
+        return 301 /crm-nova/;
+    }
+
+    # Read-only reporting API (pm2 crm-nova-api → :5020). До SPA catch-all.
+    location ^~ /crm-nova/api/ {
+        rewrite ^/crm-nova/api/(.*)$ /api/$1 break;
+        proxy_pass http://127.0.0.1:5020;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization $http_authorization;
+        proxy_pass_request_headers on;
+        add_header X-Robots-Tag "noindex, nofollow" always;
+    }
+
+    location ^~ /crm-nova/ {
+        root /var/www/arhellist.ru/present/next/public;
+        try_files $uri $uri/ /crm-nova/index.html;
+        add_header Cache-Control "no-cache";
+        add_header X-Robots-Tag "noindex, nofollow" always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.supabase.co https://hcuailgajbetllkmqrgq.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    }

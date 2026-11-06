@@ -1,27 +1,15 @@
 /**
- * Состояние сессии для guard'ов и оболочки.
+ * Состояние сессии для guard'ов и оболочки (DEC-053: без MFA, cookies через BFF).
  *
- * Почему так:
- *  - статус определяется по данным Auth и `profiles`, а не по claim `role` (INV-005);
- *  - `mfa_required` — сессия есть, но assurance ниже aal2: manager без TOTP в приложение
- *    не попадает (ADR-0005);
- *  - профиль кэшируется TanStack Query по ключу `['profile', uid]`; при 401 выполняется
- *    ровно один `refreshSession()` и повтор запроса, поэтому форма не теряется (A04.4);
- *  - выход очищает кэш профиля и защищённые данные из памяти.
+ *  - роль из `profiles` через `/api/auth/me` (INV-005);
+ *  - при 401 на профиле — один refresh внутри apiFetch, затем повтор / разлогин.
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { Profile } from './api.js';
-import {
-  getAssurance,
-  getProfile,
-  getSession,
-  isUnauthorized,
-  onAuthChange,
-  refreshSession,
-} from './api.js';
+import { getProfile, getSession, isUnauthorized, onAuthChange } from './api.js';
 
-export type SessionStatus = 'loading' | 'anonymous' | 'mfa_required' | 'authenticated';
+export type SessionStatus = 'loading' | 'anonymous' | 'authenticated';
 
 export interface SessionState {
   status: SessionStatus;
@@ -30,27 +18,10 @@ export interface SessionState {
 }
 
 export interface UseSessionResult extends SessionState {
-  /** Перечитать сессию после входа/MFA или выхода. */
   refresh: () => Promise<void>;
 }
 
 const initialState: SessionState = { status: 'loading', profile: null, email: null };
-
-/**
- * Один refresh при истёкшем токене. Ошибка пробрасывается, чтобы guard увёл на /login,
- * а не показывал половину интерфейса.
- */
-async function loadProfileWithRefresh(): Promise<Profile> {
-  try {
-    return await getProfile();
-  } catch (error) {
-    if (!isUnauthorized(error)) {
-      throw error;
-    }
-    await refreshSession();
-    return await getProfile();
-  }
-}
 
 export function useSession(): UseSessionResult {
   const queryClient = useQueryClient();
@@ -68,28 +39,26 @@ export function useSession(): UseSessionResult {
         return;
       }
 
-      const assurance = await getAssurance();
-      if (assurance.nextLevel === 'aal2' && assurance.currentLevel !== 'aal2') {
-        if (activeRef.current) {
-          setState({
-            status: 'mfa_required',
-            profile: null,
-            email: session.user.email ?? null,
-          });
-        }
-        return;
-      }
-
       const profile = await queryClient.fetchQuery({
         queryKey: ['profile', session.user.id],
-        queryFn: loadProfileWithRefresh,
+        queryFn: getProfile,
         staleTime: 60_000,
       });
 
       if (activeRef.current) {
-        setState({ status: 'authenticated', profile, email: session.user.email ?? null });
+        setState({
+          status: 'authenticated',
+          profile,
+          email: session.user.email,
+        });
       }
-    } catch {
+    } catch (error) {
+      if (isUnauthorized(error)) {
+        if (activeRef.current) {
+          setState({ status: 'anonymous', profile: null, email: null });
+        }
+        return;
+      }
       if (activeRef.current) {
         setState({ status: 'anonymous', profile: null, email: null });
       }

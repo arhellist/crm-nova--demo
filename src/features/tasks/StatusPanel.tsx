@@ -8,7 +8,8 @@
  *  - статус на экране меняется только после успешного ответа RPC: оптимистичных обновлений нет
  *    (A08.5), поэтому при ошибке карточка и история остаются прежними;
  *  - после успеха инвалидируются карточка, история, «мои задачи» и списки задач;
- *  - во время мутации все кнопки disabled: повторный клик не создаёт второй переход.
+ *  - во время мутации все кнопки disabled: повторный клик не создаёт второй переход;
+ *  - `accepted` терминален (DEC-058): кнопки скрыты сразу по ответу RPC, видна фиксация.
  */
 import { useState } from 'react';
 import type { FormEvent } from 'react';
@@ -45,20 +46,44 @@ export function StatusPanel({ taskId, status, role }: StatusPanelProps): JSX.Ele
   const mutation = useMutation({
     mutationFn: (payload: { target: TaskStatus; comment?: string }) =>
       changeTaskStatus(taskId, payload.target, payload.comment),
-    onSuccess: async () => {
+    onSuccess: async (newStatus) => {
       setReworkOpen(false);
       setComment('');
       setCommentError(null);
+      // Сразу фиксируем статус в кэше карточки — бейдж и панель не ждут refetch (DEC-058).
+      queryClient.setQueryData(taskKeys.detail(taskId), (current: unknown) => {
+        if (!current || typeof current !== 'object') {
+          return current;
+        }
+        return { ...current, status: newStatus };
+      });
       // Точечная инвалидация: карточка, история и списки, без очистки всего кэша.
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: taskKeys.detail(taskId) }),
         queryClient.invalidateQueries({ queryKey: taskKeys.history(taskId) }),
         queryClient.invalidateQueries({ queryKey: taskKeys.all }),
+        queryClient.invalidateQueries({ queryKey: ['my-tasks'] }),
       ]);
     },
   });
 
-  const targets = allowedTargets(status, role);
+  // После успешного RPC сразу берём статус из ответа — кнопки «Принять» не ждут refetch (DEC-058).
+  const effectiveStatus: TaskStatus = mutation.data ?? status;
+  const targets = allowedTargets(effectiveStatus, role);
+
+  if (effectiveStatus === 'accepted') {
+    return (
+      <section aria-labelledby="status-panel-title" className="mt-6">
+        <h2 id="status-panel-title" className="sr-only">
+          Действия со статусом
+        </h2>
+        <p role="status" className="text-sm text-text-dim">
+          Статус зафиксирован. Дальнейшая смена недоступна.
+        </p>
+      </section>
+    );
+  }
+
   if (targets.length === 0) {
     return null;
   }

@@ -259,7 +259,7 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:06:43.601Z",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
     "git_dirty": true,
     "produces": [
       "src/reporting/aggregates.test.ts",
@@ -274,8 +274,8 @@
       "src/reporting/server.ts",
       "src/reporting/sql-contract.test.ts"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "8583a63a20e5172b1b3212c3ef1237b8af0431d84503f1190598e65c61615eb2"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "55be71a65f10a25980ad8673fc9a915822c14e8e053d3276641b568d66a91f62"
   },
-  "evidence_hash": "c537ca80313a8e33ff19e5244f2abe920c67e3a7ee0cb535f37dd004e61b0930"
+  "evidence_hash": "3809f36df73ca90b6628043580736b306d4feb0c744dd5175fff88ece2a68e4a"
 }

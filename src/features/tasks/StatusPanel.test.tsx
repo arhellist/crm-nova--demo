@@ -64,7 +64,10 @@ function setupFetch(state: State, rpc: (comment: string | null) => Response): { 
   const rpcCalls: unknown[] = [];
   const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = String(input);
-    if (url.includes('/rest/v1/rpc/change_task_status')) {
+    if (url.includes('/api/auth/csrf')) {
+      return jsonResponse({ csrf_token: 'test-csrf' });
+    }
+    if (url.includes('/api/data/rpc/change_task_status')) {
       const body = JSON.parse(String(init?.body ?? '{}')) as {
         p_target: TaskStatus;
         p_comment: string | null;
@@ -72,10 +75,10 @@ function setupFetch(state: State, rpc: (comment: string | null) => Response): { 
       rpcCalls.push(body);
       return rpc(body.p_comment);
     }
-    if (url.includes('/rest/v1/task_status_history')) {
+    if (url.includes('/api/data/task_status_history')) {
       return jsonResponse(state.history);
     }
-    if (url.includes('/rest/v1/tasks')) {
+    if (url.includes('/api/data/tasks')) {
       return jsonResponse([
         {
           id: taskId,
@@ -91,8 +94,11 @@ function setupFetch(state: State, rpc: (comment: string | null) => Response): { 
         },
       ]);
     }
-    if (url.includes('/rest/v1/profiles')) {
+    if (url.includes('/api/data/profiles')) {
       return jsonResponse(profiles);
+    }
+    if (url.includes('/api/data/objects')) {
+      return jsonResponse([{ id: objectId, title: 'ЖК Северный' }]);
     }
     return jsonResponse({ message: 'unexpected' }, 500);
   });
@@ -205,5 +211,44 @@ describe('StatusPanel', () => {
     expect(rpcCalls).toHaveLength(1);
     expect(state.status).toBe('accepted');
     await waitFor(() => expect(screen.getAllByText('Принята').length).toBeGreaterThan(0));
+  });
+
+  it('DEC-058: после «Принять» кнопки переходов исчезают, статус зафиксирован', async () => {
+    const state: State = {
+      status: 'on_review',
+      history: [historyRow(1, 'in_progress', 'on_review', assigneeId, '2026-11-04T10:00:00Z')],
+    };
+    setupFetch(state, () => {
+      state.status = 'accepted';
+      state.history = [
+        historyRow(2, 'on_review', 'accepted', managerId, '2026-11-04T12:00:00Z'),
+        ...state.history,
+      ];
+      return jsonResponse('accepted');
+    });
+    renderTask();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Принять' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Статус зафиксирован. Дальнейшая смена недоступна.')).toBeTruthy();
+    });
+    expect(screen.queryByRole('button', { name: 'Принять' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'На доработку' })).toBeNull();
+    expect(screen.getAllByText('Принята').length).toBeGreaterThan(0);
+  });
+
+  it('DEC-058: у уже принятой задачи нет кнопок смены статуса', async () => {
+    const state: State = {
+      status: 'accepted',
+      history: [historyRow(2, 'on_review', 'accepted', managerId, '2026-11-04T12:00:00Z')],
+    };
+    setupFetch(state, () => jsonResponse({ code: 'P0422', message: 'transition_not_allowed' }, 400));
+    renderTask();
+
+    expect(await screen.findByText('Статус зафиксирован. Дальнейшая смена недоступна.')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Принять' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'На доработку' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Взять в работу' })).toBeNull();
   });
 });

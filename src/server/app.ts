@@ -148,16 +148,16 @@ export async function buildApp(options: BuildAppOptions = {}): Promise<FastifyIn
     done();
   });
 
-  app.get(
-    '/health',
-    { schema: { response: { 200: healthResponseSchema } } },
-    (): HealthPayload => ({
-      status: 'ok',
-      version,
-      commit: env.GIT_COMMIT,
-      uptime_s: Math.max(0, Math.floor((Date.now() - startedAt) / 1000)),
-    }),
-  );
+  const healthHandler = (): HealthPayload => ({
+    status: 'ok',
+    version,
+    commit: env.GIT_COMMIT,
+    uptime_s: Math.max(0, Math.floor((Date.now() - startedAt) / 1000)),
+  });
+
+  // `/health` — канон D01; `/api/health` — alias под nginx prefix `/crm-nova/api/` (DEC-072).
+  app.get('/health', { schema: { response: { 200: healthResponseSchema } } }, healthHandler);
+  app.get('/api/health', { schema: { response: { 200: healthResponseSchema } } }, healthHandler);
 
   app.setErrorHandler((error, request, reply) => {
     const statusCode = error.statusCode && error.statusCode >= 400 ? error.statusCode : 500;

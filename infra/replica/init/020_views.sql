@@ -46,24 +46,67 @@ group by o.id, o.title, o.address;
 comment on view public.report_objects is
   'Сводка по активным объектам: число задач в каждом статусе, доля принятых, последняя активность.';
 
--- Загрузка исполнителей: без email и без персональных контактов.
+-- Загрузка исполнителей: без email; tasks_new + без задач архивных объектов (DEC-068).
 create or replace view public.report_workload as
 select
   p.id as assignee_id,
   p.full_name,
   count(t.id) as tasks_total,
+  count(*) filter (where t.status = 'new') as tasks_new,
   count(*) filter (where t.status = 'in_progress') as tasks_in_progress,
   count(*) filter (where t.status = 'on_review') as tasks_on_review,
   count(*) filter (where t.status = 'rework') as tasks_rework,
   count(*) filter (where t.status = 'accepted') as tasks_accepted,
-  min(t.created_at) as oldest_open_at
+  min(t.created_at) filter (
+    where t.status in ('new', 'in_progress', 'on_review', 'rework')
+  ) as oldest_open_at
 from public.profiles p
-join public.tasks t on t.assignee_id = p.id and t.archived_at is null
+left join public.tasks t
+  on t.assignee_id = p.id
+ and t.archived_at is null
+ and exists (
+   select 1
+   from public.objects o
+   where o.id = t.object_id
+     and o.archived_at is null
+ )
 where p.role = 'executor'
 group by p.id, p.full_name;
 
 comment on view public.report_workload is
-  'Загрузка исполнителей: число активных задач по статусам и дата самой старой открытой задачи.';
+  'Загрузка исполнителей: активные задачи на неархивных объектах по статусам (DEC-068); без email.';
+
+-- KPI постановщиков: задачи, где менеджер — автор (DEC-061). Left join — нулевые карточки.
+create or replace view public.report_managers as
+select
+  p.id as manager_id,
+  p.full_name,
+  count(t.id) as tasks_total,
+  count(*) filter (where t.status = 'new') as tasks_new,
+  count(*) filter (where t.status = 'in_progress') as tasks_in_progress,
+  count(*) filter (where t.status = 'on_review') as tasks_on_review,
+  count(*) filter (where t.status = 'rework') as tasks_rework,
+  count(*) filter (where t.status = 'accepted') as tasks_accepted,
+  coalesce(
+    round(100.0 * count(*) filter (where t.status = 'accepted') / nullif(count(t.id), 0), 1),
+    0
+  ) as accepted_share,
+  max(t.updated_at) as last_activity_at
+from public.profiles p
+left join public.tasks t
+  on t.author_id = p.id
+ and t.archived_at is null
+ and exists (
+   select 1
+   from public.objects o
+   where o.id = t.object_id
+     and o.archived_at is null
+ )
+where p.role = 'manager'
+group by p.id, p.full_name;
+
+comment on view public.report_managers is
+  'KPI постановщиков: авторские активные задачи на неархивных объектах; без email (DEC-062).';
 
 -- Время приёмки: сколько задача провела в статусе «на проверке» перед переходом.
 create or replace view public.report_status_ages as
@@ -91,5 +134,6 @@ revoke all on all tables in schema public from nova_ro;
 grant usage on schema public to nova_ro;
 grant select on table public.profiles, public.objects, public.tasks, public.task_status_history
   to nova_ro;
-grant select on table public.report_objects, public.report_workload, public.report_status_ages
+grant select on table public.report_objects, public.report_workload, public.report_managers,
+  public.report_status_ages
   to nova_ro;

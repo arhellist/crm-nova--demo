@@ -237,7 +237,7 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:08:54.451Z",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
     "git_dirty": true,
     "produces": [
       "supabase/config.toml",
@@ -249,8 +249,8 @@
       "supabase/tests/rls_test.sql",
       "supabase/tests/schema_test.sql"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "ab897ab9b46aac4d46e4f14098b289fde5a7f6dc5b51d36d47212bdcc934b080"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "02a8b873ceca9388bd44d3525ab215087a69969acd235b7c200a3803d4e4558e"
   },
-  "evidence_hash": "41157fd0128bf55e14d8de0896cae18d55df6195e801fba1b918b2a7ae8fd434"
+  "evidence_hash": "9d04fcfa2c333897fb56d216be19ae0eaf142605a3631c670a861e2ec2e2668d"
 }

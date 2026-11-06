@@ -34,11 +34,25 @@ const workloadRowSchema = z.object({
   assignee_id: z.string().uuid(),
   full_name: z.string(),
   tasks_total: z.number().int().min(0),
+  tasks_new: z.number().int().min(0),
   tasks_in_progress: z.number().int().min(0),
   tasks_on_review: z.number().int().min(0),
   tasks_rework: z.number().int().min(0),
   tasks_accepted: z.number().int().min(0),
   oldest_open_at: z.string().nullable(),
+});
+
+const managerReportRowSchema = z.object({
+  manager_id: z.string().uuid(),
+  full_name: z.string(),
+  tasks_total: z.number().int().min(0),
+  tasks_new: z.number().int().min(0),
+  tasks_in_progress: z.number().int().min(0),
+  tasks_on_review: z.number().int().min(0),
+  tasks_rework: z.number().int().min(0),
+  tasks_accepted: z.number().int().min(0),
+  accepted_share: z.number().min(0).max(100),
+  last_activity_at: z.string().nullable(),
 });
 
 const statusAgeRowSchema = z.object({
@@ -49,10 +63,11 @@ const statusAgeRowSchema = z.object({
 
 export type ObjectReportRow = z.infer<typeof objectReportRowSchema>;
 export type WorkloadRow = z.infer<typeof workloadRowSchema>;
+export type ManagerReportRow = z.infer<typeof managerReportRowSchema>;
 export type StatusAgeRow = z.infer<typeof statusAgeRowSchema>;
 
-/** Пути отчётов: только эти три операции, других клиент не знает. */
-export type ReportPath = 'objects' | 'workload' | 'status-ages';
+/** Пути отчётов; `managers` — KPI постановщиков для /team (DEC-061). */
+export type ReportPath = 'objects' | 'workload' | 'managers' | 'status-ages';
 
 export interface ReportEnvelope<T> {
   source: 'replica';
@@ -75,6 +90,10 @@ const workloadEnvelopeSchema = z.object({
   ...envelopeBaseSchema,
   data: z.array(workloadRowSchema),
 });
+const managerEnvelopeSchema = z.object({
+  ...envelopeBaseSchema,
+  data: z.array(managerReportRowSchema),
+});
 const statusAgeEnvelopeSchema = z.object({
   ...envelopeBaseSchema,
   data: z.array(statusAgeRowSchema),
@@ -84,6 +103,7 @@ const statusAgeEnvelopeSchema = z.object({
 const ENVELOPES = {
   objects: objectEnvelopeSchema,
   workload: workloadEnvelopeSchema,
+  managers: managerEnvelopeSchema,
   'status-ages': statusAgeEnvelopeSchema,
 } as const;
 

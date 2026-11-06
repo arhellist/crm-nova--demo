@@ -49,6 +49,7 @@ const WORKLOAD_ROW = {
   assignee_id: ASSIGNEE_ID,
   full_name: 'Анна Смирнова',
   tasks_total: 3,
+  tasks_new: 0,
   tasks_in_progress: 2,
   tasks_on_review: 1,
   tasks_rework: 0,
@@ -82,6 +83,9 @@ function envelope(data: unknown[], lag: number): unknown {
 function setupFetch(lag: number): ReturnType<typeof vi.fn> {
   const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
     const url = String(input);
+    if (url.includes('/api/auth/csrf')) {
+      return jsonResponse({ csrf_token: 'test-csrf' });
+    }
     if (url.includes('/api/reports/objects')) return jsonResponse(envelope([OBJECT_ROW], lag));
     if (url.includes('/api/reports/workload')) return jsonResponse(envelope([WORKLOAD_ROW], lag));
     if (url.includes('/api/reports/status-ages')) return jsonResponse(envelope([STATUS_AGE_ROW], lag));

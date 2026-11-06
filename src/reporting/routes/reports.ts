@@ -4,8 +4,9 @@
  * Инварианты:
  *  - до обращения к БД проверяется состояние подписки: `broken` → 503 `E_REPLICA_DOWN`,
  *    `lagging` → 503 `E_REPLICA_LAG` с `retry_after` (A11.6, NFR7);
- *  - читаются только вьюхи D10 (`report_objects`, `report_workload`, `report_status_ages`),
- *    ни одной базовой таблицы и ни одного `select *` — ПДн и комментарии не выгружаются (A11.5);
+ *  - читаются только вьюхи (`report_objects`, `report_workload`, `report_managers`,
+ *    `report_status_ages`), ни одной базовой таблицы и ни одного `select *` — ПДн не
+ *    выгружаются (A11.5, DEC-061);
  *  - ответ всегда содержит `source: "replica"`, `lag_seconds`, `generated_at` (openapi Envelope);
  *  - кэш в процессе на `REPORT_CACHE_TTL_S` (максимум 30 с по умолчанию): ключ включает
  *    маршрут и параметры периода, поэтому чужой запрос не отдаёт чужие данные;
@@ -49,11 +50,25 @@ const workloadRowSchema = z.object({
   assignee_id: z.string().uuid(),
   full_name: z.string(),
   tasks_total: z.coerce.number().int().min(0),
+  tasks_new: z.coerce.number().int().min(0),
   tasks_in_progress: z.coerce.number().int().min(0),
   tasks_on_review: z.coerce.number().int().min(0),
   tasks_rework: z.coerce.number().int().min(0),
   tasks_accepted: z.coerce.number().int().min(0),
   oldest_open_at: z.string().nullable(),
+});
+
+const managerReportRowSchema = z.object({
+  manager_id: z.string().uuid(),
+  full_name: z.string(),
+  tasks_total: z.coerce.number().int().min(0),
+  tasks_new: z.coerce.number().int().min(0),
+  tasks_in_progress: z.coerce.number().int().min(0),
+  tasks_on_review: z.coerce.number().int().min(0),
+  tasks_rework: z.coerce.number().int().min(0),
+  tasks_accepted: z.coerce.number().int().min(0),
+  accepted_share: z.coerce.number().min(0).max(100),
+  last_activity_at: z.string().nullable(),
 });
 
 const statusAgeRowSchema = z.object({
@@ -85,6 +100,7 @@ export const REPORT_SQL = {
   workload: `select assignee_id::text as assignee_id,
        full_name,
        tasks_total::int as tasks_total,
+       tasks_new::int as tasks_new,
        tasks_in_progress::int as tasks_in_progress,
        tasks_on_review::int as tasks_on_review,
        tasks_rework::int as tasks_rework,
@@ -93,6 +109,21 @@ export const REPORT_SQL = {
   from public.report_workload
  where ($1::date is null or (oldest_open_at at time zone 'Europe/Moscow')::date >= $1::date)
    and ($2::date is null or (oldest_open_at at time zone 'Europe/Moscow')::date <= $2::date)
+ order by tasks_total desc, full_name asc
+ limit $3`,
+  managers: `select manager_id::text as manager_id,
+       full_name,
+       tasks_total::int as tasks_total,
+       tasks_new::int as tasks_new,
+       tasks_in_progress::int as tasks_in_progress,
+       tasks_on_review::int as tasks_on_review,
+       tasks_rework::int as tasks_rework,
+       tasks_accepted::int as tasks_accepted,
+       accepted_share::float8 as accepted_share,
+       to_char(last_activity_at at time zone 'utc', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') as last_activity_at
+  from public.report_managers
+ where ($1::date is null or (last_activity_at at time zone 'Europe/Moscow')::date >= $1::date)
+   and ($2::date is null or (last_activity_at at time zone 'Europe/Moscow')::date <= $2::date)
  order by tasks_total desc, full_name asc
  limit $3`,
   statusAges: `select to_char(day, 'YYYY-MM-DD') as day,
@@ -162,7 +193,7 @@ function envelope(data: unknown[], state: ReplicationState, now: Date): Record<s
 }
 
 interface ReportDefinition {
-  name: 'objects' | 'workload' | 'status-ages';
+  name: 'objects' | 'workload' | 'managers' | 'status-ages';
   sql: string;
   schema: z.ZodTypeAny;
 }
@@ -170,6 +201,7 @@ interface ReportDefinition {
 const REPORTS: readonly ReportDefinition[] = [
   { name: 'objects', sql: REPORT_SQL.objects, schema: objectReportRowSchema },
   { name: 'workload', sql: REPORT_SQL.workload, schema: workloadRowSchema },
+  { name: 'managers', sql: REPORT_SQL.managers, schema: managerReportRowSchema },
   { name: 'status-ages', sql: REPORT_SQL.statusAges, schema: statusAgeRowSchema },
 ];
 

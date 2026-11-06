@@ -30,6 +30,7 @@ import {
   useMyTasksCounters,
   useObjectTitles,
 } from './useMyTasks.js';
+import { useTaskPeople } from './useTask.js';
 import type { TaskRow as TaskRowModel, TaskStatus } from './types.js';
 
 interface TaskGroup {
@@ -44,6 +45,9 @@ export function MyTasksPage(): JSX.Element {
   const list = useMyTasks(filter);
   const counters = useMyTasksCounters();
   const objectTitles = useObjectTitles(list.items.map((task) => task.object_id));
+  const people = useTaskPeople(
+    list.items.flatMap((task) => [task.assignee_id, task.author_id]),
+  );
 
   const groups = useMemo<TaskGroup[]>(() => {
     if (filter !== 'all') {
@@ -117,7 +121,7 @@ export function MyTasksPage(): JSX.Element {
       <div
         role="tablist"
         aria-label="Статусы моих задач"
-        className="mt-5 flex flex-wrap gap-1 border-b border-stroke"
+        className="mt-6 flex flex-wrap gap-2 border-b border-stroke"
       >
         {MY_TASKS_TABS.map((tab, index) => {
           const selected = tab.value === filter;
@@ -204,6 +208,8 @@ export function MyTasksPage(): JSX.Element {
                   key={task.id}
                   task={task}
                   objectTitle={objectTitles[task.object_id]}
+                  assigneeName={people[task.assignee_id]}
+                  authorName={people[task.author_id]}
                   role={role}
                 />
               ))}

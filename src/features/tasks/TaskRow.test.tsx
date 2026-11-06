@@ -28,13 +28,13 @@ const objectId = '33333333-3333-4333-8333-333333333333';
 const assigneeId = '22222222-2222-4222-8222-222222222222';
 const managerId = '11111111-1111-4111-8111-111111111111';
 
-function taskRow(index: number, status: TaskStatus): TaskRow {
+function taskRow(index: number, status: TaskStatus, description = ''): TaskRow {
   const suffix = String(index).padStart(12, '0');
   return {
     id: `44444444-4444-4444-8444-${suffix}`,
     object_id: objectId,
     title: `Задача ${index}`,
-    description: '',
+    description,
     status,
     assignee_id: assigneeId,
     author_id: managerId,
@@ -62,8 +62,11 @@ function setupFetch(tasksInput: TaskRow[], options: MockOptions = {}): void {
 
   const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = String(input);
+    if (url.includes('/api/auth/csrf')) {
+      return jsonResponse({ csrf_token: 'test-csrf' });
+    }
 
-    if (url.includes('/rest/v1/rpc/change_task_status')) {
+    if (url.includes('/api/data/rpc/change_task_status')) {
       const body = JSON.parse(String(init?.body ?? '{}')) as Record<string, unknown>;
       options.rpcBodies?.push(body);
       const task = tasks.find((row) => row.id === body.p_task_id);
@@ -73,7 +76,7 @@ function setupFetch(tasksInput: TaskRow[], options: MockOptions = {}): void {
       return jsonResponse(body.p_target);
     }
 
-    if (url.includes('/rest/v1/tasks')) {
+    if (url.includes('/api/data/tasks')) {
       const search = new URL(url).searchParams;
       if (search.get('select') === 'status') {
         return jsonResponse(tasks.map((row) => ({ status: row.status })));
@@ -90,8 +93,15 @@ function setupFetch(tasksInput: TaskRow[], options: MockOptions = {}): void {
       return jsonResponse(rows.slice(0, limit));
     }
 
-    if (url.includes('/rest/v1/objects')) {
+    if (url.includes('/api/data/objects')) {
       return jsonResponse([{ id: objectId, title: 'ЖК Северный' }]);
+    }
+
+    if (url.includes('/api/data/profiles')) {
+      return jsonResponse([
+        { id: assigneeId, full_name: 'Пётр Смирнов' },
+        { id: managerId, full_name: 'Ирина Волкова' },
+      ]);
     }
 
     return jsonResponse({ message: 'unexpected' }, 500);
@@ -133,6 +143,48 @@ afterEach(() => {
 });
 
 describe('TaskRow', () => {
+  it('DEC-057: строка «Мои задачи» показывает все семь полей ТЗ', async () => {
+    setupFetch([taskRow(1, 'new', 'Монтаж на 2 этаже')]);
+    renderMyTasks();
+
+    const card = await screen.findByRole('article', { name: 'Задача Задача 1' });
+    for (const label of [
+      'Название',
+      'Описание',
+      'Объект',
+      'Исполнитель',
+      'Статус',
+      'Автор',
+      'Дата создания',
+    ]) {
+      expect(within(card).getByText(label)).toBeTruthy();
+    }
+    expect(within(card).getByText('Монтаж на 2 этаже')).toBeTruthy();
+    expect(within(card).getByText('Новая')).toBeTruthy();
+    await waitFor(() => {
+      expect(within(card).getByText('ЖК Северный')).toBeTruthy();
+      expect(within(card).getByText('Пётр Смирнов')).toBeTruthy();
+      expect(within(card).getByText('Ирина Волкова')).toBeTruthy();
+    });
+  });
+
+  it('DEC-057: пустое описание в строке — явная заглушка', async () => {
+    setupFetch([taskRow(1, 'new', '')]);
+    renderMyTasks();
+
+    const card = await screen.findByRole('article', { name: 'Задача Задача 1' });
+    expect(within(card).getByText('Описание не добавлено')).toBeTruthy();
+  });
+
+  it('DEC-058: принятая задача в списке — статус зафиксирован, без кнопок перехода', async () => {
+    setupFetch([taskRow(1, 'accepted', 'Готово')]);
+    renderMyTasks();
+
+    const card = await screen.findByRole('article', { name: 'Задача Задача 1' });
+    expect(within(card).getByText('Статус зафиксирован')).toBeTruthy();
+    expect(within(card).queryByRole('button')).toBeNull();
+  });
+
   it('A09.3: «Взять в работу» из строки переводит задачу и переносит её во вкладку «В работе»', async () => {
     const rpcBodies: Array<Record<string, unknown>> = [];
     setupFetch([taskRow(1, 'new')], { rpcBodies });

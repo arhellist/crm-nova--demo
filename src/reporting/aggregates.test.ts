@@ -61,6 +61,7 @@ function expectedWorkload(): Array<Record<string, unknown>> {
       assignee_id: assigneeId,
       full_name: assigneeId === ASSIGNEE_A ? 'Анна Смирнова' : 'Борис Ковалёв',
       tasks_total: tasks.length,
+      tasks_new: 0,
       tasks_in_progress: tasks.filter((task) => task.status === 'in_progress').length,
       tasks_on_review: tasks.filter((task) => task.status === 'on_review').length,
       tasks_rework: 0,
@@ -123,7 +124,8 @@ describe('A11.4 загрузка исполнителей', () => {
       expect(row.tasks_accepted).toBe(reference.tasks_accepted);
       // Инвариант вьюхи: сумма статусных счётчиков равна общему числу активных задач.
       expect(
-        Number(row.tasks_in_progress) +
+        Number(row.tasks_new) +
+          Number(row.tasks_in_progress) +
           Number(row.tasks_on_review) +
           Number(row.tasks_rework) +
           Number(row.tasks_accepted),
@@ -140,10 +142,11 @@ describe('A11.4 загрузка исполнителей', () => {
   it('A11.4 вьюха считает те же статусы и не выносит ПДн исполнителя', () => {
     const sql = workloadViewSql();
     expect(sql).toMatch(/from public\.profiles p/);
-    expect(sql).toMatch(/join public\.tasks t on t\.assignee_id = p\.id and t\.archived_at is null/);
+    expect(sql).toMatch(/left join public\.tasks t/);
+    expect(sql).toMatch(/t\.assignee_id = p\.id/);
     expect(sql).toMatch(/where p\.role = 'executor'/);
     expect(sql).toMatch(/group by p\.id, p\.full_name/);
-    for (const status of ['in_progress', 'on_review', 'rework', 'accepted']) {
+    for (const status of ['new', 'in_progress', 'on_review', 'rework', 'accepted']) {
       expect(sql).toContain(`t.status = '${status}'`);
     }
     expect(sql).not.toMatch(/\bemail\b/i);

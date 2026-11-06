@@ -180,8 +180,8 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:15:43.207Z",
   "code_hash": {
-    "git_head": "ed68369dcc3f6257964db38ed4f9ef15bdce0d69",
-    "git_dirty": false,
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
+    "git_dirty": true,
     "produces": [
       "infra/replica/api.Dockerfile",
       "infra/replica/check.mjs",
@@ -194,8 +194,8 @@
       "supabase/migrations/0008_publication_and_ro.sql",
       "supabase/tests/views_test.sql"
     ],
-    "git_tree": "04f6f4b19b5085c2fd7dfdaf4ec3d8f7405d0b84",
-    "produces_digest": "dafcbb7cb67682f45c5258578950eb727e5f24afc64ab0fde510177a4f600b6d"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "e6f4b43d5078d835eaf7cb1381f95fa6c3ecbb248566d146900b0090f226a1d4"
   },
-  "evidence_hash": "1989f537426f28d93c7aa169d46698e8dff04ddb8f5dc24306f86eaf7a05a8de"
+  "evidence_hash": "f3bf014314888d5cf93a05e2b7c9507dd734fe4f7a93b9f5ca2b16356a0ceb8b"
 }

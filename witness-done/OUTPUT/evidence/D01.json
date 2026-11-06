@@ -240,7 +240,7 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:05:55.439Z",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
     "git_dirty": true,
     "produces": [
       "package.json",
@@ -254,8 +254,8 @@
       "src/shared/logger.ts",
       "tsconfig.json"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "2acb4cead2caf5b6641bb111d274ce0aec3c63bbddb11b8375c49c50515a5676"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "90a2959e5a0c78251a1b565dc88cb83f4c8e6a74b06565daac9783e0162c9120"
   },
-  "evidence_hash": "3ea085ff927b50a8757c46d31203cd02687e2100e88de651e0135c81c4d8abfe"
+  "evidence_hash": "4ae15db12a08f07871bd2f775569db5bb62520284da95b1d33c402495259d746"
 }

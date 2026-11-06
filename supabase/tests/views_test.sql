@@ -14,7 +14,7 @@
 
 begin;
 
-select plan(11);
+select plan(13);
 
 -- A10.2: подписка существует и получает изменения (pid у активного worker).
 select ok(
@@ -25,6 +25,7 @@ select ok(
 -- Структура вьюх: имена и состав колонок зафиксированы §9 data-model.
 select has_view('public', 'report_objects', 'A10.3 report_objects существует');
 select has_view('public', 'report_workload', 'A10.3 report_workload существует');
+select has_view('public', 'report_managers', 'DEC-061 report_managers существует');
 select has_view('public', 'report_status_ages', 'A10.3 report_status_ages существует');
 
 select columns_are(
@@ -41,7 +42,7 @@ select columns_are(
   'public',
   'report_workload',
   array[
-    'assignee_id', 'full_name', 'tasks_total', 'tasks_in_progress',
+    'assignee_id', 'full_name', 'tasks_total', 'tasks_new', 'tasks_in_progress',
     'tasks_on_review', 'tasks_rework', 'tasks_accepted', 'oldest_open_at'
   ],
   'A10.3 report_workload без email и контактов'
@@ -97,6 +98,15 @@ select results_eq(
   'A10.3 report_workload считает активные задачи без email'
 );
 
+-- До архива: report_managers считает 3 авторские задачи менеджера.
+select results_eq(
+  $$ select tasks_total, tasks_in_progress, tasks_on_review, tasks_accepted
+       from public.report_managers
+      where manager_id = '11111111-1111-4111-8111-111111111111' $$,
+  $$ select 3::bigint, 1::bigint, 1::bigint, 1::bigint $$,
+  'DEC-062 report_managers считает авторские задачи на активном объекте'
+);
+
 -- A10.3: архивные задачи не попадают в сводку.
 update public.objects set archived_at = now()
  where id = '33333333-3333-4333-8333-333333333333';
@@ -104,6 +114,15 @@ update public.objects set archived_at = now()
 select is_empty(
   $$ select 1 from public.report_objects where id = '33333333-3333-4333-8333-333333333333' $$,
   'A10.3 архивный объект не показывается в report_objects'
+);
+
+-- DEC-062: после архива объекта KPI постановщика обнуляется (каскадное скрытие).
+select results_eq(
+  $$ select tasks_total, tasks_new, tasks_accepted
+       from public.report_managers
+      where manager_id = '11111111-1111-4111-8111-111111111111' $$,
+  $$ select 0::bigint, 0::bigint, 0::bigint $$,
+  'DEC-062 report_managers исключает задачи архивного объекта'
 );
 
 -- A10.2: история «на проверке» не содержит комментариев и авторов во вьюхе.

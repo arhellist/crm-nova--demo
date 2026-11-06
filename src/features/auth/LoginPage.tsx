@@ -1,29 +1,22 @@
 /**
- * Экран входа: email + пароль, затем TOTP без перезагрузки.
+ * Экран входа: email + пароль без TOTP (DEC-053).
  *
  * Инварианты:
- *  - текст ошибки входа всегда «Неверный email или пароль», без подсказок о существовании
- *    учётной записи (INV-007);
- *  - открытой регистрации и восстановления пароля нет — соответствующих контролов в DOM
- *    не существует (ADR-0005);
- *  - после успешного пароля с включённым TOTP показывается MfaChallenge; пароль в state
- *    не сохраняется.
+ *  - единый текст ошибки без user enumeration (INV-007);
+ *  - открытой регистрации нет;
+ *  - сессия выставляется BFF в httpOnly cookies.
  */
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { signIn, signOut } from './api.js';
-import { MfaChallenge } from './MfaChallenge.js';
+import { signInWithPassword } from './api.js';
 
 export interface LoginPageProps {
   onAuthenticated?: () => void | Promise<void>;
 }
 
-type Step = 'credentials' | 'mfa';
-
 export function LoginPage({ onAuthenticated }: LoginPageProps): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [step, setStep] = useState<Step>('credentials');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -32,38 +25,13 @@ export function LoginPage({ onAuthenticated }: LoginPageProps): JSX.Element {
     setBusy(true);
     setError(null);
     try {
-      const result = await signIn(email, password);
-      if (result.mfaRequired) {
-        setPassword('');
-        setStep('mfa');
-        return;
-      }
+      await signInWithPassword(email, password);
       await onAuthenticated?.();
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : 'Не удалось выполнить вход');
     } finally {
       setBusy(false);
     }
-  }
-
-  async function handleMfaCancel(): Promise<void> {
-    await signOut();
-    setStep('credentials');
-    setError(null);
-  }
-
-  if (step === 'mfa') {
-    return (
-      <MfaChallenge
-        email={email}
-        onVerified={async () => {
-          await onAuthenticated?.();
-        }}
-        onCancel={async () => {
-          await handleMfaCancel();
-        }}
-      />
-    );
   }
 
   return (
@@ -80,8 +48,8 @@ export function LoginPage({ onAuthenticated }: LoginPageProps): JSX.Element {
           Доступ выдаёт администратор. Самостоятельная регистрация отключена.
         </p>
 
-        <form className="mt-6 space-y-4" onSubmit={(event) => void handleSubmit(event)} noValidate>
-          <div>
+        <form className="mt-8 space-y-5" onSubmit={(event) => void handleSubmit(event)} noValidate>
+          <div className="space-y-2">
             <label htmlFor="login-email" className="block text-sm font-medium text-text">
               Email
             </label>
@@ -93,12 +61,12 @@ export function LoginPage({ onAuthenticated }: LoginPageProps): JSX.Element {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="mt-2 w-full rounded-sm border border-stroke bg-bg-1 px-3 py-2 text-text placeholder:text-text-mute"
+              className="w-full rounded-sm border border-stroke-strong bg-bg-1 px-3 py-2.5 text-text placeholder:text-text-mute"
               placeholder="name@company.ru"
             />
           </div>
 
-          <div>
+          <div className="space-y-2">
             <label htmlFor="login-password" className="block text-sm font-medium text-text">
               Пароль
             </label>
@@ -110,7 +78,7 @@ export function LoginPage({ onAuthenticated }: LoginPageProps): JSX.Element {
               required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="mt-2 w-full rounded-sm border border-stroke bg-bg-1 px-3 py-2 text-text"
+              className="w-full rounded-sm border border-stroke-strong bg-bg-1 px-3 py-2.5 text-text"
             />
           </div>
 
@@ -123,7 +91,7 @@ export function LoginPage({ onAuthenticated }: LoginPageProps): JSX.Element {
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-sm bg-cyan px-4 py-2 font-semibold text-bg-0 transition hover:shadow-glow-cyan disabled:opacity-40"
+            className="mt-1 w-full rounded-sm bg-cyan px-4 py-2.5 font-semibold text-bg-0 transition hover:shadow-glow-cyan disabled:opacity-40"
           >
             Войти
           </button>

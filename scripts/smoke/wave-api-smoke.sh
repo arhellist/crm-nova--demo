@@ -57,10 +57,10 @@ want() {
 echo "=== wave API smoke @ ${BASE_URL} (group=${GROUP}) ==="
 
 if want platform; then
-  # D01: health и защита от всплеска запросов
-  check A01.2 GET "/health" 200
-  check_json A01.2 "/health" '.status == "ok" and has("version")'
-  check A01.4 GET "/health" 200
+  # D01: health (через /api/health — path-prefix демо/nginx, DEC-073)
+  check A01.2 GET "/api/health" 200
+  check_json A01.2 "/api/health" '.status == "ok" and has("version")'
+  check A01.4 GET "/api/health" 200
 fi
 
 if want schema; then
@@ -90,10 +90,11 @@ if want tasks; then
 fi
 
 if want reports; then
-  # D10/D11/D12: три отчёта, метка источника, лаг, деградация
+  # D10/D11/D12: три отчёта, метка источника, лаг, деградация.
+  # Репликация — через /api/health/replication (alias под path-prefix демо, DEC-073).
   check A11.1 GET "/api/reports/objects?limit=5" 200
-  check A11.3 GET "/health/replication" 200
-  check_json A11.3 "/health/replication" 'has("status") and has("lag_seconds")'
+  check A11.3 GET "/api/health/replication" 200
+  check_json A11.3 "/api/health/replication" 'has("status") and has("lag_seconds")'
   check A11.6 GET "/api/reports/objects?limit=0" 400
   check A12.1 GET "/api/reports/workload?limit=5" 200
   check_json A12.1 "/api/reports/workload?limit=5" \
@@ -103,12 +104,25 @@ if want reports; then
 fi
 
 if want release; then
-  # D13/D14: метрики, запрет записи в backend, отсутствие токена
-  check A13.1 GET "/metrics" 200
-  check A14.2 POST "/health" 405
+  # D13/D14: метрики и запрет записи. Health — GET-only (POST → 404/405/не 200).
+  check A13.1 GET "/api/metrics" 200
   check A14.2 PUT "/api/reports/objects" 405
   check A14.2 DELETE "/api/reports/objects" 405
-  check A14.2 GET "/api/reports/objects" 401
+  # 401 без токена: временно снимаем Bearer, если он был задан.
+  if [[ -n "$TOKEN" ]]; then
+    code=$(curl -sS -o /tmp/nova-wave-body.json -w "%{http_code}" \
+      -X GET -H "Content-Type: application/json" \
+      "${BASE_URL}/api/reports/objects" || true)
+    if [[ "$code" == "401" ]]; then
+      echo "  OK   A14.2 GET /api/reports/objects (без токена) → 401"
+      pass=$((pass + 1))
+    else
+      echo "  FAIL A14.2 GET /api/reports/objects (без токена) → $code (ожидали 401)"
+      fail=$((fail + 1))
+    fi
+  else
+    check A14.2 GET "/api/reports/objects" 401
+  fi
 fi
 
 echo

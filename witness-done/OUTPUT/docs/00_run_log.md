@@ -42,3 +42,5 @@ DDL и контракт отчётных вьюх; регламент прови
 | Шаг | Дата | Что сделано | Статус |
 |-----|------|-------------|--------|
 | R01 | 2026-11-04 | Инициализирован `spec-state/`: `config.yaml`, 5 доменов (auth, objects, tasks, reporting, platform), 26 требований MUST/SHALL с 52 сценариями (happy + negative/boundary); `--gate baseline` = pass | done |
+| post-D14 | 2026-11-05 | Закрыты exit-criteria E1–E28 → `pass` по актам D01–D14 (DEC-040); R02 не стартован без бизнес-запроса | done |
+| R02/R03 | 2026-11-06 | change `ui-spacing-density`: PostCSS+Tailwind в SPA, локальные шрифты; CSS 1 КБ → 43 КБ с утилитами (DEC-045) | done |

@@ -52,17 +52,8 @@ values
    'email', now(), now(), now())
 on conflict (id) do nothing;
 
--- 1в. TOTP-фактор менеджера: staging обязан проверять вход с MFA (A14.1, A04.1).
--- Секрет детерминированный и локальный: e2e передаёт его через E2E_MANAGER_TOTP_SECRET.
--- Без этой строки `supabase db reset` оставлял manager без второго фактора, и сценарии
--- входа падали уже после сброса стенда (DEC-036).
-insert into auth.mfa_factors (
-  id, user_id, friendly_name, factor_type, status, secret, created_at, updated_at
-)
-values
-  ('a75d3a20-eabe-48a8-b9be-ea624aea2ce4', '11111111-1111-4111-8111-111111111111',
-   'e2e', 'totp', 'verified', 'UNTMQM3SJ2OEHJJEMBXUH23VK44KBFWD', now(), now())
-on conflict (id) do nothing;
+-- 1в. MFA/TOTP не используется (DEC-053, hh-ТЗ): вход только email/пароль через Auth BFF.
+-- Ранее здесь был totp-фактор менеджера — удалён, чтобы не требовать aal2.
 
 -- 2. Профили: роль задаётся здесь, а не в JWT.
 insert into public.profiles (id, full_name, role)

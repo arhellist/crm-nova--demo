@@ -32,9 +32,22 @@ import {
 } from './routes/health.js';
 import { registerReportRoutes } from './routes/reports.js';
 
-/** Пути, закрытые токеном: отчёты и метрики. `/health*` — открыты для мониторинга. */
+/** Только отчётный контур: auth/data BFF (DEC-053) не подпадает под API_TOKEN и запрет POST. */
+function isReportingPath(url: string): boolean {
+  const path = url.split('?')[0] ?? url;
+  return (
+    path.startsWith('/api/reports') ||
+    path === '/health/replication' ||
+    path === '/api/health/replication' ||
+    path === '/metrics' ||
+    path === '/api/metrics'
+  );
+}
+
+/** Пути, закрытые токеном отчётов. `/health` и `/api/auth|data` — вне этого контура. */
 function requiresToken(url: string): boolean {
-  return url.startsWith('/api/') || url === '/metrics';
+  const path = url.split('?')[0] ?? url;
+  return path.startsWith('/api/reports') || path === '/metrics' || path === '/api/metrics';
 }
 
 /** Сравнение Bearer-токена без утечки длины и префикса. */
@@ -153,8 +166,11 @@ export async function mountReportingSurface(
     }),
   });
   mountReportingGuards(app, options);
+  const getReplicationState =
+    options.getReplicationState ?? (() => readReplicationState(options.query));
   registerReplicationAndMetricsRoutes(app, {
     query: options.query,
+    getReplicationState,
     ...(options.now ? { now: options.now } : {}),
     ...(options.startedAtMs ? { startedAtMs: options.startedAtMs } : {}),
     ...(options.getPoolStats ? { getPoolStats: options.getPoolStats } : {}),
@@ -163,9 +179,12 @@ export async function mountReportingSurface(
   mountReportingErrorHandler(app);
 }
 
-/** Хуки доступа: только чтение, allowlist Origin, Bearer для `/api/*` и `/metrics`. */
+/** Хуки доступа только для отчётных путей; `/api/auth` и `/api/data` обслуживает BFF (DEC-053). */
 function mountReportingGuards(app: FastifyInstance, options: ReportingServerOptions): void {
   app.addHook('onRequest', async (request, reply) => {
+    if (!isReportingPath(request.url)) {
+      return;
+    }
     const method = request.method.toUpperCase();
     if (method === 'OPTIONS') {
       // Preflight разрешён только известному Origin; тело не требуется.
@@ -220,12 +239,10 @@ function mountReportingGuards(app: FastifyInstance, options: ReportingServerOpti
 
 /** Отчёты и состояние репликации: только чтение, кэш и деградация без падения процесса. */
 function mountReportingRoutes(app: FastifyInstance, options: ReportingServerOptions): void {
-  const getReplicationState =
-    options.getReplicationState ?? (() => readReplicationState(options.query));
-
   registerReportRoutes(app, {
     query: options.query,
-    getReplicationState,
+    getReplicationState:
+      options.getReplicationState ?? (() => readReplicationState(options.query)),
     cacheTtlMs: options.cacheTtlMs ?? 30_000,
     ...(options.now ? { now: options.now } : {}),
   });

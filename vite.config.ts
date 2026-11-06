@@ -14,7 +14,14 @@
  */
 import { defineConfig } from 'vite';
 
+/**
+ * `base` для подпути (демо на https://arhellist.ru/crm-nova/):
+ * задаётся `VITE_BASE_PATH=/crm-nova/` на сборке. Локально и на корневом хосте — `/`.
+ */
+const base = process.env.VITE_BASE_PATH || '/';
+
 export default defineConfig({
+  base,
   build: {
     outDir: 'dist/web',
     emptyOutDir: true,

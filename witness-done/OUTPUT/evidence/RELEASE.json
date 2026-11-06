@@ -92,14 +92,16 @@
         "A12.6",
         "A13.2",
         "A13.3",
-        "A13.4"
+        "A13.4",
+        "A14.3",
+        "A14.4"
       ]
     },
     "code_hash": {
-      "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+      "git_head": "8aaf4123da0c5b4a02250e7046f3837180122cc6",
       "git_dirty": null,
       "produces": [],
-      "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7"
+      "git_tree": "79fdf8dd0f3e5ce997caf99c9b3cd7afd6f69fbe"
     },
     "script_sha256": "1bbae059b3acf780426545940f6394fc62636e7e29cf8e39eaf4cb1ff652c8a4"
   },
@@ -231,12 +233,12 @@
     },
     "note": "статистическая оценка, а не замена tax_pass: веса перераспределены по компонентам с непустым знаменателем"
   },
-  "timestamp": "2026-11-05T19:15:58.686Z",
+  "timestamp": "2026-11-05T19:53:51.291Z",
   "code_hash": {
-    "git_head": "8aaf4123da0c5b4a02250e7046f3837180122cc6",
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
     "git_dirty": null,
     "produces": [],
-    "git_tree": "79fdf8dd0f3e5ce997caf99c9b3cd7afd6f69fbe"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c"
   },
-  "evidence_hash": "6f210c0003e5228bbc92d17d7cff6fee4b4deec36668d1d82fc23be9f44fc43c"
+  "evidence_hash": "a3efad63a432645123010e1288ab07831b0c336a18b050e7dbcd1b087b4d1621"
 }

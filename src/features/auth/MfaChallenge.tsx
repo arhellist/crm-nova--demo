@@ -62,8 +62,8 @@ export function MfaChallenge({ email, onVerified, onCancel }: MfaChallengeProps)
           {email ? <>Введите код для {email}.</> : 'Введите код из приложения-аутентификатора.'}
         </p>
 
-        <form className="mt-6 space-y-4" onSubmit={(event) => void handleSubmit(event)} noValidate>
-          <div>
+        <form className="mt-8 space-y-5" onSubmit={(event) => void handleSubmit(event)} noValidate>
+          <div className="space-y-2">
             <label htmlFor="totp-code" className="block text-sm font-medium text-text">
               Код из приложения
             </label>
@@ -76,7 +76,7 @@ export function MfaChallenge({ email, onVerified, onCancel }: MfaChallengeProps)
               maxLength={6}
               value={code}
               onChange={(event) => setCode(event.target.value.trim())}
-              className="mt-2 w-full rounded-sm border border-stroke bg-bg-1 px-3 py-2 font-mono text-lg tracking-[0.4em] text-text"
+              className="w-full rounded-sm border border-stroke-strong bg-bg-1 px-3 py-2.5 font-mono text-lg tracking-[0.4em] text-text"
               aria-invalid={error !== null}
               aria-describedby={error ? 'mfa-error' : undefined}
             />
@@ -91,7 +91,7 @@ export function MfaChallenge({ email, onVerified, onCancel }: MfaChallengeProps)
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-sm bg-cyan px-4 py-2 font-semibold text-bg-0 transition hover:shadow-glow-cyan disabled:opacity-40"
+            className="w-full rounded-sm bg-cyan px-4 py-2.5 font-semibold text-bg-0 transition hover:shadow-glow-cyan disabled:opacity-40"
           >
             Подтвердить
           </button>

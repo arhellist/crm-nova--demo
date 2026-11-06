@@ -257,8 +257,8 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T18:59:26.941Z",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
-    "git_dirty": false,
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
+    "git_dirty": true,
     "produces": [
       "src/features/auth/api.ts",
       "src/features/objects/api.test.ts",
@@ -270,8 +270,8 @@
       "src/features/objects/types.ts",
       "src/shared/api/postgrest.ts"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "07fb6da7eb711b3697191ea48238e31c259d05d52d7c7ac1eec3bc2d1544a67f"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "27131e596a4a5726a7ac0d3e3b170bf00cce012d51688663dbc3ee1b7f5e1ee3"
   },
-  "evidence_hash": "184d3fae0e242e6ed09c592a5140ed19e97f0ec9ecee0653532ac844a4cf8f69"
+  "evidence_hash": "29e6156dfbb3b5d79e04ca7c29042422b1e7a5b8fe02fa9ee3a14248c827b804"
 }

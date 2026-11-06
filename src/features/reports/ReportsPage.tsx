@@ -150,13 +150,14 @@ function ObjectsTable({ report }: { report: ReportQuery<ObjectReportRow> }): JSX
 }
 
 function WorkloadTable({ report }: { report: ReportQuery<WorkloadRow> }): JSX.Element {
-  const columns = 6;
+  const columns = 7;
   return (
     <table className="w-full min-w-[640px] border-collapse text-sm">
       <thead>
         <tr className="text-left text-xs uppercase tracking-wide text-text-mute">
           <th scope="col" className="px-3 py-2">Исполнитель</th>
           <th scope="col" className="px-3 py-2">Всего</th>
+          <th scope="col" className="px-3 py-2">Новые</th>
           <th scope="col" className="px-3 py-2">В работе</th>
           <th scope="col" className="px-3 py-2">На проверке</th>
           <th scope="col" className="px-3 py-2">На доработке</th>
@@ -175,6 +176,7 @@ function WorkloadTable({ report }: { report: ReportQuery<WorkloadRow> }): JSX.El
                 {row.full_name}
               </th>
               <td className="px-3 py-3 text-text-dim">{row.tasks_total}</td>
+              <td className="px-3 py-3 text-text-dim">{row.tasks_new}</td>
               <td className="px-3 py-3 text-text-dim">{row.tasks_in_progress}</td>
               <td className="px-3 py-3 text-text-dim">{row.tasks_on_review}</td>
               <td className="px-3 py-3 text-text-dim">{row.tasks_rework}</td>

@@ -78,6 +78,8 @@ function walk(dir: string): string[] {
     }
     if (!/\.(ts|tsx|css)$/.test(entry)) continue;
     if (/\.test\.(ts|tsx)$/.test(entry)) continue;
+    // Backend-only env schema (DEC-060): не входит в SPA-бандл Vite.
+    if (abs.endsWith(`${path.sep}shared${path.sep}config${path.sep}env.ts`)) continue;
     out.push(abs);
   }
   return out;

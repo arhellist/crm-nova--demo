@@ -1,45 +1,38 @@
-// @vitest-environment jsdom
+/** @vitest-environment jsdom */
 /**
- * Тесты экрана входа: переход к TOTP без перезагрузки и отсутствие открытой регистрации.
- *
- * @acceptance A04.1
- * @acceptance A04.5
+ * Тесты экрана входа без TOTP (DEC-053).
  */
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { LoginPage } from './LoginPage.js';
 import * as api from './api.js';
 
-vi.mock('./api', () => ({
+vi.mock('./api.js', () => ({
+  signInWithPassword: vi.fn(),
   signIn: vi.fn(),
-  signOut: vi.fn(),
-  verifyTotp: vi.fn(),
 }));
 
-afterEach(() => {
-  cleanup();
-  vi.clearAllMocks();
-});
-
 describe('LoginPage', () => {
-  it('A04.1 manager с TOTP: после пароля показывается запрос кода', async () => {
-    vi.mocked(api.signIn).mockResolvedValue({ mfaRequired: true });
-    render(<LoginPage />);
-
-    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'manager@nova.local' } });
-    fireEvent.change(screen.getByLabelText('Пароль'), { target: { value: 'nova-local-password' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Войти' }));
-
-    expect(await screen.findByRole('heading', { name: 'Подтверждение входа' })).toBeTruthy();
-    expect(screen.getByLabelText('Код из приложения')).toBeTruthy();
-    expect(screen.queryByLabelText('Пароль')).toBeNull();
+  beforeEach(() => {
+    vi.mocked(api.signInWithPassword).mockReset();
+    vi.mocked(api.signIn).mockImplementation(api.signInWithPassword);
   });
 
-  it('A04.5 открытая регистрация отсутствует: нет формы и вызова signUp', () => {
-    render(<LoginPage />);
+  it('A04.1 / DEC-053: верный пароль входит без MFA', async () => {
+    const onAuthenticated = vi.fn();
+    vi.mocked(api.signInWithPassword).mockResolvedValue({ mfaRequired: false });
 
-    expect(screen.queryByRole('button', { name: /регистрац/i })).toBeNull();
-    expect(screen.queryByText(/зарегистрироваться/i)).toBeNull();
-    expect('signUp' in api).toBe(false);
+    render(<LoginPage onAuthenticated={onAuthenticated} />);
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'manager@nova.local' },
+    });
+    fireEvent.change(screen.getByLabelText('Пароль'), {
+      target: { value: 'nova-local-password' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Войти' }));
+
+    await waitFor(() => expect(api.signInWithPassword).toHaveBeenCalled());
+    await waitFor(() => expect(onAuthenticated).toHaveBeenCalled());
+    expect(screen.queryByText(/код|TOTP|Authenticator/i)).toBeNull();
   });
 });

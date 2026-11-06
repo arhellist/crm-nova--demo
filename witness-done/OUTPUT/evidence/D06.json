@@ -251,7 +251,7 @@
   "tax_pass": true,
   "timestamp": "2026-11-05T19:06:31.254Z",
   "code_hash": {
-    "git_head": "4e15699bc36049e18f362d4fdcf7b71ecdfa7bf8",
+    "git_head": "74adaaf17b0e19c049359f37699da4ceb4ea6b0d",
     "git_dirty": true,
     "produces": [
       "src/app/router.tsx",
@@ -264,8 +264,8 @@
       "src/features/objects/objectKeys.ts",
       "src/features/objects/useObjects.ts"
     ],
-    "git_tree": "bff728df9e9ed1444aca1f1814a70a345f6c9ce7",
-    "produces_digest": "30ef2bc248ee07365d458ded63490277a04e322005adae2d5ef6aa4c9c41862d"
+    "git_tree": "664c3fd81c828fe63a945cf6c2417385f263b00c",
+    "produces_digest": "9006877eb76ddbe69298912f9314b432251aeaa6eff2dc46d335e8b06538f5d3"
   },
-  "evidence_hash": "e680ee98c37d6db1fc6225d39bc9cbd99d4da0f9668a743548e4694e5543789c"
+  "evidence_hash": "a611513b8edef3b982843a9a077b7168b31ae22d2907d742f94370f8495b4c5f"
 }
